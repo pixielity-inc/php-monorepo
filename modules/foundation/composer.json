@@ -68,6 +68,12 @@
         "test": "Pixielity\\Foundation\\Scripts\\TestScripts::run",
         "test:coverage": "Pixielity\\Foundation\\Scripts\\TestScripts::coverage",
         "test:parallel": "Pixielity\\Foundation\\Scripts\\TestScripts::parallel",
-        "test:filter": "Pixielity\\Foundation\\Scripts\\TestScripts::filter"
+        "test:filter": "Pixielity\\Foundation\\Scripts\\TestScripts::filter",
+        "lint": "Pixielity\\Foundation\\Scripts\\LintScripts::check",
+        "lint:fix": "Pixielity\\Foundation\\Scripts\\LintScripts::fix",
+        "analyse": "Pixielity\\Foundation\\Scripts\\AnalyseScripts::run",
+        "analyse:baseline": "Pixielity\\Foundation\\Scripts\\AnalyseScripts::baseline",
+        "refactor": "Pixielity\\Foundation\\Scripts\\RefactorScripts::dryRun",
+        "refactor:fix": "Pixielity\\Foundation\\Scripts\\RefactorScripts::apply"
     }
 }
