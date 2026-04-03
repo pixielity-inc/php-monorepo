@@ -1,12 +1,44 @@
 {
   "name": "php-monorepo",
+  "version": "0.0.0",
+  "description": "Production-ready PHP monorepo powered by Turborepo.",
   "private": true,
+  "homepage": "https://github.com/your-org/php-monorepo#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/your-org/php-monorepo.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-org/php-monorepo/issues"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Your Name",
+    "email": "you@example.com",
+    "url": "https://example.com"
+  },
+  "workspaces": [
+    "applications/*",
+    "modules/*"
+  ],
   "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev",
-    "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "check-types": "turbo run check-types"
+    "prepare":      "git config core.hooksPath .githooks",
+    "build":        "turbo run build",
+    "dev":          "turbo run dev",
+    "start":        "turbo run start",
+    "lint":         "turbo run lint",
+    "lint:fix":     "turbo run lint:fix",
+    "test":         "turbo run test",
+    "test:coverage":"turbo run test:coverage",
+    "analyse":      "turbo run analyse",
+    "refactor":     "turbo run refactor",
+    "refactor:fix": "turbo run refactor:fix",
+    "check-types":  "turbo run check-types",
+    "format":       "prettier --write \"**/*.{js,ts,json,md,yaml,yml}\"",
+    "format:check": "prettier --check \"**/*.{js,ts,json,md,yaml,yml}\"",
+    "clean":        "turbo run clean",
+    "clean:all":    "turbo run clean && rm -rf node_modules",
+    "upgrade":      "npx npm-check-updates -u && npm install"
   },
   "devDependencies": {
     "prettier": "^3.7.4",
@@ -14,11 +46,8 @@
     "typescript": "5.9.2"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=18",
+    "npm": ">=10"
   },
-  "packageManager": "npm@10.9.7",
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ]
+  "packageManager": "npm@10.9.7"
 }

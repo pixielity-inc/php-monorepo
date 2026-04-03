@@ -5,17 +5,53 @@
     "build": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": [".next/**", "!.next/cache/**"]
+      "outputs": ["vendor/**", "public/build/**"]
     },
-    "lint": {
-      "dependsOn": ["^lint"]
-    },
-    "check-types": {
-      "dependsOn": ["^check-types"]
+    "start": {
+      "dependsOn": ["build"],
+      "cache": false,
+      "persistent": true
     },
     "dev": {
       "cache": false,
       "persistent": true
+    },
+    "lint": {
+      "dependsOn": ["^build"],
+      "inputs": ["**/*.php", "**/*.js", "**/*.ts", "pint.json"]
+    },
+    "lint:fix": {
+      "dependsOn": ["^build"],
+      "cache": false
+    },
+    "analyse": {
+      "dependsOn": ["build"],
+      "inputs": ["**/*.php", "phpstan.neon", "phpstan.neon.dist"]
+    },
+    "refactor": {
+      "dependsOn": ["build"],
+      "inputs": ["**/*.php", "rector.php"],
+      "cache": false
+    },
+    "refactor:fix": {
+      "dependsOn": ["build"],
+      "cache": false
+    },
+    "check-types": {
+      "dependsOn": ["^check-types"]
+    },
+    "test": {
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", ".env.test*"],
+      "outputs": ["coverage/**"]
+    },
+    "test:coverage": {
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", ".env.test*"],
+      "outputs": ["coverage/**", "coverage.xml"]
+    },
+    "clean": {
+      "cache": false
     }
   }
 }

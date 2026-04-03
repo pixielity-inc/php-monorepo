@@ -1,0 +1,49 @@
+# .editorconfig
+#
+# Ensures consistent coding style across all editors and IDEs.
+# See https://editorconfig.org for documentation.
+#
+# Most editors support EditorConfig natively or via a plugin.
+
+root = true
+
+# ---------------------------------------------------------------------------
+# Defaults — applied to all files unless overridden below
+# ---------------------------------------------------------------------------
+[*]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 4
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# ---------------------------------------------------------------------------
+# JavaScript / TypeScript / JSON — 2-space indent (JS ecosystem convention)
+# ---------------------------------------------------------------------------
+[*.{js,jsx,ts,tsx,json,jsonc}]
+indent_size = 2
+
+# ---------------------------------------------------------------------------
+# YAML — 2-space indent
+# ---------------------------------------------------------------------------
+[*.{yml,yaml}]
+indent_size = 2
+
+# ---------------------------------------------------------------------------
+# Markdown — preserve trailing whitespace (two spaces = line break)
+# ---------------------------------------------------------------------------
+[*.md]
+trim_trailing_whitespace = false
+
+# ---------------------------------------------------------------------------
+# Makefiles — must use tabs
+# ---------------------------------------------------------------------------
+[Makefile]
+indent_style = tab
+
+# ---------------------------------------------------------------------------
+# PHP — PSR-12 uses 4-space indent (already the default above)
+# ---------------------------------------------------------------------------
+[*.php]
+indent_size = 4

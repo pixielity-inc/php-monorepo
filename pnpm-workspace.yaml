@@ -1,0 +1,13 @@
+# pnpm-workspace.yaml — php-monorepo
+#
+# Declares the workspace packages for pnpm.
+# pnpm does not read the "workspaces" field in package.json — this file
+# is the canonical source of truth when using pnpm as the package manager.
+#
+# Docs: https://pnpm.io/pnpm-workspace_yaml
+
+packages:
+  # Deployable applications
+  - "applications/*"
+  # Shared modules / libraries
+  - "modules/*"
