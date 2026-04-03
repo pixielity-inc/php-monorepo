@@ -72,7 +72,7 @@ coverage.xml
 # IDE / Editor
 # -----------------------------------------------------------------------------
 .idea/
-.vscode/
+# .vscode/ tracked for shared workspace settings (settings.json, extensions.json)
 *.swp
 *.swo
 .DS_Store

@@ -1,0 +1,18 @@
+{
+  "recommendations": [
+    // PHP
+    "bmewburn.vscode-intelephense-client",
+    "shufo.vscode-blade-formatter",
+    "onecentlin.laravel-blade",
+    "amiralizadeh9480.laravel-extra-intellisense",
+    "ryannaddy.laravel-artisan",
+    // Formatting
+    "esbenp.prettier-vscode",
+    "EditorConfig.EditorConfig",
+    // Git
+    "eamodio.gitlens",
+    // General
+    "streetsidesoftware.code-spell-checker",
+    "usernamehw.errorlens"
+  ]
+}

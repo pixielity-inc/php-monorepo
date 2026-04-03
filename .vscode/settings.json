@@ -1,0 +1,86 @@
+{
+  // ---------------------------------------------------------------------------
+  // PHP
+  // ---------------------------------------------------------------------------
+
+  // Disable PHP validation — we use PHPStan for static analysis, not the
+  // built-in VS Code PHP validator which produces false positives on
+  // Composer script classes (e.g. use Composer\Script\Event).
+  "php.validate.enable": false,
+  "php.suggest.basic": false,
+
+  // Intelephense: suppress errors for Composer API classes that are only
+  // available at runtime (not in the project's vendor directory).
+  "intelephense.diagnostics.undefinedTypes": false,
+  "intelephense.diagnostics.undefinedFunctions": false,
+  "intelephense.diagnostics.undefinedConstants": false,
+  "intelephense.diagnostics.undefinedClassConstants": false,
+  "intelephense.diagnostics.undefinedMethods": false,
+  "intelephense.diagnostics.undefinedProperties": false,
+  "intelephense.diagnostics.unusedSymbols": false,
+
+  // Blade: disable all built-in HTML/PHP validation inside .blade.php files.
+  // Blade templates use Laravel-specific syntax that confuses standard validators.
+  "[blade]": {
+    "editor.defaultFormatter": "shufo.vscode-blade-formatter",
+    "editor.formatOnSave": true
+  },
+
+  // Suppress HTML validation errors in Blade files (they contain PHP/Blade
+  // directives that are not valid HTML).
+  "html.validate.scripts": false,
+  "html.validate.styles": false,
+
+  // Exclude Blade files from the built-in HTML language features that
+  // produce false-positive errors on @directives and {{ expressions }}.
+  "files.associations": {
+    "*.blade.php": "blade"
+  },
+
+  // ---------------------------------------------------------------------------
+  // Editor
+  // ---------------------------------------------------------------------------
+  "editor.formatOnSave": true,
+  "editor.tabSize": 4,
+  "editor.insertSpaces": true,
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "files.eol": "\n",
+
+  "[php]": {
+    "editor.defaultFormatter": "bmewburn.vscode-intelephense-client",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 4,
+    "editor.rulers": [120]
+  },
+
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.tabSize": 2
+  },
+
+  "[yaml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.tabSize": 2
+  },
+
+  // ---------------------------------------------------------------------------
+  // File exclusions
+  // ---------------------------------------------------------------------------
+  "files.exclude": {
+    "**/vendor": true,
+    "**/node_modules": true,
+    "**/bootstrap/cache": true,
+    "**/.phpunit.cache": true,
+    "**/storage/framework/cache": true,
+    "**/storage/framework/sessions": true,
+    "**/storage/framework/views": true
+  },
+
+  "search.exclude": {
+    "**/vendor": true,
+    "**/node_modules": true,
+    "**/storage": true,
+    "**/.turbo": true
+  }
+}
