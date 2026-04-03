@@ -41,36 +41,6 @@ class ComposerScripts
         'modules/*/*',
         'modules/*/*/*',
     ];
-foreach ($keys as $key) {
-                $value = $envVars[$key] ?? '<fg=yellow>not set</>';
-                $io->write("  {$key} : <info>{$value}</info>");
-            }
-        } else {
-            $io->write('  <fg=yellow>.env file not found</>');
-        }
-
-        // --- Repositories ---
-        $registered = self::getRegisteredPathRepos($composerJson, $root);
-        $discovered = self::discoverModulePaths($root);
-
-        $io->write('');
-        $io->write('<comment>Local path repositories:</comment>');
-
-        if (empty($discovered)) {
-            $io->write('  <fg=yellow>No modules discovered</>');
-        } else {
-            foreach ($discovered as $path) {
-                $relative  = self::toRelativePath($path, $root);
-                $isReg     = in_array($path, $registered, true);
-                $status    = $isReg ? '<info>✔ registered</info>' : '<fg=yellow>✘ missing</>';
-                $io->write("  {$relative}  {$status}");
-            }
-        }
-
-        $io->write('');
-        $io->write('<info>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</info>');
-        $io->write('');
-    }
 
     // -------------------------------------------------------------------------
     // Repository commands
@@ -197,61 +167,7 @@ foreach ($keys as $key) {
     // -------------------------------------------------------------------------
     // Private helpers
     // -------------------------------------------------------------------------
-] environment</info>");
-        $io->write("<info>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</info>");
 
-        // 1. Update composer.json stability
-        self::updateComposerStability($event, $config['minimum-stability'], $config['prefer-stable']);
-        $io->write("  <info>✔</info> minimum-stability → <comment>{$config['minimum-stability']}</comment>");
-        $io->write("  <info>✔</info> prefer-stable     → <comment>" . ($config['prefer-stable'] ? 'true' : 'false') . "</comment>");
-
-        // 2. Write .env variables
-        $envFile = self::findEnvFile($event);
-
-        if ($envFile !== null) {
-            self::writeEnvVars($envFile, $config['env']);
-            $io->write('');
-            $io->write('  <info>✔</info> Updated .env:');
-            foreach ($config['env'] as $key => $value) {
-                $io->write("      {$key}={$value}");
-            }
-        } else {
-            $io->write('  <fg=yellow>⚠ .env not found — skipping Laravel env vars.</> ');
-            $io->write('    Run `composer setup` to create it from .env.example.');
-        }
-
-        // 3. Sync repositories (only for dev/testing — prod uses packagist)
-        if ($preset !== 'prod') {
-            $io->write('');
-            $added = self::syncRepositories($event, $root);
-            if (!empty($added)) {
-                $io->write('  <info>✔</info> Registered path repositories:');
-                foreach ($added as $path) {
-                    $io->write('      + ' . self::toRelativePath($path, $root));
-                }
-            } else {
-                $io->write('  <info>✔</info> Path repositories already up to date.');
-            }
-        }
-
-        $io->write('');
-        $io->write("<info>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</info>");
-        $io->write("<info>  Done! Run `composer install` to apply changes.</info>");
-        $io->write("<info>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</info>");
-        $io->write('');
-    }
-
-    /**
-     * Discover all module directories that contain a composer.json.
-     *
-     * Scans the three glob depths:
-     *   modules/*           — e.g. modules/core
-     *   modules/X/Y         — e.g. modules/pixielity/core
-     *   modules/X/Y/Z       — e.g. modules/pixielity/group/core
-     *
-     * @param  string   $root Absolute path to the workspace root.
-     * @return string[] Absolute paths to discovered module directories.
-     */
     private static function discoverModulePaths(string $root): array
     {
         $paths = [];
@@ -388,42 +304,6 @@ foreach ($keys as $key) {
         self::writeComposerJson($event, $composerJson);
 
         return array_values($toAdd);
-    }
-}
-
-        return null;
-    }
-[$key, $value] = explode('=', $line, 2);
-            $key   = trim($key);
-            $value = trim($value, " \t\n\r\0\x0B\"'");
-
-            $vars[$key] = $value;
-        }
-
-        return $vars;
-    }
-[$key] = explode('=', $line, 2);
-            $key   = trim($key);
-
-            if (array_key_exists($key, $vars)) {
-                $line    = "{$key}={$vars[$key]}";
-                $written[$key] = true;
-            }
-        }
-        unset($line);
-
-        // Append keys that didn't exist yet.
-        $newKeys = array_diff_key($vars, $written);
-
-        if (!empty($newKeys)) {
-            $lines[] = '';
-            $lines[] = '# Added by composer env:* command';
-            foreach ($newKeys as $key => $value) {
-                $lines[] = "{$key}={$value}";
-            }
-        }
-
-        file_put_contents($path, implode("\n", $lines));
     }
 
     /**
