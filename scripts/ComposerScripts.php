@@ -437,6 +437,9 @@ class ComposerScripts
     private static function getRegisteredPathRepos(array $composerJson, string $root): array
     {
         $registered = [];
+        // Paths in repositories[] are relative to the workspace directory (getcwd()),
+        // not the monorepo root. Resolve from cwd for accurate deduplication.
+        $cwd = getcwd();
 
         foreach ($composerJson['repositories'] ?? [] as $repo) {
             if (($repo['type'] ?? '') !== 'path') {
@@ -445,17 +448,18 @@ class ComposerScripts
 
             $url = $repo['url'] ?? '';
 
-            // Resolve relative paths against the workspace root.
+            // Resolve to absolute path — try cwd first, then root as fallback.
             $absolute = str_starts_with($url, '/')
-                ? $url
-                : realpath($root . '/' . $url);
+                ? realpath($url)
+                : (realpath($cwd . '/' . $url) ?: realpath($root . '/' . $url));
 
-            if ($absolute !== false) {
+            if ($absolute !== false && $absolute !== '') {
                 $registered[] = $absolute;
             }
         }
 
-        return $registered;
+        // Deduplicate in case the same path was registered multiple times.
+        return array_values(array_unique($registered));
     }
 
     /**
@@ -519,6 +523,9 @@ class ComposerScripts
         if (!isset($composerJson['repositories']) || !is_array($composerJson['repositories'])) {
             $composerJson['repositories'] = [];
         }
+
+        // Deduplicate existing repositories before adding new ones.
+        $composerJson['repositories'] = self::deduplicateRepositories($composerJson['repositories']);
 
         foreach ($toAdd as $packageName => $absolutePath) {
             // Store as a relative path from the current working directory for portability.
@@ -775,6 +782,48 @@ class ComposerScripts
      * @param  string $base     Base directory to make the path relative to.
      * @return string           Relative path (e.g. "../../modules/core").
      */
+
+    /**
+     * Remove duplicate path repositories from a repositories array.
+     *
+     * Two entries are considered duplicates when they resolve to the same
+     * absolute path, regardless of whether the URL is stored as relative
+     * or absolute.
+     *
+     * @param  array $repositories The repositories array from composer.json.
+     * @return array               Deduplicated repositories array.
+     */
+    private static function deduplicateRepositories(array $repositories): array
+    {
+        $seen   = [];
+        $result = [];
+        $cwd    = getcwd();
+
+        foreach ($repositories as $repo) {
+            if (($repo['type'] ?? '') !== 'path') {
+                // Non-path repos (vcs, composer, etc.) are always kept as-is.
+                $result[] = $repo;
+                continue;
+            }
+
+            $url      = $repo['url'] ?? '';
+            $absolute = str_starts_with($url, '/')
+                ? realpath($url)
+                : (realpath($cwd . '/' . $url) ?: $url);
+
+            $key = $absolute ?: $url;
+
+            if (isset($seen[$key])) {
+                continue; // Skip duplicate.
+            }
+
+            $seen[$key] = true;
+            $result[]   = $repo;
+        }
+
+        return $result;
+    }
+
     private static function toRelativePath(string $absolute, string $base): string
     {
         $absolute = rtrim($absolute, '/');

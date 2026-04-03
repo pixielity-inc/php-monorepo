@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "eb79fc7b2f88597a00e67c4a6cccf1e4",
+    "content-hash": "fd6002b8b12c503ec764dd6bd77f6f15",
     "packages": [
         {
             "name": "abbasudo/laravel-purity",
@@ -1380,6 +1380,58 @@
             "time": "2025-08-22T14:27:06+00:00"
         },
         {
+            "name": "jaybizzle/crawler-detect",
+            "version": "v1.3.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/JayBizzle/Crawler-Detect.git",
+                "reference": "1882af9b76cb1dbfba3256de2562c3cd383f9b8f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/JayBizzle/Crawler-Detect/zipball/1882af9b76cb1dbfba3256de2562c3cd383f9b8f",
+                "reference": "1882af9b76cb1dbfba3256de2562c3cd383f9b8f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8|^5.5|^6.5|^7.5|^8.5.52|^9.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Jaybizzle\\CrawlerDetect\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mark Beech",
+                    "email": "m@rkbee.ch",
+                    "role": "Developer"
+                }
+            ],
+            "description": "CrawlerDetect is a PHP class for detecting bots/crawlers/spiders via the user agent",
+            "homepage": "https://github.com/JayBizzle/Crawler-Detect/",
+            "keywords": [
+                "crawler",
+                "crawler detect",
+                "crawler detector",
+                "crawlerdetect",
+                "php crawler detect"
+            ],
+            "support": {
+                "issues": "https://github.com/JayBizzle/Crawler-Detect/issues",
+                "source": "https://github.com/JayBizzle/Crawler-Detect/tree/v1.3.8"
+            },
+            "time": "2026-03-26T23:01:33+00:00"
+        },
+        {
             "name": "ksubileau/color-thief-php",
             "version": "v2.0.2",
             "source": {
@@ -1438,6 +1490,94 @@
                 "source": "https://github.com/ksubileau/color-thief-php/tree/v2.0.2"
             },
             "time": "2025-07-17T15:26:54+00:00"
+        },
+        {
+            "name": "laminas/laminas-diactoros",
+            "version": "3.8.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laminas/laminas-diactoros.git",
+                "reference": "60c182916b2749480895601649563970f3f12ec4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laminas/laminas-diactoros/zipball/60c182916b2749480895601649563970f3f12ec4",
+                "reference": "60c182916b2749480895601649563970f3f12ec4",
+                "shasum": ""
+            },
+            "require": {
+                "php": "~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0",
+                "psr/http-factory": "^1.1",
+                "psr/http-message": "^1.1 || ^2.0"
+            },
+            "conflict": {
+                "amphp/amp": "<2.6.4"
+            },
+            "provide": {
+                "psr/http-factory-implementation": "^1.0",
+                "psr/http-message-implementation": "^1.1 || ^2.0"
+            },
+            "require-dev": {
+                "ext-curl": "*",
+                "ext-dom": "*",
+                "ext-gd": "*",
+                "ext-libxml": "*",
+                "http-interop/http-factory-tests": "^2.2.0",
+                "laminas/laminas-coding-standard": "~3.1.0",
+                "php-http/psr7-integration-tests": "^1.4.0",
+                "phpunit/phpunit": "^10.5.36",
+                "psalm/plugin-phpunit": "^0.19.5",
+                "vimeo/psalm": "^6.13"
+            },
+            "type": "library",
+            "extra": {
+                "laminas": {
+                    "module": "Laminas\\Diactoros",
+                    "config-provider": "Laminas\\Diactoros\\ConfigProvider"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/functions/create_uploaded_file.php",
+                    "src/functions/marshal_headers_from_sapi.php",
+                    "src/functions/marshal_method_from_sapi.php",
+                    "src/functions/marshal_protocol_version_from_sapi.php",
+                    "src/functions/normalize_server.php",
+                    "src/functions/normalize_uploaded_files.php",
+                    "src/functions/parse_cookie_header.php"
+                ],
+                "psr-4": {
+                    "Laminas\\Diactoros\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "PSR HTTP Message implementations",
+            "homepage": "https://laminas.dev",
+            "keywords": [
+                "http",
+                "laminas",
+                "psr",
+                "psr-17",
+                "psr-7"
+            ],
+            "support": {
+                "chat": "https://laminas.dev/chat",
+                "docs": "https://docs.laminas.dev/laminas-diactoros/",
+                "forum": "https://discourse.laminas.dev",
+                "issues": "https://github.com/laminas/laminas-diactoros/issues",
+                "rss": "https://github.com/laminas/laminas-diactoros/releases.atom",
+                "source": "https://github.com/laminas/laminas-diactoros"
+            },
+            "funding": [
+                {
+                    "url": "https://funding.communitybridge.org/projects/laminas-project",
+                    "type": "community_bridge"
+                }
+            ],
+            "time": "2025-10-12T15:31:36+00:00"
         },
         {
             "name": "laravel/framework",
@@ -1662,62 +1802,68 @@
             "time": "2026-04-01T15:39:53+00:00"
         },
         {
-            "name": "laravel/horizon",
-            "version": "v5.45.5",
+            "name": "laravel/octane",
+            "version": "v2.17.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/laravel/horizon.git",
-                "reference": "683b6117ec0d0495a4d18106bc2c44b3461fd92b"
+                "url": "https://github.com/laravel/octane.git",
+                "reference": "eb6150b9aa30956e3a2c04dfebf3a03c5d963a3a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/horizon/zipball/683b6117ec0d0495a4d18106bc2c44b3461fd92b",
-                "reference": "683b6117ec0d0495a4d18106bc2c44b3461fd92b",
+                "url": "https://api.github.com/repos/laravel/octane/zipball/eb6150b9aa30956e3a2c04dfebf3a03c5d963a3a",
+                "reference": "eb6150b9aa30956e3a2c04dfebf3a03c5d963a3a",
                 "shasum": ""
             },
             "require": {
-                "ext-json": "*",
-                "ext-pcntl": "*",
-                "ext-posix": "*",
-                "illuminate/contracts": "^9.21|^10.0|^11.0|^12.0|^13.0",
-                "illuminate/queue": "^9.21|^10.0|^11.0|^12.0|^13.0",
-                "illuminate/support": "^9.21|^10.0|^11.0|^12.0|^13.0",
-                "laravel/sentinel": "^1.0",
-                "nesbot/carbon": "^2.17|^3.0",
-                "php": "^8.0",
-                "ramsey/uuid": "^4.0",
+                "laminas/laminas-diactoros": "^3.0",
+                "laravel/framework": "^10.10.1|^11.0|^12.0|^13.0",
+                "laravel/prompts": "^0.1.24|^0.2.0|^0.3.0",
+                "laravel/serializable-closure": "^1.3|^2.0",
+                "nesbot/carbon": "^2.66.0|^3.0",
+                "php": "^8.1.0",
                 "symfony/console": "^6.0|^7.0|^8.0",
-                "symfony/error-handler": "^6.0|^7.0|^8.0",
-                "symfony/polyfill-php83": "^1.28",
-                "symfony/process": "^6.0|^7.0|^8.0"
+                "symfony/psr-http-message-bridge": "^2.2.0|^6.4|^7.0|^8.0"
+            },
+            "conflict": {
+                "spiral/roadrunner": "<2023.1.0",
+                "spiral/roadrunner-cli": "<2.6.0",
+                "spiral/roadrunner-http": "<3.3.0"
             },
             "require-dev": {
-                "mockery/mockery": "^1.0",
-                "orchestra/testbench": "^7.56|^8.37|^9.16|^10.9|^11.0",
-                "phpstan/phpstan": "^1.10|^2.0",
-                "predis/predis": "^1.1|^2.0|^3.0"
+                "guzzlehttp/guzzle": "^7.6.1",
+                "inertiajs/inertia-laravel": "^1.3.2|^2.0",
+                "laravel/scout": "^10.2.1",
+                "laravel/socialite": "^5.6.1",
+                "livewire/livewire": "^2.12.3|^3.0",
+                "nunomaduro/collision": "^6.4.0|^7.5.2|^8.0",
+                "orchestra/testbench": "^8.21|^9.0|^10.0|^11.0",
+                "phpstan/phpstan": "^2.1.7",
+                "phpunit/phpunit": "^10.4|^11.5|^12.0|^13.0",
+                "spiral/roadrunner-cli": "^2.6.0",
+                "spiral/roadrunner-http": "^3.3.0"
             },
-            "suggest": {
-                "ext-redis": "Required to use the Redis PHP driver.",
-                "predis/predis": "Required when not using the Redis PHP driver (^1.1|^2.0|^3.0)."
-            },
+            "bin": [
+                "bin/roadrunner-worker",
+                "bin/swoole-server"
+            ],
             "type": "library",
             "extra": {
                 "laravel": {
                     "aliases": {
-                        "Horizon": "Laravel\\Horizon\\Horizon"
+                        "Octane": "Laravel\\Octane\\Facades\\Octane"
                     },
                     "providers": [
-                        "Laravel\\Horizon\\HorizonServiceProvider"
+                        "Laravel\\Octane\\OctaneServiceProvider"
                     ]
                 },
                 "branch-alias": {
-                    "dev-master": "6.x-dev"
+                    "dev-master": "2.x-dev"
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "Laravel\\Horizon\\": "src/"
+                    "Laravel\\Octane\\": "src"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1730,16 +1876,19 @@
                     "email": "taylor@laravel.com"
                 }
             ],
-            "description": "Dashboard and code-driven configuration for Laravel queues.",
+            "description": "Supercharge your Laravel application's performance.",
             "keywords": [
+                "frankenphp",
                 "laravel",
-                "queue"
+                "octane",
+                "roadrunner",
+                "swoole"
             ],
             "support": {
-                "issues": "https://github.com/laravel/horizon/issues",
-                "source": "https://github.com/laravel/horizon/tree/v5.45.5"
+                "issues": "https://github.com/laravel/octane/issues",
+                "source": "https://github.com/laravel/octane"
             },
-            "time": "2026-04-01T07:28:03+00:00"
+            "time": "2026-03-18T14:14:24+00:00"
         },
         {
             "name": "laravel/prompts",
@@ -1799,69 +1948,6 @@
                 "source": "https://github.com/laravel/prompts/tree/v0.3.16"
             },
             "time": "2026-03-23T14:35:33+00:00"
-        },
-        {
-            "name": "laravel/sanctum",
-            "version": "v4.3.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/laravel/sanctum.git",
-                "reference": "e3b85d6e36ad00e5db2d1dcc27c81ffdf15cbf76"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/laravel/sanctum/zipball/e3b85d6e36ad00e5db2d1dcc27c81ffdf15cbf76",
-                "reference": "e3b85d6e36ad00e5db2d1dcc27c81ffdf15cbf76",
-                "shasum": ""
-            },
-            "require": {
-                "ext-json": "*",
-                "illuminate/console": "^11.0|^12.0|^13.0",
-                "illuminate/contracts": "^11.0|^12.0|^13.0",
-                "illuminate/database": "^11.0|^12.0|^13.0",
-                "illuminate/support": "^11.0|^12.0|^13.0",
-                "php": "^8.2",
-                "symfony/console": "^7.0|^8.0"
-            },
-            "require-dev": {
-                "mockery/mockery": "^1.6",
-                "orchestra/testbench": "^9.15|^10.8|^11.0",
-                "phpstan/phpstan": "^1.10"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Laravel\\Sanctum\\SanctumServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Laravel\\Sanctum\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Taylor Otwell",
-                    "email": "taylor@laravel.com"
-                }
-            ],
-            "description": "Laravel Sanctum provides a featherweight authentication system for SPAs and simple APIs.",
-            "keywords": [
-                "auth",
-                "laravel",
-                "sanctum"
-            ],
-            "support": {
-                "issues": "https://github.com/laravel/sanctum/issues",
-                "source": "https://github.com/laravel/sanctum"
-            },
-            "time": "2026-02-07T17:19:31+00:00"
         },
         {
             "name": "laravel/scout",
@@ -1942,62 +2028,6 @@
                 "source": "https://github.com/laravel/scout"
             },
             "time": "2026-03-10T16:16:46+00:00"
-        },
-        {
-            "name": "laravel/sentinel",
-            "version": "v1.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/laravel/sentinel.git",
-                "reference": "972d9885d9d14312a118e9565c4e6ecc5e751ea1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/laravel/sentinel/zipball/972d9885d9d14312a118e9565c4e6ecc5e751ea1",
-                "reference": "972d9885d9d14312a118e9565c4e6ecc5e751ea1",
-                "shasum": ""
-            },
-            "require": {
-                "ext-json": "*",
-                "illuminate/container": "^8.37|^9.0|^10.0|^11.0|^12.0|^13.0",
-                "php": "^8.0"
-            },
-            "require-dev": {
-                "laravel/pint": "^1.27",
-                "orchestra/testbench": "^6.47.1|^7.56|^8.37|^9.16|^10.9|^11.0",
-                "phpstan/phpstan": "^2.1.33"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Laravel\\Sentinel\\SentinelServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Laravel\\Sentinel\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Taylor Otwell",
-                    "email": "taylor@laravel.com"
-                },
-                {
-                    "name": "Mior Muhammad Zaki",
-                    "email": "mior@laravel.com"
-                }
-            ],
-            "support": {
-                "source": "https://github.com/laravel/sentinel/tree/v1.1.0"
-            },
-            "time": "2026-03-24T14:03:38+00:00"
         },
         {
             "name": "laravel/serializable-closure",
@@ -2757,6 +2787,60 @@
                 }
             ],
             "time": "2026-03-08T20:05:35+00:00"
+        },
+        {
+            "name": "maantje/react-email",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/maantje/laravel-react-email.git",
+                "reference": "a3a10f3103b451a60c93fbf5fba37db95ae936cb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/maantje/laravel-react-email/zipball/a3a10f3103b451a60c93fbf5fba37db95ae936cb",
+                "reference": "a3a10f3103b451a60c93fbf5fba37db95ae936cb",
+                "shasum": ""
+            },
+            "require-dev": {
+                "orchestra/testbench": "^7.20 || ^8.0 || ^9.0 || ^10",
+                "pestphp/pest": "^1.20 || ^2.0 || ^3"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Maantje\\ReactEmail\\ReactEmailServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Maantje\\ReactEmail\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jamie Schouten",
+                    "email": "j4mie@hey.com"
+                }
+            ],
+            "description": "React email for Laravel",
+            "homepage": "https://github.com/maantje/laravel-react-email",
+            "keywords": [
+                "laravel",
+                "react",
+                "react email"
+            ],
+            "support": {
+                "issues": "https://github.com/maantje/laravel-react-email/issues",
+                "source": "https://github.com/maantje/laravel-react-email/tree/v1.0.0"
+            },
+            "time": "2025-03-01T21:43:25+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -3871,6 +3955,68 @@
             "time": "2026-03-25T14:34:12+00:00"
         },
         {
+            "name": "pixielity/laravel-foundation",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "../../modules/foundation",
+                "reference": "1ec5e29f05573dded745c0e6f7b3cb62fb2ced52"
+            },
+            "require": {
+                "illuminate/routing": "^13.0",
+                "illuminate/support": "^13.0",
+                "jaybizzle/crawler-detect": "^1.3",
+                "maantje/react-email": "^1.0",
+                "php": "^8.4|^8.5",
+                "pixielity/laravel-discovery": "*",
+                "pixielity/laravel-framework": "@dev"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^13.0|^12.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Pixielity\\Foundation\\Providers\\FoundationServiceProvider"
+                    ],
+                    "aliases": []
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Pixielity\\Foundation\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Pixielity\\Foundation\\Tests\\": "tests/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Pixielity Inc",
+                    "email": "hello@pixielity.com"
+                }
+            ],
+            "description": "Foundation module for Pixielity Laravel headless API backend - provides custom Application class, root route handlers, and base API structure",
+            "keywords": [
+                "api",
+                "foundation",
+                "headless",
+                "laravel",
+                "module",
+                "pixielity"
+            ],
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
             "name": "pixielity/laravel-framework",
             "version": "dev-main",
             "dist": {
@@ -4029,6 +4175,91 @@
                 "issues": "https://gitlab.com/pixielity/laravel-/framework/meta/-/issues",
                 "source": "https://gitlab.com/pixielity/laravel-/framework/meta"
             },
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
+            "name": "pixielity/laravel-octane",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "../../modules/octane",
+                "reference": "b43432ddb762ce66f13d441cbcf8fc8b9bb421bf"
+            },
+            "require": {
+                "illuminate/console": "^13.0",
+                "illuminate/support": "^13.0",
+                "laravel/octane": "^2.17",
+                "php": "^8.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^13.0|^12.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Pixielity\\Octane\\Providers\\OctaneServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Pixielity\\Octane\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Pixielity Inc",
+                    "email": "hello@pixielity.com"
+                }
+            ],
+            "description": "Laravel Octane integration module with simplified server management commands for production-grade headless API backends",
+            "keywords": [
+                "api",
+                "frankenphp",
+                "headless",
+                "laravel",
+                "octane",
+                "performance",
+                "pixielity",
+                "roadrunner",
+                "server"
+            ],
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
+            "name": "pixielity/laravel-user",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "../../modules/user",
+                "reference": "cce249637612900c616bfc152896f28b1a0d7045"
+            },
+            "require": {
+                "illuminate/auth": "^13.0",
+                "illuminate/database": "^13.0",
+                "php": "^8.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Pixielity\\User\\": "src/",
+                    "Pixielity\\User\\Database\\Factories\\": "src/Factories/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "User module for Laravel applications",
             "transport-options": {
                 "symlink": true,
                 "relative": true
@@ -6957,86 +7188,6 @@
             "time": "2025-01-02T08:10:11+00:00"
         },
         {
-            "name": "symfony/polyfill-php83",
-            "version": "v1.33.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/polyfill-php83.git",
-                "reference": "17f6f9a6b1735c0f163024d959f700cfbc5155e5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php83/zipball/17f6f9a6b1735c0f163024d959f700cfbc5155e5",
-                "reference": "17f6f9a6b1735c0f163024d959f700cfbc5155e5",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.2"
-            },
-            "type": "library",
-            "extra": {
-                "thanks": {
-                    "url": "https://github.com/symfony/polyfill",
-                    "name": "symfony/polyfill"
-                }
-            },
-            "autoload": {
-                "files": [
-                    "bootstrap.php"
-                ],
-                "psr-4": {
-                    "Symfony\\Polyfill\\Php83\\": ""
-                },
-                "classmap": [
-                    "Resources/stubs"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Nicolas Grekas",
-                    "email": "p@tchwork.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony polyfill backporting some PHP 8.3+ features to lower PHP versions",
-            "homepage": "https://symfony.com",
-            "keywords": [
-                "compatibility",
-                "polyfill",
-                "portable",
-                "shim"
-            ],
-            "support": {
-                "source": "https://github.com/symfony/polyfill-php83/tree/v1.33.0"
-            },
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://github.com/nicolas-grekas",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2025-07-08T02:45:35+00:00"
-        },
-        {
             "name": "symfony/polyfill-php84",
             "version": "v1.33.0",
             "source": {
@@ -7323,6 +7474,93 @@
             "homepage": "https://symfony.com",
             "support": {
                 "source": "https://github.com/symfony/process/tree/v8.0.8"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/nicolas-grekas",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2026-03-30T15:14:47+00:00"
+        },
+        {
+            "name": "symfony/psr-http-message-bridge",
+            "version": "v8.0.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/psr-http-message-bridge.git",
+                "reference": "94facc221260c1d5f20e31ee43cd6c6a824b4a19"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/psr-http-message-bridge/zipball/94facc221260c1d5f20e31ee43cd6c6a824b4a19",
+                "reference": "94facc221260c1d5f20e31ee43cd6c6a824b4a19",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.4",
+                "psr/http-message": "^1.0|^2.0",
+                "symfony/http-foundation": "^7.4|^8.0"
+            },
+            "conflict": {
+                "php-http/discovery": "<1.15"
+            },
+            "require-dev": {
+                "nyholm/psr7": "^1.1",
+                "php-http/discovery": "^1.15",
+                "psr/log": "^1.1.4|^2|^3",
+                "symfony/browser-kit": "^7.4|^8.0",
+                "symfony/config": "^7.4|^8.0",
+                "symfony/event-dispatcher": "^7.4|^8.0",
+                "symfony/framework-bundle": "^7.4|^8.0",
+                "symfony/http-kernel": "^7.4|^8.0",
+                "symfony/runtime": "^7.4|^8.0"
+            },
+            "type": "symfony-bridge",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Bridge\\PsrHttpMessage\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "PSR HTTP message bridge",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "http",
+                "http-message",
+                "psr-17",
+                "psr-7"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/psr-http-message-bridge/tree/v8.0.8"
             },
             "funding": [
                 {

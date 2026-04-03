@@ -1,191 +1,300 @@
 {
-    "$schema": "https://getcomposer.org/schema.json",
-    "name": "pixielity/api-app",
-    "type": "project",
-    "description": "Laravel 13 application — api-app.",
-    "keywords": [
-        "laravel",
-        "framework",
-        "application"
-    ],
-    "homepage": "https://github.com/pixielity-inc/php-monorepo",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Your Name",
-            "email": "you@example.com",
-            "role": "Developer"
-        }
-    ],
-    "require": {
-        "php": "^8.4",
-        "laravel/framework": "^13.0",
-        "laravel/horizon": "^5.0",
-        "laravel/sanctum": "^4.0",
-        "laravel/tinker": "^3.0",
-        "nwidart/laravel-modules": "^13.0",
-        "pixielity/laravel-framework": "*",
-        "pixielity/laravel-foundation": "*",
-        "pixielity/laravel-octane": "*",
-        "pixielity/laravel-user": "*"
-    },
-    "require-dev": {
-        "driftingly/rector-laravel": "^2.2",
-        "fakerphp/faker": "^1.23",
-        "laravel/pail": "^1.2",
-        "laravel/pint": "^1.29",
-        "larastan/larastan": "^3.0",
-        "mockery/mockery": "^1.6",
-        "nunomaduro/collision": "^8.6",
-        "phpstan/phpstan": "^2.1",
-        "phpunit/phpunit": "^12.5",
-        "rector/rector": "^2.3"
-    },
-    "suggest": {
-        "laravel/cashier": "Stripe billing and subscription management",
-        "laravel/cashier-paddle": "Paddle billing integration",
-        "laravel/dusk": "Browser automation and testing",
-        "laravel/envoy": "Task runner for remote servers",
-        "laravel/folio": "Page-based routing for Laravel",
-        "laravel/jetstream": "Application scaffolding with auth, teams, and more",
-        "laravel/octane": "Supercharge application performance with Swoole or RoadRunner",
-        "laravel/passport": "Full OAuth2 server implementation",
-        "laravel/pennant": "Feature flags management",
-        "laravel/pulse": "Real-time application performance monitoring",
-        "laravel/reverb": "First-party WebSocket server",
-        "laravel/scout": "Full-text search via Algolia, Meilisearch, or Typesense",
-        "laravel/socialite": "OAuth authentication with social providers",
-        "laravel/telescope": "Debug assistant and request inspector",
-        "spatie/laravel-activitylog": "Log activity inside your Laravel app",
-        "spatie/laravel-backup": "Back up your application",
-        "spatie/laravel-medialibrary": "Associate files with Eloquent models",
-        "spatie/laravel-permission": "Role and permission management",
-        "spatie/laravel-query-builder": "Easily build Eloquent queries from API requests",
-        "spatie/laravel-ray": "Debug with Ray app",
-        "spatie/laravel-sluggable": "Generate slugs for Eloquent models",
-        "spatie/laravel-translatable": "Making Eloquent models translatable",
-        "barryvdh/laravel-debugbar": "PHP Debugbar integration",
-        "barryvdh/laravel-ide-helper": "IDE helper for Laravel facades and models",
-        "pestphp/pest": "Elegant PHP testing framework",
-        "pestphp/pest-plugin-laravel": "Pest plugin for Laravel"
-    },
-    "scripts": {
-        "setup": [
-            "composer install",
-            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
-            "@php artisan key:generate",
-            "@php artisan migrate --force"
-        ],
-        "dev": [
-            "Composer\\Config::disableProcessTimeout",
-            "php artisan serve"
-        ],
-        "test": [
-            "@php artisan config:clear --ansi",
-            "@php artisan test"
-        ],
-        "test:coverage": [
-            "@php artisan config:clear --ansi",
-            "@php artisan test --coverage --coverage-clover=coverage.xml"
-        ],
-        "test:parallel": [
-            "@php artisan config:clear --ansi",
-            "@php artisan test --parallel"
-        ],
-        "lint": "vendor/bin/pint --test",
-        "lint:fix": "vendor/bin/pint",
-        "analyse": "vendor/bin/phpstan analyse --no-progress",
-        "refactor": "vendor/bin/rector process --dry-run",
-        "refactor:fix": "vendor/bin/rector process",
-        "cache:clear": "@php artisan optimize:clear",
-        "cache:warm": "@php artisan optimize",
-        "post-autoload-dump": [
-            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
-        ],
-        "post-update-cmd": [
-            "Pixielity\\Scripts\\ComposerScripts::ensureRepositories",
-            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
-        ],
-        "post-root-package-install": [
-            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
-        ],
-        "post-create-project-cmd": [
-            "@php artisan key:generate --ansi",
-            "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
-            "@php artisan migrate --graceful --ansi"
-        ],
-        "pre-package-uninstall": [
-            "Illuminate\\Foundation\\ComposerScripts::prePackageUninstall"
-        ],
-        "env:dev": "Pixielity\\Scripts\\ComposerScripts::envDev",
-        "env:testing": "Pixielity\\Scripts\\ComposerScripts::envTesting",
-        "env:prod": "Pixielity\\Scripts\\ComposerScripts::envProd",
-        "env:status": "Pixielity\\Scripts\\ComposerScripts::envStatus",
-        "repos:sync": "Pixielity\\Scripts\\ComposerScripts::reposSync",
-        "repos:check": "Pixielity\\Scripts\\ComposerScripts::reposCheck",
-        "post-install-cmd": [
-            "Pixielity\\Scripts\\ComposerScripts::ensureRepositories"
-        ]
-    },
-    "extra": {
-        "laravel": {
-            "dont-discover": []
-        }
-    },
-    "config": {
-        "optimize-autoloader": true,
-        "preferred-install": "dist",
-        "sort-packages": true,
-        "allow-plugins": {
-            "olvlvl/composer-attribute-collector": true,
-            "pestphp/pest-plugin": true,
-            "php-http/discovery": true,
-            "wikimedia/composer-merge-plugin": true
-        }
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
-    "autoload-dev": {
-        "psr-4": {
-            "Pixielity\\Scripts\\": "../../scripts/"
-        }
-    },
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../../modules/framework",
-            "options": {
-                "symlink": true
-            }
-        },
-        {
-            "type": "path",
-            "url": "../../modules/framework",
-            "options": {
-                "symlink": true
-            }
-        },
-        {
-            "type": "path",
-            "url": "../../modules/framework",
-            "options": {
-                "symlink": true
-            }
-        },
-        {
-            "type": "path",
-            "url": "../../modules/foundation",
-            "options": {
-                "symlink": true
-            }
-        },
-        {
-            "type": "path",
-            "url": "../../modules/user",
-            "options": {
-                "symlink": true
-            }
-        }
+  "$schema": "https://getcomposer.org/schema.json",
+  "name": "pixielity/api-app",
+  "type": "project",
+  "description": "Laravel 13 application — api-app.",
+  "keywords": [
+    "laravel",
+    "framework",
+    "application"
+  ],
+  "homepage": "https://github.com/pixielity-inc/php-monorepo",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Your Name",
+      "email": "you@example.com",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": "^8.4",
+    "laravel/framework": "^13.0",
+    "laravel/tinker": "^3.0",
+    "nwidart/laravel-modules": "^13.0",
+    "pixielity/laravel-framework": "*",
+    "pixielity/laravel-foundation": "*",
+    "pixielity/laravel-octane": "*",
+    "pixielity/laravel-user": "*"
+  },
+  "require-dev": {
+    "driftingly/rector-laravel": "^2.2",
+    "fakerphp/faker": "^1.23",
+    "laravel/pail": "^1.2",
+    "laravel/pint": "^1.29",
+    "larastan/larastan": "^3.0",
+    "mockery/mockery": "^1.6",
+    "nunomaduro/collision": "^8.6",
+    "phpstan/phpstan": "^2.1",
+    "phpunit/phpunit": "^12.5",
+    "rector/rector": "^2.3"
+  },
+  "suggest": {
+    "laravel/cashier": "Stripe billing and subscription management",
+    "laravel/cashier-paddle": "Paddle billing integration",
+    "laravel/dusk": "Browser automation and testing",
+    "laravel/envoy": "Task runner for remote servers",
+    "laravel/folio": "Page-based routing for Laravel",
+    "laravel/jetstream": "Application scaffolding with auth, teams, and more",
+    "laravel/octane": "Supercharge application performance with Swoole or RoadRunner",
+    "laravel/passport": "Full OAuth2 server implementation",
+    "laravel/pennant": "Feature flags management",
+    "laravel/pulse": "Real-time application performance monitoring",
+    "laravel/reverb": "First-party WebSocket server",
+    "laravel/scout": "Full-text search via Algolia, Meilisearch, or Typesense",
+    "laravel/socialite": "OAuth authentication with social providers",
+    "laravel/telescope": "Debug assistant and request inspector",
+    "spatie/laravel-activitylog": "Log activity inside your Laravel app",
+    "spatie/laravel-backup": "Back up your application",
+    "spatie/laravel-medialibrary": "Associate files with Eloquent models",
+    "spatie/laravel-permission": "Role and permission management",
+    "spatie/laravel-query-builder": "Easily build Eloquent queries from API requests",
+    "spatie/laravel-ray": "Debug with Ray app",
+    "spatie/laravel-sluggable": "Generate slugs for Eloquent models",
+    "spatie/laravel-translatable": "Making Eloquent models translatable",
+    "barryvdh/laravel-debugbar": "PHP Debugbar integration",
+    "barryvdh/laravel-ide-helper": "IDE helper for Laravel facades and models",
+    "pestphp/pest": "Elegant PHP testing framework",
+    "pestphp/pest-plugin-laravel": "Pest plugin for Laravel"
+  },
+  "autoload": {
+    "files": [
+      "vendor/attributes.php"
     ]
+  },
+  "scripts": {
+    "setup": [
+      "@setup:env",
+      "@docker:up",
+      "composer install",
+      "php artisan key:generate --ansi",
+      "php artisan migrate --force --ansi"
+    ],
+    "setup:env": [
+      "php bin/setup-env"
+    ],
+    "setup:quick": [
+      "composer install",
+      "php bin/setup-env",
+      "php artisan key:generate --ansi"
+    ],
+    "docker:check": [
+      "bash bin/docker-check-ports"
+    ],
+    "docker:up": [
+      "bash bin/docker-up"
+    ],
+    "docker:up:kill": [
+      "bash bin/docker-up --kill"
+    ],
+    "docker:up:orbstack": [
+      "bash bin/docker-up --orbstack"
+    ],
+    "docker:down": [
+      "bash bin/docker-down"
+    ],
+    "docker:down:clean": [
+      "bash bin/docker-down --volumes"
+    ],
+    "docker:restart": [
+      "docker-compose -f docker/docker-compose.yml restart"
+    ],
+    "docker:logs": [
+      "docker-compose -f docker/docker-compose.yml logs -f"
+    ],
+    "docker:ps": [
+      "docker-compose -f docker/docker-compose.yml ps"
+    ],
+    "docker:build": [
+      "docker-compose -f docker/compose.app.yml build --no-cache app"
+    ],
+    "docker:clean": [
+      "docker-compose -f docker/docker-compose.yml down -v --remove-orphans"
+    ],
+    "dev": [
+      "Composer\\Config::disableProcessTimeout",
+      "php artisan serve"
+    ],
+    "dev:octane": [
+      "Composer\\Config::disableProcessTimeout",
+      "php artisan octane:start --server=frankenphp --watch"
+    ],
+    "dev:full": [
+      "Composer\\Config::disableProcessTimeout",
+      "npx concurrently -c \"#93c5fd,#c4b5fd,#fb7185\" \"php artisan octane:start --server=frankenphp --watch\" \"php artisan queue:listen --tries=1 --timeout=0\" \"php artisan pail --timeout=0\" --names=octane,queue,logs --kill-others"
+    ],
+    "octane": [
+      "Composer\\Config::disableProcessTimeout",
+      "php artisan octane:start --server=frankenphp --watch"
+    ],
+    "octane:prod": [
+      "php artisan config:cache",
+      "php artisan route:cache",
+      "php artisan event:cache",
+      "php artisan octane:start ----server=frankenphp --host=0.0.0.0 --port=8000"
+    ],
+    "octane:reload": [
+      "php artisan octane:reload"
+    ],
+    "octane:stop": [
+      "php artisan octane:stop"
+    ],
+    "optimize": [
+      "php artisan config:cache",
+      "php artisan route:cache",
+      "php artisan event:cache"
+    ],
+    "optimize:clear": [
+      "php artisan config:clear",
+      "php artisan route:clear",
+      "php artisan event:clear",
+      "php artisan cache:clear"
+    ],
+    "test": [
+      "php artisan config:clear --ansi",
+      "php artisan test"
+    ],
+    "test:coverage": [
+      "@php artisan config:clear --ansi",
+      "@php artisan test --coverage --coverage-clover=coverage.xml"
+    ],
+    "test:parallel": [
+      "@php artisan config:clear --ansi",
+      "@php artisan test --parallel"
+    ],
+    "format": [
+      "vendor/bin/pint"
+    ],
+    "format:test": [
+      "vendor/bin/pint --test"
+    ],
+    "refactor": "vendor/bin/rector process --dry-run",
+    "refactor:fix": "vendor/bin/rector process",
+    "analyse": "vendor/bin/phpstan analyse --memory-limit=512M --no-progress",
+    "analyse:baseline": "vendor/bin/phpstan analyse --memory-limit=512M --generate-baseline",
+    "insights": [
+      "vendor/bin/phpinsights analyse --no-interaction"
+    ],
+    "insights:fix": [
+      "vendor/bin/phpinsights analyse --fix --no-interaction"
+    ],
+    "quality": [
+      "@format",
+      "@refactor:dry",
+      "@analyse"
+    ],
+    "quality:fix": [
+      "@format",
+      "@refactor",
+      "@analyse"
+    ],
+    "lint": "vendor/bin/pint --test",
+    "lint:fix": "vendor/bin/pint",
+    "cache:clear": "@php artisan optimize:clear",
+    "cache:warm": "@php artisan optimize",
+    "env:dev": "Pixielity\\Scripts\\ComposerScripts::envDev",
+    "env:testing": "Pixielity\\Scripts\\ComposerScripts::envTesting",
+    "env:prod": "Pixielity\\Scripts\\ComposerScripts::envProd",
+    "env:status": "Pixielity\\Scripts\\ComposerScripts::envStatus",
+    "repos:sync": "Pixielity\\Scripts\\ComposerScripts::reposSync",
+    "repos:check": "Pixielity\\Scripts\\ComposerScripts::reposCheck",
+    "post-autoload-dump": [
+      "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+      "@php artisan package:discover --ansi"
+    ],
+    "post-update-cmd": [
+      "Pixielity\\Scripts\\ComposerScripts::ensureRepositories",
+      "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
+    ],
+    "post-root-package-install": [
+      "php bin/setup-env"
+    ],
+    "post-create-project-cmd": [
+      "php bin/setup-env",
+      "php artisan key:generate --ansi"
+    ],
+    "pre-package-uninstall": [
+      "Illuminate\\Foundation\\ComposerScripts::prePackageUninstall"
+    ],
+    "post-install-cmd": [
+      "Pixielity\\Scripts\\ComposerScripts::ensureRepositories"
+    ]
+  },
+  "extra": {
+    "laravel": {
+      "dont-discover": [
+        "pixielity/octane-module"
+      ]
+    },
+    "composer-attribute-collector": {
+      "include": [
+        "{vendor}/pixielity/laravel-framework/src/*/src",
+        "{vendor}/pixielity/laravel-foundation/src/Controllers",
+        "{vendor}/pixielity/laravel-foundation/src/Concerns",
+        "{vendor}/pixielity/laravel-foundation/src/Contracts",
+        "{vendor}/pixielity/laravel-foundation/src/Traits",
+        "modules/framework/src/*/src",
+        "modules/foundation/src/Controllers"
+      ]
+    }
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "preferred-install": "dist",
+    "sort-packages": true,
+    "allow-plugins": {
+      "olvlvl/composer-attribute-collector": true,
+      "pestphp/pest-plugin": true,
+      "php-http/discovery": true,
+      "wikimedia/composer-merge-plugin": true,
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "autoload-dev": {
+    "psr-4": {
+      "Pixielity\\Scripts\\": "../../scripts/"
+    }
+  },
+  "repositories": [
+    {
+      "type": "path",
+      "url": "../../modules/framework",
+      "options": {
+        "symlink": true
+      }
+    },
+    {
+      "type": "path",
+      "url": "../../modules/foundation",
+      "options": {
+        "symlink": true
+      }
+    },
+    {
+      "type": "path",
+      "url": "../../modules/octane",
+      "options": {
+        "symlink": true
+      }
+    },
+    {
+      "type": "path",
+      "url": "../../modules/user",
+      "options": {
+        "symlink": true
+      }
+    }
+  ]
 }

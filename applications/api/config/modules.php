@@ -99,7 +99,7 @@ return [
         | This path will also be added automatically to the list of scanned folders.
         |
         */
-        'modules' => env('MODULES_PATH', base_path('modules')),
+        'modules' => env('MODULES_PATH', realpath(base_path('../../modules'))),
 
         /*
         |--------------------------------------------------------------------------

@@ -1,5 +1,5 @@
 {
-  "name": "pixielity/octane-module",
+  "name": "pixielity/laravel-octane",
   "description": "Laravel Octane integration module with simplified server management commands for production-grade headless API backends",
   "type": "library",
   "keywords": [

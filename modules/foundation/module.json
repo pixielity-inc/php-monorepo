@@ -1,5 +1,5 @@
 {
-    "name": "foundation",
+    "name": "Foundation",
     "alias": "foundation",
     "description": "Foundation module for Pixielity Laravel headless API backend - provides custom Application class, root route handlers, and base API structure",
     "keywords": [
