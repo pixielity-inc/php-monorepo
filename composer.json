@@ -1,6 +1,6 @@
 {
     "name": "pixielity/php-monorepo",
-    "description": "Root Composer orchestrator for the Pixielity PHP monorepo.",
+    "description": "Root Composer orchestrator for the Pixielity PHP monorepo. Discovers workspaces dynamically.",
     "type": "project",
     "license": "MIT",
     "require": {
@@ -12,48 +12,19 @@
         }
     },
     "scripts": {
-        "env:dev": [
-            "@php -r \"echo \"Switching all workspaces to [dev]...\\n\";\"",
-            "@composer env:dev -d applications/example-app",
-            "@composer env:dev -d modules/core"
-        ],
-        "env:testing": [
-            "@php -r \"echo \"Switching all workspaces to [testing]...\\n\";\"",
-            "@composer env:testing -d applications/example-app",
-            "@composer env:testing -d modules/core"
-        ],
-        "env:prod": [
-            "@php -r \"echo \"Switching all workspaces to [prod]...\\n\";\"",
-            "@composer env:prod -d applications/example-app",
-            "@composer env:prod -d modules/core"
-        ],
-        "env:status": [
-            "@composer env:status -d applications/example-app"
-        ],
-        "repos:sync": [
-            "@composer repos:sync -d applications/example-app",
-            "@composer repos:sync -d modules/core"
-        ],
-        "repos:check": [
-            "@composer repos:check -d applications/example-app",
-            "@composer repos:check -d modules/core"
-        ],
-        "install:all": [
-            "@composer install -d applications/example-app",
-            "@composer install -d modules/core"
-        ],
-        "update:all": [
-            "@composer update -d applications/example-app",
-            "@composer update -d modules/core"
-        ],
-        "test:all": [
-            "@composer test -d applications/example-app",
-            "@composer test -d modules/core"
-        ],
-        "lint:all": [
-            "@composer lint -d applications/example-app",
-            "@composer lint -d modules/core"
-        ]
+        "workspaces:list": "Pixielity\\Scripts\\WorkspaceDiscovery::listWorkspaces",
+        "env:dev": "Pixielity\\Scripts\\ComposerScripts::envDevAll",
+        "env:testing": "Pixielity\\Scripts\\ComposerScripts::envTestingAll",
+        "env:prod": "Pixielity\\Scripts\\ComposerScripts::envProdAll",
+        "env:status": "Pixielity\\Scripts\\ComposerScripts::envStatusAll",
+        "repos:sync": "Pixielity\\Scripts\\ComposerScripts::reposSyncAll",
+        "repos:check": "Pixielity\\Scripts\\ComposerScripts::reposCheckAll",
+        "install:all": "Pixielity\\Scripts\\WorkspaceDiscovery::runAll install",
+        "update:all": "Pixielity\\Scripts\\WorkspaceDiscovery::runAll update",
+        "test:all": "Pixielity\\Scripts\\WorkspaceDiscovery::runAll test",
+        "lint:all": "Pixielity\\Scripts\\WorkspaceDiscovery::runAll lint",
+        "analyse:all": "Pixielity\\Scripts\\WorkspaceDiscovery::runAll analyse",
+        "refactor:all": "Pixielity\\Scripts\\WorkspaceDiscovery::runAll refactor"
     },
     "config": {
         "optimize-autoloader": true,

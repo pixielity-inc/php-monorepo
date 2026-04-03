@@ -645,11 +645,22 @@ class ComposerScripts
     /**
      * Get the absolute path to the composer.json being processed.
      *
+     * When called from a workspace context (via chdir), uses getcwd().
+     * Falls back to the Composer config source for root-level calls.
+     *
      * @param  Event  $event Composer event.
      * @return string Absolute path.
      */
     private static function getComposerJsonPath(Event $event): string
     {
+        $cwd = getcwd();
+
+        // If there's a composer.json in the current working directory,
+        // use it — this handles the chdir() workspace iteration pattern.
+        if (is_file($cwd . '/composer.json')) {
+            return $cwd . '/composer.json';
+        }
+
         return $event->getComposer()->getConfig()->getConfigSource()->getName();
     }
 
@@ -728,5 +739,117 @@ class ComposerScripts
         $relative = implode('/', array_merge($ups, $downs));
 
         return $relative ?: '.';
+    }
+
+    // -------------------------------------------------------------------------
+    // Root-level "All workspaces" methods (called from root composer.json)
+    // These discover workspaces dynamically — no hardcoded paths.
+    // -------------------------------------------------------------------------
+
+    /**
+     * Run env:dev across all discovered workspaces.
+     * Called from the root composer.json: composer env:dev
+     */
+    public static function envDevAll(Event $event): void
+    {
+        self::runAcrossWorkspaces($event, 'env:dev');
+    }
+
+    /**
+     * Run env:testing across all discovered workspaces.
+     * Called from the root composer.json: composer env:testing
+     */
+    public static function envTestingAll(Event $event): void
+    {
+        self::runAcrossWorkspaces($event, 'env:testing');
+    }
+
+    /**
+     * Run env:prod across all discovered workspaces.
+     * Called from the root composer.json: composer env:prod
+     */
+    public static function envProdAll(Event $event): void
+    {
+        self::runAcrossWorkspaces($event, 'env:prod');
+    }
+
+    /**
+     * Run env:status across all discovered workspaces.
+     * Called from the root composer.json: composer env:status
+     */
+    public static function envStatusAll(Event $event): void
+    {
+        self::runAcrossWorkspaces($event, 'env:status');
+    }
+
+    /**
+     * Run repos:sync across all discovered workspaces.
+     * Called from the root composer.json: composer repos:sync
+     */
+    public static function reposSyncAll(Event $event): void
+    {
+        self::runAcrossWorkspaces($event, 'repos:sync');
+    }
+
+    /**
+     * Run repos:check across all discovered workspaces.
+     * Called from the root composer.json: composer repos:check
+     */
+    public static function reposCheckAll(Event $event): void
+    {
+        self::runAcrossWorkspaces($event, 'repos:check');
+    }
+
+    /**
+     * Run a named Composer script across every discovered workspace.
+     *
+     * Workspaces are discovered dynamically via WorkspaceDiscovery::discover()
+     * — no paths are hardcoded. Adding a new application or module to the
+     * monorepo is enough; no config changes needed.
+     *
+     * @param Event  $event  Composer event.
+     * @param string $script The composer script name to run in each workspace.
+     */
+    private static function runAcrossWorkspaces(Event $event, string $script): void
+    {
+        $io   = $event->getIO();
+        $root = getcwd();
+        $ws   = WorkspaceDiscovery::discover($root);
+
+        if (empty($ws)) {
+            $io->write('<warning>No workspaces discovered.</warning>');
+            return;
+        }
+
+        $io->write("<info>Running [{$script}] across " . count($ws) . " workspace(s)...</info>");
+        $io->write('');
+
+        foreach ($ws as $workspace) {
+            $relative = ltrim(str_replace($root, '', $workspace), '/');
+            $io->write("<comment>━━ {$relative} ━━</comment>");
+
+            // Build a synthetic event pointing at the workspace directory.
+            // We do this by temporarily changing the working directory so
+            // the script methods resolve paths correctly.
+            $originalCwd = getcwd();
+            chdir($workspace);
+
+            try {
+                // Re-use the same event but the script reads getcwd() for paths.
+                match ($script) {
+                    'env:dev'      => self::envDev($event),
+                    'env:testing'  => self::envTesting($event),
+                    'env:prod'     => self::envProd($event),
+                    'env:status'   => self::envStatus($event),
+                    'repos:sync'   => self::reposSync($event),
+                    'repos:check'  => self::reposCheck($event),
+                    default        => $io->write("<warning>Unknown script: {$script}</warning>"),
+                };
+            } finally {
+                chdir($originalCwd);
+            }
+
+            $io->write('');
+        }
     }
 }
