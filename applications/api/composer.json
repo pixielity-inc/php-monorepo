@@ -77,6 +77,7 @@
     ]
   },
   "scripts": {
+    "_hooks": "── LIFECYCLE HOOKS ─────────────────────────────────",
     "post-install-cmd": [
       "Pixielity\\Scripts\\ComposerScripts::ensureRepositories"
     ],
@@ -98,6 +99,7 @@
     "pre-package-uninstall": [
       "Illuminate\\Foundation\\ComposerScripts::prePackageUninstall"
     ],
+    "_setup": "── SETUP ───────────────────────────────────────────────",
     "setup": [
       "@setup:env",
       "@docker:up",
@@ -111,10 +113,12 @@
       "@setup:env",
       "php artisan key:generate --ansi"
     ],
+    "_env": "── ENVIRONMENT ─────────────────────────────────────────",
     "env:dev": "Pixielity\\Foundation\\Scripts\\EnvScripts::dev",
     "env:testing": "Pixielity\\Foundation\\Scripts\\EnvScripts::testing",
     "env:prod": "Pixielity\\Foundation\\Scripts\\EnvScripts::prod",
     "env:status": "Pixielity\\Foundation\\Scripts\\EnvScripts::status",
+    "_dev": "── DEV SERVERS ─────────────────────────────────────────",
     "dev": [
       "Composer\\Config::disableProcessTimeout",
       "php artisan serve"
@@ -127,24 +131,29 @@
       "Composer\\Config::disableProcessTimeout",
       "npx concurrently -c \"#93c5fd,#c4b5fd,#fb7185\" \"php artisan octane:start --server=frankenphp --watch\" \"php artisan queue:listen --tries=1 --timeout=0\" \"php artisan pail --timeout=0\" --names=octane,queue,logs --kill-others"
     ],
+    "_octane": "── OCTANE ──────────────────────────────────────────────",
     "octane:start": "Pixielity\\Octane\\Scripts\\OctaneScripts::start",
     "octane:start:prod": "Pixielity\\Octane\\Scripts\\OctaneScripts::startProd",
     "octane:reload": "Pixielity\\Octane\\Scripts\\OctaneScripts::reload",
     "octane:stop": "Pixielity\\Octane\\Scripts\\OctaneScripts::stop",
     "octane:status": "Pixielity\\Octane\\Scripts\\OctaneScripts::status",
+    "_database": "── DATABASE ────────────────────────────────────────────",
     "migrate": "Pixielity\\Database\\Scripts\\DatabaseScripts::migrate",
     "migrate:fresh": "Pixielity\\Database\\Scripts\\DatabaseScripts::fresh",
     "migrate:rollback": "Pixielity\\Database\\Scripts\\DatabaseScripts::rollback",
     "migrate:status": "Pixielity\\Database\\Scripts\\DatabaseScripts::status",
     "db:seed": "Pixielity\\Database\\Scripts\\DatabaseScripts::seed",
     "db:fresh": "Pixielity\\Database\\Scripts\\DatabaseScripts::freshAndSeed",
+    "_cache": "── CACHE ───────────────────────────────────────────────",
     "cache:clear": "Pixielity\\Foundation\\Scripts\\CacheScripts::clear",
     "cache:warm": "Pixielity\\Foundation\\Scripts\\CacheScripts::warm",
     "cache:clean": "Pixielity\\Foundation\\Scripts\\CacheScripts::clean",
+    "_test": "── TESTING ─────────────────────────────────────────────",
     "test": "Pixielity\\Foundation\\Scripts\\TestScripts::run",
     "test:coverage": "Pixielity\\Foundation\\Scripts\\TestScripts::coverage",
     "test:parallel": "Pixielity\\Foundation\\Scripts\\TestScripts::parallel",
     "test:filter": "Pixielity\\Foundation\\Scripts\\TestScripts::filter",
+    "_quality": "── CODE QUALITY ────────────────────────────────────────",
     "lint": "Pixielity\\Foundation\\Scripts\\LintScripts::check",
     "lint:fix": "Pixielity\\Foundation\\Scripts\\LintScripts::fix",
     "analyse": "Pixielity\\Foundation\\Scripts\\AnalyseScripts::run",
@@ -163,41 +172,21 @@
       "@refactor:fix",
       "@analyse"
     ],
+    "_repos": "── REPOSITORY MANAGEMENT ───────────────────────────────",
     "repos:sync": "Pixielity\\Scripts\\ComposerScripts::reposSync",
     "repos:check": "Pixielity\\Scripts\\ComposerScripts::reposCheck",
-    "docker:check": [
-      "bash bin/docker-check-ports"
-    ],
-    "docker:up": [
-      "bash bin/docker-up"
-    ],
-    "docker:up:kill": [
-      "bash bin/docker-up --kill"
-    ],
-    "docker:up:orbstack": [
-      "bash bin/docker-up --orbstack"
-    ],
-    "docker:down": [
-      "bash bin/docker-down"
-    ],
-    "docker:down:clean": [
-      "bash bin/docker-down --volumes"
-    ],
-    "docker:restart": [
-      "docker-compose -f docker/docker-compose.yml restart"
-    ],
-    "docker:logs": [
-      "docker-compose -f docker/docker-compose.yml logs -f"
-    ],
-    "docker:ps": [
-      "docker-compose -f docker/docker-compose.yml ps"
-    ],
-    "docker:build": [
-      "docker-compose -f docker/compose.app.yml build --no-cache app"
-    ],
-    "docker:clean": [
-      "docker-compose -f docker/docker-compose.yml down -v --remove-orphans"
-    ]
+    "_docker": "── DOCKER ──────────────────────────────────────────────",
+    "docker:check": "Pixielity\\Docker\\Scripts\\DockerScripts::check",
+    "docker:up": "Pixielity\\Docker\\Scripts\\DockerScripts::up",
+    "docker:up:kill": "Pixielity\\Docker\\Scripts\\DockerScripts::upKill",
+    "docker:up:orbstack": "Pixielity\\Docker\\Scripts\\DockerScripts::upOrbstack",
+    "docker:down": "Pixielity\\Docker\\Scripts\\DockerScripts::down",
+    "docker:down:clean": "Pixielity\\Docker\\Scripts\\DockerScripts::downClean",
+    "docker:restart": "Pixielity\\Docker\\Scripts\\DockerScripts::restart",
+    "docker:logs": "Pixielity\\Docker\\Scripts\\DockerScripts::logs",
+    "docker:ps": "Pixielity\\Docker\\Scripts\\DockerScripts::ps",
+    "docker:build": "Pixielity\\Docker\\Scripts\\DockerScripts::build",
+    "docker:clean": "Pixielity\\Docker\\Scripts\\DockerScripts::clean"
   },
   "extra": {
     "laravel": {
@@ -267,34 +256,43 @@
     }
   ],
   "scripts-descriptions": {
+    "_hooks": "── LIFECYCLE HOOKS ─────────────────────────────────",
+    "_setup": "── SETUP ───────────────────────────────────────────",
     "setup": "Full setup: env + Docker + install + key:generate + migrate",
     "setup:env": "Copy .env templates and create symlinks via bin/setup-env",
     "setup:quick": "Quick setup without Docker (install + env + key:generate)",
+    "_env": "── ENVIRONMENT ─────────────────────────────────────",
     "env:dev": "Switch to dev (stability=dev, APP_ENV=local, array drivers)",
     "env:testing": "Switch to testing (in-memory SQLite, array drivers)",
     "env:prod": "Switch to production (stability=stable, Redis, SMTP, debug off)",
     "env:status": "Show current environment: stability + key .env vars",
+    "_dev": "── DEV SERVERS ─────────────────────────────────────",
     "dev": "Start Laravel dev server (php artisan serve)",
     "dev:octane": "Start Octane dev server with FrankenPHP + file watcher",
     "dev:full": "Start Octane + queue worker + Pail log viewer concurrently",
+    "_octane": "── OCTANE ──────────────────────────────────────────",
     "octane:start": "Start Octane (dev, FrankenPHP + watch, reads OCTANE_* env vars)",
     "octane:start:prod": "Cache config/routes/events then start Octane for production",
     "octane:reload": "Reload Octane workers without downtime (use after deploy)",
     "octane:stop": "Stop the running Octane server",
     "octane:status": "Show Octane server status",
+    "_database": "── DATABASE ────────────────────────────────────────",
     "migrate": "Run pending database migrations",
     "migrate:fresh": "Drop all tables, re-run migrations, and seed",
     "migrate:rollback": "Rollback the last migration batch (pass --step=N after --)",
     "migrate:status": "Show the status of each migration",
     "db:seed": "Seed the database (pass --class=X after -- for specific seeder)",
     "db:fresh": "Alias for migrate:fresh — drop, migrate, and seed",
+    "_cache": "── CACHE ───────────────────────────────────────────",
     "cache:clear": "Flush all caches (cache:flush --force)",
     "cache:warm": "Cache config, routes, and events for production",
     "cache:clean": "Clean specific cache types (pass types after --)",
+    "_test": "── TESTING ─────────────────────────────────────────",
     "test": "Clear config cache then run the full test suite",
     "test:coverage": "Run tests with Clover XML coverage report",
     "test:parallel": "Run tests in parallel",
     "test:filter": "Run tests matching a pattern (pass pattern after --)",
+    "_quality": "── CODE QUALITY ────────────────────────────────────",
     "lint": "Check code style with Pint (read-only, CI-safe)",
     "lint:fix": "Fix code style issues with Pint",
     "analyse": "Run PHPStan static analysis (512M memory limit)",
@@ -305,8 +303,10 @@
     "insights:fix": "Run PHP Insights and apply safe auto-fixes",
     "quality": "Run all quality checks: lint + analyse + test",
     "quality:fix": "Fix all quality issues: lint:fix + refactor:fix + analyse",
+    "_repos": "── REPOSITORY MANAGEMENT ───────────────────────────",
     "repos:sync": "Add missing local module path repositories to composer.json",
     "repos:check": "Dry-run: list required local modules missing from repositories",
+    "_docker": "── DOCKER ──────────────────────────────────────────",
     "docker:check": "Check if required ports are available before starting",
     "docker:up": "Start all Docker services",
     "docker:up:kill": "Start Docker services, killing processes on conflicting ports",
