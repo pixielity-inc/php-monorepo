@@ -1,8 +1,8 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "pixielity/example-app",
+    "name": "pixielity/api-app",
     "type": "project",
-    "description": "Laravel 13 application — example-app.",
+    "description": "Laravel 13 application — api-app.",
     "keywords": [
         "laravel",
         "framework",
@@ -24,7 +24,10 @@
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^3.0",
         "nwidart/laravel-modules": "^13.0",
-        "pixielity/laravel-framework": "*"
+        "pixielity/laravel-framework": "*",
+        "pixielity/laravel-foundation": "*",
+        "pixielity/laravel-octane": "*",
+        "pixielity/laravel-user": "*"
     },
     "require-dev": {
         "driftingly/rector-laravel": "^2.2",
@@ -159,6 +162,27 @@
         {
             "type": "path",
             "url": "../../modules/framework",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "type": "path",
+            "url": "../../modules/framework",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "type": "path",
+            "url": "../../modules/foundation",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "type": "path",
+            "url": "../../modules/user",
             "options": {
                 "symlink": true
             }

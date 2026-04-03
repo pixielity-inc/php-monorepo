@@ -1,0 +1,32 @@
+{
+  "name": "@pixielity/laravel-octane",
+  "version": "0.1.0",
+  "description": "Laravel Octane integration module with simplified server management commands for production-grade headless API backends",
+  "homepage": "https://github.com/pixielity-inc/php-monorepo/tree/main/modules/octane",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pixielity-inc/php-monorepo.git",
+    "directory": "modules/octane"
+  },
+  "bugs": {
+    "url": "https://github.com/pixielity-inc/php-monorepo/issues"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "composer install --no-interaction --prefer-dist --optimize-autoloader",
+    "build:prod": "composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev",
+    "lint": "vendor/bin/pint --test",
+    "lint:fix": "vendor/bin/pint",
+    "analyse": "vendor/bin/phpstan analyse --no-progress",
+    "refactor": "vendor/bin/rector process --dry-run",
+    "refactor:fix": "vendor/bin/rector process",
+    "test": "vendor/bin/phpunit --testdox",
+    "test:coverage": "vendor/bin/phpunit --coverage-clover coverage.xml",
+    "clean": "rm -rf vendor .phpunit.result.cache coverage.xml",
+    "upgrade": "composer update"
+  },
+  "engines": {
+    "node": ">=18",
+    "pnpm": ">=10"
+  }
+}

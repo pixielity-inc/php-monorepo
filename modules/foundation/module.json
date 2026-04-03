@@ -1,0 +1,18 @@
+{
+    "name": "foundation",
+    "alias": "foundation",
+    "description": "Foundation module for Pixielity Laravel headless API backend - provides custom Application class, root route handlers, and base API structure",
+    "keywords": [
+        "laravel",
+        "module",
+        "foundation",
+        "api",
+        "headless",
+        "pixielity"
+    ],
+    "priority": 0,
+    "providers": [
+        "Pixielity\\Foundation\\Providers\\FoundationServiceProvider"
+    ],
+    "files": []
+}

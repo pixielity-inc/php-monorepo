@@ -13,7 +13,7 @@ assignees: ""
 ## Workspace
 
 <!-- Which application or module is affected? -->
-- [ ] `applications/example-app`
+- [ ] `applications/api-app`
 - [ ] `modules/example_package`
 - [ ] Root / tooling
 

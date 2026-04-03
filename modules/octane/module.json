@@ -1,0 +1,21 @@
+{
+    "name": "octane",
+    "alias": "octane",
+    "description": "Laravel Octane integration module with simplified server management commands for production-grade headless API backends",
+    "keywords": [
+        "laravel",
+        "octane",
+        "roadrunner",
+        "frankenphp",
+        "server",
+        "performance",
+        "api",
+        "headless",
+        "pixielity"
+    ],
+    "priority": 0,
+    "providers": [
+        "Pixielity\\Octane\\Providers\\OctaneServiceProvider"
+    ],
+    "files": []
+}

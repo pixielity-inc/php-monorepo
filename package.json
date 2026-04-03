@@ -23,6 +23,8 @@
   ],
   "scripts": {
     "prepare": "git config core.hooksPath .githooks",
+    "preinstall": "node scripts/repos-sync-all.mjs",
+    "postinstall": "node scripts/composer-install-all.mjs",
     "build": "turbo run build",
     "dev": "turbo run dev",
     "start": "turbo run start",

@@ -14,7 +14,7 @@ Per-module changelogs live alongside each module:
 
 ### Added
 - Initial monorepo scaffold via `create-turbo`
-- `applications/example-app` — Laravel 13 application
+- `applications/api-app` — Laravel 13 application
 - `modules/example_package` — shared PHP utility module
 - GitHub Actions: CI, CD deploy, CD publish, security scanning, release
 - Root tooling: `.editorconfig`, `.gitignore`, `CONTRIBUTING.md`

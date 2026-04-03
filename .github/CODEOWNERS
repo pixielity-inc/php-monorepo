@@ -23,7 +23,7 @@ phpstan.neon                @your-org/platform
 # ---------------------------------------------------------------------------
 # Applications
 # ---------------------------------------------------------------------------
-applications/example-app/   @your-org/backend-team
+applications/api-app/   @your-org/backend-team
 
 # ---------------------------------------------------------------------------
 # Shared modules (publishable — require extra scrutiny)

@@ -18,9 +18,15 @@ importers:
         specifier: 5.9.2
         version: 5.9.2
 
-  applications/example-app: {}
+  applications/api: {}
 
-  modules/core: {}
+  modules/foundation: {}
+
+  modules/framework: {}
+
+  modules/octane: {}
+
+  modules/user: {}
 
 packages:
 

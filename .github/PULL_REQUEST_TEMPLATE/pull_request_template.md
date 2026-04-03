@@ -12,7 +12,7 @@
 
 ## Affected workspace(s)
 
-- [ ] `applications/example-app`
+- [ ] `applications/api-app`
 - [ ] `modules/example_package`
 - [ ] Root / tooling / CI
 

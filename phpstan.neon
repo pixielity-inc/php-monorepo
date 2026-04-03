@@ -29,7 +29,7 @@ includes:
     # Install: composer require --dev larastan/larastan
     # Docs:    https://github.com/larastan/larastan
     # -------------------------------------------------------------------------
-    # - applications/example-app/vendor/larastan/larastan/extension.neon
+    # - applications/api-app/vendor/larastan/larastan/extension.neon
 
 parameters:
 

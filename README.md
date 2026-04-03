@@ -24,10 +24,10 @@ Batteries included: nWidart Modules, Rector, PHPStan, Pint, CI/CD, git hooks, an
 ```
 php-monorepo/
 ├── applications/
-│   └── example-app/          # Laravel 13 application
+│   └── api-app/          # Laravel 13 application
 │       ├── app/               # Controllers, Models, Services, Jobs…
 │       ├── config/modules.php # nWidart Modules config → ../../modules
-│       ├── composer.json      # pixielity/example-app
+│       ├── composer.json      # pixielity/api-app
 │       └── package.json       # Turbo task integration (PHP scripts only)
 ├── modules/
 │   └── core/                  # Shared PHP library → pixielity/laravel-core
@@ -78,9 +78,9 @@ composer env:dev
 composer install:all
 
 # 5. Prepare the Laravel app
-cp applications/example-app/.env.example applications/example-app/.env
-php applications/example-app/artisan key:generate
-php applications/example-app/artisan migrate
+cp applications/api-app/.env.example applications/api-app/.env
+php applications/api-app/artisan key:generate
+php applications/api-app/artisan migrate
 
 # 6. Start dev server
 npm run dev
@@ -108,7 +108,7 @@ npm run dev
 Filter to a single workspace:
 
 ```bash
-npm run test -- --filter=@pixielity/example-app
+npm run test -- --filter=@pixielity/api-app
 npm run lint -- --filter=@pixielity/laravel-core
 ```
 
@@ -131,7 +131,7 @@ npm run lint -- --filter=@pixielity/laravel-core
 ### Per-workspace (Composer)
 
 ```bash
-# From applications/example-app or modules/core:
+# From applications/api-app or modules/core:
 composer env:dev        # Switch this workspace to dev
 composer env:prod       # Switch this workspace to prod
 composer env:status     # Show this workspace's env state
@@ -192,7 +192,7 @@ mkdir -p modules/my-module/src
 composer repos:sync
 
 # 4. Require it in your application
-composer require pixielity/laravel-my-module --working-dir=applications/example-app
+composer require pixielity/laravel-my-module --working-dir=applications/api-app
 ```
 
 ### Publishing a module to Packagist

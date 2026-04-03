@@ -8,10 +8,10 @@ version: 2
 
 updates:
   # ---------------------------------------------------------------------------
-  # Composer — applications/example-app
+  # Composer — applications/api-app
   # ---------------------------------------------------------------------------
   - package-ecosystem: composer
-    directory: /applications/example-app
+    directory: /applications/api-app
     schedule:
       interval: weekly
       day: monday

@@ -21,7 +21,7 @@
 #   revert   — reverts a previous commit
 #
 # Examples:
-#   feat(example-app): add user profile endpoint
+#   feat(api-app): add user profile endpoint
 #   fix(example_package): handle empty string in StringHelper::truncate
 #   chore: bump laravel/framework to 13.4
 
@@ -45,7 +45,7 @@ if ! echo "$COMMIT_MSG" | grep -qE "$PATTERN"; then
   echo -e "${RED}✖ Invalid commit message format.${NC}"
   echo ""
   echo "  Expected: <type>(<scope>): <description>"
-  echo "  Example:  feat(example-app): add user profile endpoint"
+  echo "  Example:  feat(api-app): add user profile endpoint"
   echo ""
   echo "  Allowed types: feat fix docs style refactor perf test build ci chore revert"
   echo ""

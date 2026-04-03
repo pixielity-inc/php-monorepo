@@ -33,9 +33,9 @@ for dir in applications/*/  modules/*/; do
 done
 
 # 4. Copy .env for the example app
-cp applications/example-app/.env.example applications/example-app/.env
-php applications/example-app/artisan key:generate
-php applications/example-app/artisan migrate
+cp applications/api-app/.env.example applications/api-app/.env
+php applications/api-app/artisan key:generate
+php applications/api-app/artisan migrate
 
 # 5. Start all workspaces in dev mode
 npm run dev

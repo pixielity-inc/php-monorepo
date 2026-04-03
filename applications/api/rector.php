@@ -2,7 +2,7 @@
 
 /**
  * @file rector.php
- * @description Rector configuration for applications/example-app (Laravel 13).
+ * @description Rector configuration for applications/api-app (Laravel 13).
  *
  * This config is scoped to this application only. It extends the same rule
  * sets as the root rector.php but targets only this app's source directories.
