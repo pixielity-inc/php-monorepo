@@ -261,16 +261,44 @@ class ComposerScripts
         $composerJson = self::readComposerJson($event);
         $registered   = self::getRegisteredPathRepos($composerJson, $root);
         $discovered   = self::discoverModulePaths($root);
-        $missing      = array_diff($discovered, $registered);
+
+        // Build name → path map for discovered modules.
+        $discoveredByName = [];
+        foreach ($discovered as $absolutePath) {
+            $moduleComposer = $absolutePath . '/composer.json';
+            if (is_file($moduleComposer)) {
+                $data = json_decode(file_get_contents($moduleComposer), true) ?? [];
+                $name = $data['name'] ?? null;
+                if ($name !== null) {
+                    $discoveredByName[$name] = $absolutePath;
+                }
+            }
+        }
+
+        // Only check packages that are in require or require-dev.
+        $required = array_merge(
+            array_keys($composerJson['require'] ?? []),
+            array_keys($composerJson['require-dev'] ?? []),
+        );
+
+        $missing = [];
+        foreach ($required as $packageName) {
+            if (!isset($discoveredByName[$packageName])) {
+                continue; // Not a local module.
+            }
+            if (!in_array($discoveredByName[$packageName], $registered, true)) {
+                $missing[$packageName] = $discoveredByName[$packageName];
+            }
+        }
 
         $io->write('');
 
         if (empty($missing)) {
-            $io->write('<info>✔ All local path repositories are registered.</info>');
+            $io->write('<info>✔ All required local modules are registered as path repositories.</info>');
         } else {
-            $io->write('<warning>The following modules are not registered as path repositories:</warning>');
-            foreach ($missing as $path) {
-                $io->write('  <fg=yellow>✘</> ' . self::toRelativePath($path, $root));
+            $io->write('<warning>Missing path repositories for required local modules:</warning>');
+            foreach ($missing as $name => $path) {
+                $io->write("  <fg=yellow>✘</> {$name}  (" . self::toRelativePath($path, $root) . ')');
             }
             $io->write('');
             $io->write('Run <comment>composer repos:sync</comment> to add them.');
@@ -445,9 +473,45 @@ class ComposerScripts
         $composerJson = self::readComposerJson($event);
         $registered   = self::getRegisteredPathRepos($composerJson, $root);
         $discovered   = self::discoverModulePaths($root);
-        $missing      = array_diff($discovered, $registered);
 
-        if (empty($missing)) {
+        // Build a map of package name → absolute path for all discovered modules.
+        $discoveredByName = [];
+        foreach ($discovered as $absolutePath) {
+            $moduleComposer = $absolutePath . '/composer.json';
+            if (is_file($moduleComposer)) {
+                $data = json_decode(file_get_contents($moduleComposer), true) ?? [];
+                $name = $data['name'] ?? null;
+                if ($name !== null) {
+                    $discoveredByName[$name] = $absolutePath;
+                }
+            }
+        }
+
+        // Collect all package names from require + require-dev.
+        $required = array_merge(
+            array_keys($composerJson['require'] ?? []),
+            array_keys($composerJson['require-dev'] ?? []),
+        );
+
+        // Only add path repos for packages that:
+        //   1. Are in require or require-dev
+        //   2. Exist as a local module
+        //   3. Are not already registered as a path repo
+        $toAdd = [];
+        foreach ($required as $packageName) {
+            if (!isset($discoveredByName[$packageName])) {
+                continue; // Not a local module — skip (it's from Packagist).
+            }
+
+            $absolutePath = $discoveredByName[$packageName];
+            if (in_array($absolutePath, $registered, true)) {
+                continue; // Already registered.
+            }
+
+            $toAdd[$packageName] = $absolutePath;
+        }
+
+        if (empty($toAdd)) {
             return [];
         }
 
@@ -456,17 +520,15 @@ class ComposerScripts
             $composerJson['repositories'] = [];
         }
 
-        foreach ($missing as $absolutePath) {
-            // Store as a relative path from the workspace root for portability.
-            $relativePath = self::toRelativePath($absolutePath, $root);
+        foreach ($toAdd as $packageName => $absolutePath) {
+            // Store as a relative path from the current working directory for portability.
+            $cwd          = getcwd();
+            $relativePath = self::toRelativePath($absolutePath, $cwd);
 
             $composerJson['repositories'][] = [
                 'type'    => 'path',
                 'url'     => $relativePath,
                 'options' => [
-                    // symlink: true means Composer symlinks the directory instead
-                    // of copying it, so changes to the module are reflected
-                    // immediately without re-running composer install.
                     'symlink' => true,
                 ],
             ];
@@ -474,7 +536,7 @@ class ComposerScripts
 
         self::writeComposerJson($event, $composerJson);
 
-        return array_values($missing);
+        return array_values($toAdd);
     }
 
     /**
