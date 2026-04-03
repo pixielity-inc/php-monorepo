@@ -1,0 +1,89 @@
+# .claude — php-monorepo
+#
+# Project-level instructions for Claude / AI assistants working in this repo.
+
+## Project overview
+PHP monorepo powered by Turborepo.
+- `applications/example-app`   — Laravel 13 application
+- `modules/example_package`    — Shared PHP library (publishable to Packagist)
+
+## Stack
+- PHP 8.3+, Composer 2
+- Laravel 13 (applications)
+- PHPUnit 12, Laravel Pint, PHPStan 2, Rector 2
+- Node.js 20+ / npm 10+ (for Turborepo orchestration only)
+- Turborepo 2.x
+
+## Key commands (from repo root)
+```bash
+npm install          # install JS deps + register git hooks
+npm run build        # composer install in all workspaces
+npm run test         # PHPUnit across all workspaces
+npm run lint         # Pint --test across all workspaces
+npm run lint:fix     # Pint (auto-fix) across all workspaces
+npm run analyse      # PHPStan across all workspaces
+npm run refactor     # Rector dry-run across all workspaces
+npm run refactor:fix # Rector apply across all workspaces
+```
+
+## Per-workspace commands (from workspace directory)
+```bash
+composer run test           # run PHPUnit
+composer run lint           # pint --test
+composer run lint:fix       # pint (auto-fix)
+composer run analyse        # phpstan
+composer run refactor       # rector --dry-run
+composer run refactor:fix   # rector apply
+composer run check          # lint + analyse + test in sequence
+php artisan serve           # start Laravel dev server
+php artisan test            # run Laravel tests
+php artisan migrate         # run migrations
+php artisan optimize:clear  # clear all caches
+```
+
+## PHP code conventions
+- Always `declare(strict_types=1)` at the top of every PHP file.
+- PSR-12 code style enforced by Laravel Pint.
+- PHPStan level 6 — no ignored errors without a comment.
+- Full docblocks on all public methods and class properties.
+- Constructor property promotion for simple value objects.
+- Named arguments for clarity on functions with 3+ parameters.
+- No `var_dump()`, `dd()`, or `dump()` in committed code.
+
+## Laravel conventions
+- Thin controllers — business logic belongs in Services or Actions.
+- Use Form Requests for validation.
+- Use Resource classes for API responses.
+- Use Jobs for anything that can be queued.
+- Use Events + Listeners for side effects.
+- Policies for authorization — never inline `Gate::allows()` in controllers.
+
+## Adding a new application
+```bash
+laravel new applications/my-app --no-interaction
+# Add package.json with "name": "@repo/my-app" and turbo tasks
+npm install
+```
+
+## Adding a new module
+Copy `modules/example_package` as a template, update namespace and composer.json name.
+
+## Publishing a module to Packagist
+```bash
+# 1. Bump version in modules/<name>/composer.json
+# 2. Update CHANGELOG.md
+git tag example_package-v1.2.3 && git push --tags
+# cd_publish.yml workflow handles the rest
+```
+
+## Git conventions
+- Conventional Commits: `feat(scope): description`
+- Never commit directly to `main`.
+- Module release tag: `<module_name>-v<semver>`
+- App release tag: `v<semver>`
+
+## What NOT to do
+- Do not commit `.env` files — ever.
+- Do not commit `vendor/` directories.
+- Do not use `@phpstan-ignore` without a comment explaining why.
+- Do not add `laravel/horizon` or `laravel/sanctum` without configuring them.

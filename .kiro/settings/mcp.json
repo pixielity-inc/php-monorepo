@@ -1,0 +1,42 @@
+{
+  "mcpServers": {
+    "laravel": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://gitmcp.io/laravel/laravel"],
+      "disabled": false,
+      "autoApprove": [
+        "search_docs",
+        "get_doc_page"
+      ]
+    },
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "get_file_contents",
+        "list_commits",
+        "list_issues",
+        "get_issue",
+        "search_repositories",
+        "create_issue",
+        "create_pull_request"
+      ]
+    },
+    "playwright": {
+      "command": "npx",
+      "args": ["-y", "@playwright/mcp@latest"],
+      "disabled": false,
+      "autoApprove": [
+        "browser_navigate",
+        "browser_snapshot",
+        "browser_take_screenshot",
+        "browser_click",
+        "browser_type"
+      ]
+    }
+  }
+}
