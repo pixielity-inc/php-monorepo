@@ -2751,7 +2751,7 @@
                 "ext-dom": "*",
                 "ext-json": "*",
                 "ext-simplexml": "*",
-                "php": "^8.3",
+                "php": "^8.4",
                 "wikimedia/composer-merge-plugin": "^2.1"
             },
             "require-dev": {
@@ -8785,7 +8785,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^8.3"
+        "php": "^8.4"
     },
     "platform-dev": {},
     "plugin-api-version": "2.9.0"
