@@ -9,9 +9,21 @@
   "php.validate.enable": false,
   "php.suggest.basic": false,
 
-  // Intelephense: suppress errors for Composer API classes that are only
-  // available at runtime (not in the project's vendor directory).
-  "intelephense.diagnostics.undefinedTypes": false,
+  // Suppress PHP2014 (syntax errors) on Blade files — Blade templates contain
+  // PHP 8.x match expressions and Blade directives that the PHP parser
+  // incorrectly flags as syntax errors.
+  "php.problems.exclude": {
+    "**/*.blade.php": true
+  },
+
+  // Exclude Composer\Script\Event undefined type error (P1009) from
+  // the scripts/ files. These classes live inside the Composer phar
+  // at runtime and cannot be resolved by Intelephense statically.
+  "intelephense.problems.exclude": {
+    "/Users/akouta/Projects/monos/php-monorepo/scripts/ComposerScripts.php": [1009],
+    "/Users/akouta/Projects/monos/php-monorepo/scripts/WorkspaceDiscovery.php": [1009],
+    "**/*.blade.php": [2014]
+  },
   "intelephense.diagnostics.undefinedFunctions": false,
   "intelephense.diagnostics.undefinedConstants": false,
   "intelephense.diagnostics.undefinedClassConstants": false,
@@ -19,21 +31,9 @@
   "intelephense.diagnostics.undefinedProperties": false,
   "intelephense.diagnostics.unusedSymbols": false,
 
-  // Tell Intelephense to ignore undefined type errors specifically for
-  // Composer\Script\Event and the entire Composer\ namespace.
-  // These classes exist only inside the Composer phar at runtime and are
-  // not present in the project vendor/ directory.
-  "intelephense.diagnostics.typeErrors": false,
-
-  // Exclude Composer\Script\Event undefined type error (P1009) from
-  // the scripts/ files. These classes live inside the Composer phar
-  // at runtime and cannot be resolved by Intelephense statically.
-  "intelephense.problems.exclude": {
-    "/Users/akouta/Projects/monos/php-monorepo/scripts/ComposerScripts.php": [1009],
-    "/Users/akouta/Projects/monos/php-monorepo/scripts/WorkspaceDiscovery.php": [1009]
-  },
-
-  // Blade: disable all built-in HTML/PHP validation inside .blade.php files.
+  // Intelephense: suppress errors for Composer API classes that are only
+  // available at runtime (not in the project's vendor directory).
+  "intelephense.diagnostics.undefinedTypes": false,
   // Blade templates use Laravel-specific syntax that confuses standard validators.
   "[blade]": {
     "editor.defaultFormatter": "shufo.vscode-blade-formatter",
@@ -95,9 +95,5 @@
     "**/node_modules": true,
     "**/storage": true,
     "**/.turbo": true
-  },
-  "php.problems.exclude": {
-    "/Users/akouta/Projects/monos/php-monorepo/scripts/ComposerScripts.php": [413],
-    "/Users/akouta/Projects/monos/php-monorepo/scripts/WorkspaceDiscovery.php": [413]
-}
+  }
 }
