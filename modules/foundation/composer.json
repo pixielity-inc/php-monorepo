@@ -74,6 +74,13 @@
         "analyse": "Pixielity\\Foundation\\Scripts\\AnalyseScripts::run",
         "analyse:baseline": "Pixielity\\Foundation\\Scripts\\AnalyseScripts::baseline",
         "refactor": "Pixielity\\Foundation\\Scripts\\RefactorScripts::dryRun",
-        "refactor:fix": "Pixielity\\Foundation\\Scripts\\RefactorScripts::apply"
+        "refactor:fix": "Pixielity\\Foundation\\Scripts\\RefactorScripts::apply",
+        "insights": "Pixielity\\Foundation\\Scripts\\InsightsScripts::run",
+        "insights:fix": "Pixielity\\Foundation\\Scripts\\InsightsScripts::fix",
+        "env:dev": "Pixielity\\Foundation\\Scripts\\EnvScripts::dev",
+        "env:testing": "Pixielity\\Foundation\\Scripts\\EnvScripts::testing",
+        "env:prod": "Pixielity\\Foundation\\Scripts\\EnvScripts::prod",
+        "env:status": "Pixielity\\Foundation\\Scripts\\EnvScripts::status",
+        "setup:env": "Pixielity\\Foundation\\Scripts\\EnvScripts::setup"
     }
 }
