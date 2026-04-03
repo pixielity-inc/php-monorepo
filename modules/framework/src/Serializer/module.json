@@ -1,0 +1,21 @@
+{
+  "name": "Serializer",
+  "alias": "serializer",
+  "description": "Data serialization and transformation utilities for Laravel",
+  "keywords": [
+    "serializer",
+    "transformation",
+    "data-transfer",
+    "dto",
+    "json"
+  ],
+  "priority": 4,
+  "providers": [
+    "Pixielity\\Serializer\\Providers\\SerializerServiceProvider"
+  ],
+  "aliases": {},
+  "files": [],
+  "requires": [
+    "support"
+  ]
+}

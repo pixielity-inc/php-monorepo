@@ -1,0 +1,162 @@
+{
+    "name": "pixielity/laravel-framework",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Pixielity Team",
+            "email": "dev@pixielity.com"
+        }
+    ],
+    "homepage": "https://gitlab.com/pixielity/laravel-/framework/meta",
+    "support": {
+        "issues": "https://gitlab.com/pixielity/laravel-/framework/meta/-/issues",
+        "source": "https://gitlab.com/pixielity/laravel-/framework/meta"
+    },
+    "keywords": [
+        "framework",
+        "laravel",
+        "pixielity",
+        "utilities",
+        "database",
+        "media",
+        "serialization",
+        "firebase",
+        "pusher",
+        "swagger",
+        "query-builder",
+        "settings",
+        "sluggable",
+        "tags",
+        "versioning",
+        "repository",
+        "search",
+        "scout"
+    ],
+    "prefer-stable": true,
+    "minimum-stability": "stable",
+    "require": {
+        "php": "^8.4|^8.5",
+        "abbasudo/laravel-purity": "^3.0",
+        "beeyev/disposable-email-filter-php": "*",
+        "pixielity/laravel-discovery": "*",
+        "illuminate/container": "^12.0|^13.0",
+        "illuminate/database": "^12.0|^13.0",
+        "illuminate/support": "^12.0|^13.0",
+        "ksubileau/color-thief-php": "^2.0",
+        "laravel/framework": "^12.0|^13.0",
+        "laravel/scout": "^10.0",
+        "league/fractal": "*",
+        "prettus/l5-repository": "@dev",
+        "spatie/laravel-data": "^4.0",
+        "spatie/laravel-health": "^1.39",
+        "spatie/laravel-translatable": "^6.0",
+        "zircote/swagger-php": "^6.0"
+    },
+    "require-dev": {
+        "driftingly/rector-laravel": "^2.1",
+        "larastan/larastan": "^3.9",
+        "laravel/pint": "^1.27",
+        "mockery/mockery": "^1.6",
+        "orchestra/testbench": "^10.0",
+        "phpstan/phpstan": "^2.0",
+        "phpunit/phpunit": "^11.0",
+        "rector/rector": "^2.3"
+    },
+    "suggest": {
+        "typesense/typesense-php": "Required for Typesense driver (^4.0).",
+        "meilisearch/meilisearch-php": "Required for MeiliSearch driver (^1.0).",
+        "algolia/algoliasearch-client-php": "Required for Algolia search driver (^3.0)."
+    },
+    "autoload": {
+        "psr-4": {
+            "Pixielity\\": "src/",
+            "Pixielity\\Enum\\": "src/Enum/src/",
+            "Pixielity\\Routing\\": "src/Routing/src/",
+            "Pixielity\\Support\\": "src/Support/src/",
+            "Pixielity\\Container\\": "src/Container/src/",
+            "Pixielity\\Serializer\\": "src/Serializer/src/",
+            "Pixielity\\Localization\\": "src/Localization/src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Pixielity\\Enum\\Tests\\": "src/Enum/tests/",
+            "Pixielity\\Routing\\Tests\\": "src/Routing/tests/",
+            "Pixielity\\Support\\Tests\\": "src/Support/tests/",
+            "Pixielity\\Container\\Tests\\": "src/Container/tests/",
+            "Pixielity\\Serializer\\Tests\\": "src/Serializer/tests/",
+            "Pixielity\\Localization\\Tests\\": "src/Localization/tests/"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test:coverage": "vendor/bin/phpunit --coverage-html coverage",
+        "test:filter": "vendor/bin/phpunit --filter",
+        "analyse": "vendor/bin/phpstan analyse --memory-limit=2G",
+        "analyse:baseline": "vendor/bin/phpstan analyse --memory-limit=2G --generate-baseline",
+        "format": "@php vendor/bin/pint --ansi",
+        "format:test": "@php vendor/bin/pint --test --ansi",
+        "format:fix": "@php vendor/bin/pint --ansi",
+        "rector": "vendor/rector/rector/bin/rector process --dry-run",
+        "rector:fix": "vendor/rector/rector/bin/rector process",
+        "quality": [
+            "@format:test",
+            "@analyse"
+        ],
+        "quality:fix": [
+            "@format:fix",
+            "@rector:fix"
+        ],
+        "ci": [
+            "@test",
+            "@quality"
+        ]
+    },
+    "scripts-descriptions": {
+        "test": "Run the test suite",
+        "test:coverage": "Run tests with HTML coverage report",
+        "test:filter": "Run specific tests by filter pattern",
+        "analyse": "Run PHPStan static analysis",
+        "analyse:baseline": "Generate PHPStan baseline file",
+        "format": "Check code style with Laravel Pint",
+        "format:test": "Check code style without fixing",
+        "format:fix": "Fix code style issues with Laravel Pint",
+        "rector": "Preview Rector refactoring changes",
+        "rector:fix": "Apply Rector refactoring changes",
+        "quality": "Run all quality checks (format + analyse)",
+        "quality:fix": "Fix all quality issues (format + rector)",
+        "ci": "Run all CI checks (tests + quality)",
+        "clear": "Clear Testbench skeleton files",
+        "prepare": "Discover Testbench packages",
+        "build": "Build Testbench workbench",
+        "serve": "Start Testbench development server"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Pixielity\\Routing\\Providers\\RoutingServiceProvider",
+                "Pixielity\\Container\\Providers\\ContainerServiceProvider",
+                "Pixielity\\Localization\\Providers\\LocalizationServiceProvider"
+            ],
+            "aliases": {}
+        }
+    },
+    "replace": {
+        "pixielity/laravel-enum": "self.version",
+        "pixielity/laravel-routing": "self.version",
+        "pixielity/laravel-support": "self.version",
+        "pixielity/laravel-container": "self.version",
+        "pixielity/laravel-serializer": "self.version",
+        "pixielity/laravel-localization": "self.version"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "allow-plugins": {
+            "php-http/discovery": true,
+            "olvlvl/composer-attribute-collector": true
+        }
+    }
+}

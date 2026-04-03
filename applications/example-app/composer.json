@@ -23,7 +23,8 @@
         "laravel/horizon": "^5.0",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^3.0",
-        "nwidart/laravel-modules": "^13.0"
+        "nwidart/laravel-modules": "^13.0",
+        "pixielity/laravel-framework": "*"
     },
     "require-dev": {
         "driftingly/rector-laravel": "^2.2",
@@ -134,6 +135,7 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "allow-plugins": {
+            "olvlvl/composer-attribute-collector": true,
             "pestphp/pest-plugin": true,
             "php-http/discovery": true,
             "wikimedia/composer-merge-plugin": true
@@ -149,7 +151,14 @@
     "repositories": [
         {
             "type": "path",
-            "url": "modules/core",
+            "url": "../../modules/framework",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "type": "path",
+            "url": "../../modules/framework",
             "options": {
                 "symlink": true
             }

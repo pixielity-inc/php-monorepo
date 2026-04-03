@@ -1,0 +1,19 @@
+{
+  "name": "Enum",
+  "alias": "enum",
+  "description": "Enhanced PHP enums with additional functionality and utilities",
+  "keywords": [
+    "enum",
+    "enumeration",
+    "backed-enum",
+    "attributes",
+    "labels"
+  ],
+  "priority": 1,
+  "providers": [],
+  "aliases": {},
+  "files": [],
+  "requires": [
+    "support"
+  ]
+}

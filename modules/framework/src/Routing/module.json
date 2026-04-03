@@ -1,0 +1,21 @@
+{
+  "name": "Routing",
+  "alias": "routing",
+  "description": "Enhanced routing utilities and attribute-based route registration",
+  "keywords": [
+    "routing",
+    "routes",
+    "attributes",
+    "controllers",
+    "middleware"
+  ],
+  "priority": 3,
+  "providers": [
+    "Pixielity\\Routing\\Providers\\RoutingServiceProvider"
+  ],
+  "aliases": {},
+  "files": [],
+  "requires": [
+    "support"
+  ]
+}

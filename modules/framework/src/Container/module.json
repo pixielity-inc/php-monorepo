@@ -1,0 +1,22 @@
+{
+  "name": "Container",
+  "alias": "container",
+  "description": "Dependency injection container utilities and extensions for Laravel",
+  "keywords": [
+    "container",
+    "dependency-injection",
+    "ioc",
+    "service-container",
+    "attributes",
+    "discovery"
+  ],
+  "priority": 1,
+  "providers": [
+    "Pixielity\\Container\\Providers\\ContainerServiceProvider"
+  ],
+  "aliases": {},
+  "files": [],
+  "requires": [
+    "support"
+  ]
+}

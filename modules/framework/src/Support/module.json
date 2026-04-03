@@ -1,0 +1,19 @@
+{
+  "name": "Support",
+  "alias": "support",
+  "description": "Core support utilities, helpers, and base classes for Laravel",
+  "keywords": [
+    "support",
+    "helpers",
+    "utilities",
+    "base-classes",
+    "traits"
+  ],
+  "priority": 0,
+  "providers": [
+    "Pixielity\\Support\\Providers\\SupportServiceProvider"
+  ],
+  "aliases": {},
+  "files": [],
+  "requires": []
+}

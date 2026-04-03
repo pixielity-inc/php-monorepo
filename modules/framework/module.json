@@ -1,0 +1,25 @@
+{
+    "name": "Framework",
+    "alias": "framework",
+    "description": "Pixielity Laravel Framework module — shared utilities, routing, container, serializer, localization, and support components consumed by all applications in this monorepo.",
+    "keywords": [
+        "framework",
+        "laravel",
+        "pixielity",
+        "utilities",
+        "routing",
+        "container",
+        "serializer",
+        "localization",
+        "support"
+    ],
+    "priority": 0,
+    "providers": [
+        "Pixielity\\Routing\\Providers\\RoutingServiceProvider",
+        "Pixielity\\Container\\Providers\\ContainerServiceProvider",
+        "Pixielity\\Localization\\Providers\\LocalizationServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

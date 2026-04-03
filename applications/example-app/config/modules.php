@@ -13,7 +13,7 @@ return [
     | Default module namespace.
     |
     */
-    'namespace' => 'Pixielity',
+    'namespace' => env('MODULES_NAMESPACE', 'Pixielity'),
 
     /*
     |--------------------------------------------------------------------------
@@ -206,7 +206,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Auto Discover of Modules
+    | Auto Discover of Pixielity
     |--------------------------------------------------------------------------
     |
     | Here you configure auto discover of module
@@ -222,7 +222,7 @@ return [
         | This option for register migration automatically.
         |
         */
-        'migrations' => true,
+        'migrations' => env('MODULES_AUTO_DISCOVER_MIGRATIONS', true),
 
         /*
         |--------------------------------------------------------------------------
@@ -232,7 +232,7 @@ return [
         | This option for register lang file automatically.
         |
         */
-        'translations' => false,
+        'translations' => env('MODULES_AUTO_DISCOVER_TRANSLATIONS', false),
 
     ],
 
@@ -260,8 +260,9 @@ return [
     |
     */
     'scan' => [
-        'enabled' => true,
+        'enabled' => env('MODULES_SCAN_ENABLED', true),
         'paths' => [
+            base_path('vendor/*/*'),
             base_path('../../modules/*'),
         ],
     ],
@@ -277,8 +278,8 @@ return [
     'composer' => [
         'vendor' => env('MODULE_VENDOR', 'pixielity'),
         'author' => [
-            'name' => env('MODULE_AUTHOR_NAME', 'Pixielity'),
-            'email' => env('MODULE_AUTHOR_EMAIL', 'hello@pixielity.com'),
+            'name' => env('MODULE_AUTHOR_NAME', 'Pixielity Co.'),
+            'email' => env('MODULE_AUTHOR_EMAIL', 'pixielity@gmail.com'),
         ],
         'composer-output' => false,
     ],
@@ -291,11 +292,11 @@ return [
     |--------------------------------------------------------------------------
     */
     'register' => [
-        'translations' => true,
+        'translations' => env('MODULES_REGISTER_TRANSLATIONS', true),
         /**
          * load files on boot or register method
          */
-        'files' => 'register',
+        'files' => env('MODULES_REGISTER_FILES', 'register'),
     ],
 
     /*
@@ -305,29 +306,14 @@ return [
     |
     | You can define new types of activators here, file, database, etc. The only
     | required parameter is 'class'.
-    | The file activator will store the activation status in storage/installed_modules
+    | The file activator will store the activation status in storage/framework/modules.json
     */
     'activators' => [
         'file' => [
             'class' => FileActivator::class,
-            'statuses-file' => base_path('modules_statuses.json'),
+            'statuses-file' => storage_path('framework/modules.json'),
         ],
     ],
 
-    'activator' => 'file',
-
-    /*
-    |--------------------------------------------------------------------------
-    | Inertia
-    |--------------------------------------------------------------------------
-    |
-    | Default Inertia frontend framework used by make commands when no
-    | framework flag (--vue, --react, --svelte) is provided.
-    |
-    | Supported: "vue", "react", "svelte"
-    |
-    */
-    'inertia' => [
-        'frontend' => 'vue',
-    ],
+    'activator' => env('MODULES_ACTIVATOR', 'file'),
 ];

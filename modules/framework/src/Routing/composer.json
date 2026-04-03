@@ -1,0 +1,98 @@
+{
+  "name": "pixielity/laravel-routing",
+  "description": "Attribute-based routing system for Laravel with NestJS-inspired decorators",
+  "type": "library",
+  "license": "MIT",
+  "keywords": [
+    "laravel",
+    "routing",
+    "attributes",
+    "decorators",
+    "php8",
+    "nestjs",
+    "route-attributes",
+    "controller-attributes",
+    "middleware-attributes"
+  ],
+  "authors": [
+    {
+      "name": "Pixielity Team",
+      "email": "dev@pixielity.com"
+    }
+  ],
+  "homepage": "https://gitlab.com/pixielity/laravel/framework/routing",
+  "support": {
+    "issues": "https://gitlab.com/pixielity/laravel/framework/routing/-/issues",
+    "source": "https://gitlab.com/pixielity/laravel/framework/routing"
+  },
+  "require": {
+    "php": "^8.4|^8.5",
+    "zircote/swagger-php": "*",
+    "illuminate/contracts": "^13.0|^12.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^11.0",
+    "orchestra/testbench": "^10.0",
+    "mockery/mockery": "^1.6",
+    "phpstan/phpstan": "^2.0",
+    "laravel/pint": "^1.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Pixielity\\Routing\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Pixielity\\Routing\\Tests\\": "tests/"
+    }
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://gitlab.com/pixielity/laravel-/foundation"
+    },
+    {
+      "type": "vcs",
+      "url": "https://gitlab.com/pixielity/laravel-/framework/meta"
+    },
+    {
+      "type": "vcs",
+      "url": "https://gitlab.com/pixielity/laravel-/discovery"
+    },
+    {
+      "type": "vcs",
+      "url": "https://gitlab.com/pixielity/laravel-/contracts"
+    },
+    {
+      "type": "vcs",
+      "url": "https://gitlab.com/pixielity/laravel-/telemetry/meta"
+    }
+  ],
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Pixielity\\Routing\\Providers\\RoutingServiceProvider"
+      ]
+    },
+    "branch-alias": {
+      "dev-main": "1.x-dev"
+    }
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit",
+    "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
+    "format": "vendor/bin/pint",
+    "analyse": "vendor/bin/phpstan analyse src --memory-limit=1G"
+  },
+  "config": {
+    "sort-packages": true,
+    "preferred-install": "dist",
+    "optimize-autoloader": true,
+    "allow-plugins": {
+      "php-http/discovery": true
+    }
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true
+}

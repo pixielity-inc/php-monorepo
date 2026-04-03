@@ -1,0 +1,21 @@
+{
+  "name": "Localization",
+  "alias": "localization",
+  "description": "Multi-language support and localization utilities for Laravel",
+  "keywords": [
+    "localization",
+    "i18n",
+    "translation",
+    "multi-language",
+    "locale"
+  ],
+  "priority": 3,
+  "providers": [
+    "Pixielity\\Localization\\Providers\\LocalizationServiceProvider"
+  ],
+  "aliases": {},
+  "files": [],
+  "requires": [
+    "support"
+  ]
+}

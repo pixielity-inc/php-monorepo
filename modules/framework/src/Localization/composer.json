@@ -1,0 +1,55 @@
+{
+  "name": "pixielity/laravel-localization",
+  "description": "Localization and internationalization package with translation files, locale detection, and timezone handling",
+  "type": "library",
+  "license": "MIT",
+  "keywords": [
+    "localization",
+    "internationalization",
+    "i18n",
+    "l10n",
+    "translation",
+    "locale",
+    "timezone",
+    "laravel",
+    "pixielity"
+  ],
+  "authors": [
+    {
+      "name": "Pixielity Team",
+      "email": "dev@pixielity.com"
+    }
+  ],
+  "require": {
+    "php": "^8.4|^8.5",
+    "pixielity/laravel-routing": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Pixielity\\Localization\\": "src/"
+    }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^11.0",
+    "mockery/mockery": "^1.6",
+    "orchestra/testbench": "^10.0"
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Pixielity\\Localization\\Providers\\LocalizationServiceProvider"
+      ]
+    }
+  },
+  "homepage": "https://gitlab.com/pixielity/laravel/framework/localization",
+  "support": {
+    "issues": "https://gitlab.com/pixielity/laravel/framework/localization/-/issues",
+    "source": "https://gitlab.com/pixielity/laravel/framework/localization"
+  },
+  "config": {
+    "sort-packages": true,
+    "allow-plugins": {}
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true
+}
