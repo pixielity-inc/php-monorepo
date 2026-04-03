@@ -1,48 +1,22 @@
-# .github/workflows/cd_publish.yml
+# .github/workflows/cd_publish.yml — php-monorepo
 #
-# Continuous Delivery — Publish PHP modules to Packagist.
+# Publish PHP modules to Packagist on module version tags.
+# Tag format: <module_name>-v<semver>  e.g. core-v1.0.0
 #
-# Triggered when a tag matching `<module_name>-v*` is pushed.
-# Examples:
-#   git tag example_package-v1.0.0 && git push --tags
-#
-# Pipeline:
-#   1. CI gate  — lint + test must pass before publishing
-#   2. Extract  — parse module name and version from the git tag
-#   3. Validate — ensure composer.json version matches the tag
-#   4. Publish  — trigger a Packagist webhook to sync the new release
-#
-# Required repository secrets:
-#   PACKAGIST_USERNAME  — your Packagist username
-#   PACKAGIST_TOKEN     — API token from https://packagist.org/profile/
-#
-# Packagist auto-updates via GitHub webhook (recommended):
-#   Go to packagist.org → your package → Settings → GitHub Hook
-#   and add the webhook to your GitHub repo. The publish job below
-#   triggers that webhook manually as a fallback.
-#
-# To publish a new version:
-#   1. Bump "version" in modules/<name>/composer.json
-#   2. Commit and push
-#   3. git tag example_package-v1.2.3 && git push --tags
+# Required secrets: PACKAGIST_USERNAME, PACKAGIST_TOKEN
 
 name: Publish Module
 
 on:
   push:
-    # Only trigger on module version tags, e.g. example_package-v1.2.3
     tags:
       - "*-v[0-9]+.[0-9]+.[0-9]+"
 
 concurrency:
   group: publish-${{ github.ref }}
-  # Never cancel an in-progress publish.
   cancel-in-progress: false
 
 jobs:
-  # ---------------------------------------------------------------------------
-  # CI gate — do not publish broken code
-  # ---------------------------------------------------------------------------
   ci-gate:
     name: CI gate (lint + test)
     runs-on: ubuntu-latest
@@ -51,11 +25,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
+          cache: pnpm
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -65,8 +44,8 @@ jobs:
           coverage: none
           tools: composer:v2
 
-      - name: Install npm dependencies
-        run: npm ci
+      - name: Install pnpm dependencies
+        run: pnpm install --frozen-lockfile
 
       - name: Install Composer dependencies (all modules)
         run: |
@@ -77,34 +56,21 @@ jobs:
           done
 
       - name: Lint
-        run: npm run lint
+        run: pnpm run lint
 
       - name: Test
-        run: npm run test
+        run: pnpm run test
 
-  # ---------------------------------------------------------------------------
-  # Publish to Packagist
-  # ---------------------------------------------------------------------------
   publish:
     name: Publish to Packagist
     runs-on: ubuntu-latest
     needs: ci-gate
-
-    # Only run on the canonical repository, not forks.
     if: github.repository_owner == github.event.repository.owner.login
 
     steps:
-      # -----------------------------------------------------------------------
-      # 1. Checkout
-      # -----------------------------------------------------------------------
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # -----------------------------------------------------------------------
-      # 2. Extract module name and version from the git tag
-      #    Tag format: <module_name>-v<semver>
-      #    e.g. "example_package-v1.2.3" → module=example_package, version=1.2.3
-      # -----------------------------------------------------------------------
       - name: Extract module info from tag
         id: tag
         run: |
@@ -113,54 +79,33 @@ jobs:
           VERSION="${TAG##*-v}"
           echo "module=$MODULE"   >> "$GITHUB_OUTPUT"
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
-          echo "Publishing module: $MODULE @ $VERSION"
+          echo "Publishing: $MODULE @ $VERSION"
 
-      # -----------------------------------------------------------------------
-      # 3. Validate that composer.json version matches the tag
-      # -----------------------------------------------------------------------
       - name: Validate composer.json version
         run: |
           MODULE="${{ steps.tag.outputs.module }}"
           VERSION="${{ steps.tag.outputs.version }}"
           COMPOSER_VERSION=$(jq -r '.version' "modules/$MODULE/composer.json")
           if [ "$COMPOSER_VERSION" != "$VERSION" ]; then
-            echo "ERROR: composer.json version ($COMPOSER_VERSION) does not match tag ($VERSION)"
+            echo "ERROR: composer.json version ($COMPOSER_VERSION) != tag ($VERSION)"
             exit 1
           fi
-          echo "Version check passed: $COMPOSER_VERSION"
 
-      # -----------------------------------------------------------------------
-      # 4. Trigger Packagist webhook to sync the new tag
-      #    Packagist will pull the tag from GitHub and create the release.
-      # -----------------------------------------------------------------------
       - name: Trigger Packagist update
         run: |
           MODULE="${{ steps.tag.outputs.module }}"
-          # Read the Packagist package name from composer.json
           PACKAGE_NAME=$(jq -r '.name' "modules/$MODULE/composer.json")
-          echo "Triggering Packagist update for: $PACKAGE_NAME"
           curl -s -X POST \
             "https://packagist.org/api/update-package?username=${{ secrets.PACKAGIST_USERNAME }}&apiToken=${{ secrets.PACKAGIST_TOKEN }}" \
             -H "Content-Type: application/json" \
             -d "{\"repository\":{\"url\":\"https://github.com/${{ github.repository }}\"}}"
 
-      # -----------------------------------------------------------------------
-      # 5. Create a GitHub Release for the module
-      # -----------------------------------------------------------------------
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.ref_name }}
           name: "${{ steps.tag.outputs.module }} v${{ steps.tag.outputs.version }}"
-          body: |
-            ## ${{ steps.tag.outputs.module }} v${{ steps.tag.outputs.version }}
-
-            Published to Packagist: https://packagist.org/packages/monorepo/${{ steps.tag.outputs.module }}
-
-            ### Install
-            ```bash
-            composer require monorepo/${{ steps.tag.outputs.module }}:^${{ steps.tag.outputs.version }}
-            ```
+          generate_release_notes: true
           draft: false
           prerelease: false
         env:

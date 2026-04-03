@@ -1,26 +1,8 @@
-# .github/workflows/cd_deploy.yml
+# .github/workflows/cd_deploy.yml — php-monorepo
 #
-# Continuous Delivery — Deploy Laravel applications.
+# Deploy Laravel applications on push to main (staging) or v* tags (production).
 #
-# Triggered on pushes to `main` (staging) and version tags (production).
-# Each application under applications/ can declare its own deploy target
-# via a deploy.sh script or environment variables.
-#
-# Strategy:
-#   - Build the application assets with Vite
-#   - Run composer install --no-dev for production
-#   - Deploy via SSH / rsync (replace with your preferred method:
-#     Laravel Forge, Envoyer, AWS, Fly.io, etc.)
-#
-# Required repository secrets:
-#   DEPLOY_SSH_KEY        — private SSH key for the deploy user
-#   DEPLOY_HOST           — server hostname or IP
-#   DEPLOY_USER           — SSH username
-#   DEPLOY_PATH           — absolute path on server (e.g. /var/www/example-app)
-#   APP_KEY               — Laravel APP_KEY for production
-#
-# Optional secrets (per-environment):
-#   STAGING_DEPLOY_HOST, PRODUCTION_DEPLOY_HOST, etc.
+# Required secrets: DEPLOY_SSH_KEY, DEPLOY_HOST, DEPLOY_USER, DEPLOY_PATH
 
 name: Deploy Applications
 
@@ -28,18 +10,13 @@ on:
   push:
     branches: [main]
     tags:
-      # Match version tags like v1.2.3
       - "v[0-9]+.[0-9]+.[0-9]+"
 
 concurrency:
   group: deploy-${{ github.ref }}
-  # Do NOT cancel in-progress deploys — let them finish.
   cancel-in-progress: false
 
 jobs:
-  # ---------------------------------------------------------------------------
-  # Determine environment from ref
-  # ---------------------------------------------------------------------------
   context:
     name: Resolve deploy environment
     runs-on: ubuntu-latest
@@ -55,9 +32,6 @@ jobs:
             echo "environment=staging" >> "$GITHUB_OUTPUT"
           fi
 
-  # ---------------------------------------------------------------------------
-  # Build + Deploy each application
-  # ---------------------------------------------------------------------------
   deploy:
     name: Deploy ${{ matrix.app }} → ${{ needs.context.outputs.environment }}
     runs-on: ubuntu-latest
@@ -69,24 +43,20 @@ jobs:
         app: [example-app]
 
     steps:
-      # -----------------------------------------------------------------------
-      # 1. Checkout
-      # -----------------------------------------------------------------------
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # -----------------------------------------------------------------------
-      # 2. Node.js — for Vite asset build
-      # -----------------------------------------------------------------------
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
+          cache: pnpm
 
-      # -----------------------------------------------------------------------
-      # 3. PHP — production version
-      # -----------------------------------------------------------------------
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -95,18 +65,12 @@ jobs:
           coverage: none
           tools: composer:v2
 
-      # -----------------------------------------------------------------------
-      # 4. Install npm dependencies and build assets
-      # -----------------------------------------------------------------------
-      - name: Install npm dependencies
-        run: npm ci
+      - name: Install pnpm dependencies
+        run: pnpm install --frozen-lockfile
 
-      - name: Build frontend assets
-        run: npm run build -- --filter=${{ matrix.app }}
+      - name: Build
+        run: pnpm run build --filter=${{ matrix.app }}
 
-      # -----------------------------------------------------------------------
-      # 5. Install Composer dependencies (no dev)
-      # -----------------------------------------------------------------------
       - name: Install Composer dependencies (production)
         run: |
           composer install \
@@ -116,10 +80,6 @@ jobs:
             --no-dev \
             --working-dir=applications/${{ matrix.app }}
 
-      # -----------------------------------------------------------------------
-      # 6. Deploy via rsync over SSH
-      #    Replace this step with your preferred deploy mechanism.
-      # -----------------------------------------------------------------------
       - name: Setup SSH agent
         uses: webfactory/ssh-agent@v0.9.0
         with:
@@ -137,9 +97,6 @@ jobs:
             applications/${{ matrix.app }}/ \
             ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:${{ secrets.DEPLOY_PATH }}/
 
-      # -----------------------------------------------------------------------
-      # 7. Run post-deploy artisan commands on the server
-      # -----------------------------------------------------------------------
       - name: Run post-deploy commands
         run: |
           ssh ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} << 'ENDSSH'

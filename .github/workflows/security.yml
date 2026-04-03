@@ -1,13 +1,6 @@
-# .github/workflows/security.yml
+# .github/workflows/security.yml — php-monorepo
 #
-# Security scanning — runs weekly and on every push to main.
-#
-# Checks:
-#   1. Composer audit    — known vulnerabilities in PHP dependencies
-#   2. npm audit         — known vulnerabilities in JS dependencies
-#   3. CodeQL analysis   — static analysis for PHP and JavaScript
-#
-# Results appear in the GitHub Security tab (repository → Security → Code scanning).
+# Security scanning — weekly + on every push to main.
 
 name: Security
 
@@ -15,13 +8,9 @@ on:
   push:
     branches: [main]
   schedule:
-    # Run every Monday at 08:00 UTC
     - cron: "0 8 * * 1"
 
 jobs:
-  # ---------------------------------------------------------------------------
-  # Dependency vulnerability audit
-  # ---------------------------------------------------------------------------
   audit:
     name: Dependency audit
     runs-on: ubuntu-latest
@@ -30,11 +19,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
+          cache: pnpm
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -43,9 +37,11 @@ jobs:
           tools: composer:v2
           coverage: none
 
-      - name: npm audit
-        # --audit-level=high fails only on high/critical vulnerabilities.
-        run: npm audit --audit-level=high
+      - name: Install pnpm dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: pnpm audit
+        run: pnpm audit --audit-level=high
         continue-on-error: true
 
       - name: Composer audit (all workspaces)
@@ -57,9 +53,6 @@ jobs:
             fi
           done
 
-  # ---------------------------------------------------------------------------
-  # CodeQL static analysis
-  # ---------------------------------------------------------------------------
   codeql:
     name: CodeQL analysis
     runs-on: ubuntu-latest
@@ -68,10 +61,6 @@ jobs:
       contents: read
       security-events: write
 
-    strategy:
-      matrix:
-        language: [javascript, php]
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -79,12 +68,11 @@ jobs:
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v3
         with:
-          languages: ${{ matrix.language }}
+          # PHP is not a supported CodeQL language — javascript only.
+          languages: javascript
 
       - name: Autobuild
         uses: github/codeql-action/autobuild@v3
 
       - name: Perform CodeQL analysis
         uses: github/codeql-action/analyze@v3
-        with:
-          category: "/language:${{ matrix.language }}"
