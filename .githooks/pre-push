@@ -1,0 +1,70 @@
+#!/usr/bin/env bash
+# .githooks/pre-push — php-monorepo
+#
+# Runs before `git push` as a final local gate.
+# Slower checks (full test suite) live here rather than in pre-commit.
+#
+# Checks (in order):
+#   1. PHP syntax check  — all PHP files in applications/ and modules/
+#   2. PHPUnit tests     — full test suite for every workspace
+#   3. turbo build       — ensure JS/Vite assets compile
+#
+# Skip for emergency pushes (use sparingly):
+#   git push --no-verify
+
+set -euo pipefail
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m'
+
+step()  { echo -e "${YELLOW}▶ $*${NC}"; }
+ok()    { echo -e "${GREEN}✔ $*${NC}"; }
+fail()  { echo -e "${RED}✖ $*${NC}"; exit 1; }
+
+command -v php >/dev/null 2>&1 || fail "php not found. Install PHP >= 8.2."
+
+# ── 1. PHP syntax check (all workspaces) ─────────────────────────────────────
+step "Checking PHP syntax across all workspaces..."
+
+SYNTAX_FAILED=0
+while IFS= read -r file; do
+  php -l "$file" > /dev/null 2>&1 || {
+    echo -e "${RED}  Syntax error: $file${NC}"
+    php -l "$file"
+    SYNTAX_FAILED=1
+  }
+done < <(find applications modules -name '*.php' \
+  -not -path '*/vendor/*' \
+  -not -path '*/node_modules/*' 2>/dev/null)
+
+[ "$SYNTAX_FAILED" -ne 0 ] && fail "PHP syntax errors found. Fix them before pushing."
+ok "PHP syntax check passed."
+
+# ── 2. PHPUnit tests (all workspaces) ────────────────────────────────────────
+step "Running PHPUnit tests across all workspaces..."
+
+TEST_FAILED=0
+for dir in applications/*/  modules/*/; do
+  if [ -f "$dir/vendor/bin/phpunit" ] && [ -f "$dir/phpunit.xml" ]; then
+    echo "  → testing $dir"
+    "$dir/vendor/bin/phpunit" --configuration="$dir/phpunit.xml" 2>&1 || {
+      echo -e "${RED}  Tests failed in: $dir${NC}"
+      TEST_FAILED=1
+    }
+  fi
+done
+
+[ "$TEST_FAILED" -ne 0 ] && fail "Tests failed. Fix them before pushing."
+ok "All tests passed."
+
+# ── 3. JS/Vite build (if npm is available) ────────────────────────────────────
+if command -v npm >/dev/null 2>&1; then
+  step "Building JS assets..."
+  npm run build 2>&1 || fail "JS build failed. Fix errors before pushing."
+  ok "JS build passed."
+fi
+
+# ── Done ──────────────────────────────────────────────────────────────────────
+ok "Pre-push checks passed. Pushing..."

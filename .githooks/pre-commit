@@ -1,0 +1,92 @@
+#!/usr/bin/env bash
+# .githooks/pre-commit — php-monorepo
+#
+# Runs before every commit as a fast local quality gate.
+#
+# Checks (in order):
+#   1. PHP syntax check  — fail if any staged PHP file has a parse error
+#   2. Prettier format   — fail if any staged JS/TS/JSON/MD file is unformatted
+#   3. composer lint     — run phpunit dry-run on affected modules
+#
+# Tests are intentionally skipped here (too slow for a commit hook).
+# Run `npm run test` manually before pushing, or rely on pre-push hook.
+#
+# Install:
+#   git config core.hooksPath .githooks
+
+set -euo pipefail
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m'
+
+step()  { echo -e "${YELLOW}▶ $*${NC}"; }
+ok()    { echo -e "${GREEN}✔ $*${NC}"; }
+fail()  { echo -e "${RED}✖ $*${NC}"; exit 1; }
+
+# ── Guard: require php ────────────────────────────────────────────────────────
+command -v php >/dev/null 2>&1 || fail "php not found. Install PHP >= 8.2."
+
+# ── Collect staged files ──────────────────────────────────────────────────────
+STAGED_PHP=$(git diff --cached --name-only --diff-filter=ACMR | grep '\.php$' || true)
+STAGED_JS=$(git diff --cached --name-only --diff-filter=ACMR \
+  | grep -E '\.(js|ts|json|md)$' || true)
+
+# ── 1. PHP syntax check ───────────────────────────────────────────────────────
+if [ -n "$STAGED_PHP" ]; then
+  step "Checking PHP syntax on staged files..."
+
+  SYNTAX_FAILED=0
+  while IFS= read -r file; do
+    if [ -f "$file" ]; then
+      php -l "$file" > /dev/null 2>&1 || {
+        echo -e "${RED}  Syntax error in: $file${NC}"
+        php -l "$file"
+        SYNTAX_FAILED=1
+      }
+    fi
+  done <<< "$STAGED_PHP"
+
+  [ "$SYNTAX_FAILED" -ne 0 ] && fail "PHP syntax errors found. Fix them before committing."
+  ok "PHP syntax check passed."
+else
+  ok "No staged PHP files — skipping syntax check."
+fi
+
+# ── 2. Prettier format check (JS/TS/JSON/MD) ──────────────────────────────────
+if [ -n "$STAGED_JS" ] && command -v npx >/dev/null 2>&1; then
+  step "Checking Prettier formatting..."
+  FILES=$(echo "$STAGED_JS" | tr '\n' ' ')
+  npx prettier --check $FILES 2>&1 || \
+    fail "Formatting issues found.\nRun: npm run format\nThen re-stage the files."
+  ok "Prettier format check passed."
+fi
+
+# ── 3. Composer lint on affected modules ──────────────────────────────────────
+if [ -n "$STAGED_PHP" ]; then
+  step "Running composer lint on affected workspaces..."
+
+  # Determine which workspace directories contain staged PHP files.
+  AFFECTED_DIRS=$(echo "$STAGED_PHP" \
+    | sed 's|/[^/]*$||' \
+    | sed 's|^\(applications/[^/]*\).*|\1|; s|^\(modules/[^/]*\).*|\1|' \
+    | sort -u)
+
+  LINT_FAILED=0
+  while IFS= read -r dir; do
+    if [ -f "$dir/composer.json" ] && [ -f "$dir/vendor/bin/phpunit" ]; then
+      echo "  → lint in $dir"
+      "$dir/vendor/bin/phpunit" --dry-run --working-directory="$dir" > /dev/null 2>&1 || {
+        echo -e "${RED}  Lint failed in: $dir${NC}"
+        LINT_FAILED=1
+      }
+    fi
+  done <<< "$AFFECTED_DIRS"
+
+  [ "$LINT_FAILED" -ne 0 ] && fail "Composer lint failed. Fix errors before committing."
+  ok "Composer lint passed."
+fi
+
+# ── Done ──────────────────────────────────────────────────────────────────────
+ok "Pre-commit checks passed."
