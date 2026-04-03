@@ -1,0 +1,18 @@
+{
+    "$schema": "https://turborepo.dev/schema.json",
+    "extends": ["//"],
+    "tasks": {
+        "build": {
+            "inputs": ["src/**/*.php", "composer.json", "composer.lock"],
+            "outputs": ["vendor/**"]
+        },
+        "test": {
+            "dependsOn": ["build"],
+            "inputs": ["src/**/*.php", "tests/**/*.php", "phpunit.xml"]
+        },
+        "lint": {
+            "dependsOn": ["build"],
+            "inputs": ["src/**/*.php", "tests/**/*.php"]
+        }
+    }
+}
