@@ -256,7 +256,6 @@
     }
   ],
   "scripts-descriptions": {
-    "_hooks": "── LIFECYCLE HOOKS ─────────────────────────────────",
     "_setup": "── SETUP ───────────────────────────────────────────",
     "setup": "Full setup: env + Docker + install + key:generate + migrate",
     "setup:env": "Copy .env templates and create symlinks via bin/setup-env",
