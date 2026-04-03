@@ -25,12 +25,13 @@
   // not present in the project vendor/ directory.
   "intelephense.diagnostics.typeErrors": false,
 
-  // Exclude the Composer\Script\Event class (and the whole Composer namespace)
-  // from undefined-type diagnostics. The scripts/ directory uses Composer's
-  // API which is only available inside the Composer phar at runtime.
-  "intelephense.diagnostics.ignore": [
-    "scripts/**"
-  ],
+  // Exclude Composer\Script\Event undefined type error (P1009) from
+  // the scripts/ files. These classes live inside the Composer phar
+  // at runtime and cannot be resolved by Intelephense statically.
+  "intelephense.problems.exclude": {
+    "/Users/akouta/Projects/monos/php-monorepo/scripts/ComposerScripts.php": [1009],
+    "/Users/akouta/Projects/monos/php-monorepo/scripts/WorkspaceDiscovery.php": [1009]
+  },
 
   // Blade: disable all built-in HTML/PHP validation inside .blade.php files.
   // Blade templates use Laravel-specific syntax that confuses standard validators.
@@ -94,5 +95,9 @@
     "**/node_modules": true,
     "**/storage": true,
     "**/.turbo": true
-  }
+  },
+  "php.problems.exclude": {
+    "/Users/akouta/Projects/monos/php-monorepo/scripts/ComposerScripts.php": [413],
+    "/Users/akouta/Projects/monos/php-monorepo/scripts/WorkspaceDiscovery.php": [413]
+}
 }
