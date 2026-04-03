@@ -59,7 +59,7 @@ if [ -n "$STAGED_JS" ] && command -v npx >/dev/null 2>&1; then
   step "Checking Prettier formatting..."
   FILES=$(echo "$STAGED_JS" | tr '\n' ' ')
   npx prettier --check $FILES 2>&1 || \
-    fail "Formatting issues found.\nRun: npm run format\nThen re-stage the files."
+    fail "Formatting issues found.\nRun: pnpm run format\nThen re-stage the files."
   ok "Prettier format check passed."
 fi
 

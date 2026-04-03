@@ -38,7 +38,7 @@
     "format:check": "prettier --check \"**/*.{js,ts,json,md,yaml,yml}\"",
     "clean":        "turbo run clean",
     "clean:all":    "turbo run clean && rm -rf node_modules",
-    "upgrade":      "npx npm-check-updates -u && npm install"
+    "upgrade":      "pnpm update --recursive --latest"
   },
   "devDependencies": {
     "prettier": "^3.7.4",
@@ -47,7 +47,7 @@
   },
   "engines": {
     "node": ">=18",
-    "npm": ">=10"
+    "pnpm": ">=10"
   },
-  "packageManager": "npm@10.9.7"
+  "packageManager": "pnpm@10.33.0"
 }

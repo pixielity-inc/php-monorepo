@@ -62,7 +62,7 @@ ok "All tests passed."
 # ── 3. JS/Vite build (if npm is available) ────────────────────────────────────
 if command -v npm >/dev/null 2>&1; then
   step "Building JS assets..."
-  npm run build 2>&1 || fail "JS build failed. Fix errors before pushing."
+  pnpm run build 2>&1 || fail "JS build failed. Fix errors before pushing."
   ok "JS build passed."
 fi
 
