@@ -1,0 +1,65 @@
+{
+    "name": "pixielity/laravel-docker",
+    "description": "Pixielity Docker module — container lifecycle management Composer scripts.",
+    "license": "MIT",
+    "version": "0.1.0",
+    "keywords": [
+        "docker",
+        "infrastructure",
+        "devops",
+        "laravel",
+        "pixielity"
+    ],
+    "homepage": "https://github.com/pixielity-inc/php-monorepo/tree/main/modules/docker",
+    "authors": [
+        {
+            "name": "Pixielity Team",
+            "email": "dev@pixielity.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.4"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.0"
+    },
+    "autoload": {},
+    "autoload-dev": {
+        "psr-4": {
+            "Pixielity\\Docker\\Scripts\\": "scripts/"
+        }
+    },
+    "scripts": {
+        "docker:check": "Pixielity\\Docker\\Scripts\\DockerScripts::check",
+        "docker:up": "Pixielity\\Docker\\Scripts\\DockerScripts::up",
+        "docker:up:kill": "Pixielity\\Docker\\Scripts\\DockerScripts::upKill",
+        "docker:up:orbstack": "Pixielity\\Docker\\Scripts\\DockerScripts::upOrbstack",
+        "docker:down": "Pixielity\\Docker\\Scripts\\DockerScripts::down",
+        "docker:down:clean": "Pixielity\\Docker\\Scripts\\DockerScripts::downClean",
+        "docker:restart": "Pixielity\\Docker\\Scripts\\DockerScripts::restart",
+        "docker:logs": "Pixielity\\Docker\\Scripts\\DockerScripts::logs",
+        "docker:ps": "Pixielity\\Docker\\Scripts\\DockerScripts::ps",
+        "docker:build": "Pixielity\\Docker\\Scripts\\DockerScripts::build",
+        "docker:clean": "Pixielity\\Docker\\Scripts\\DockerScripts::clean"
+    },
+    "scripts-descriptions": {
+        "docker:check": "Check if required ports are available",
+        "docker:up": "Start all Docker services",
+        "docker:up:kill": "Start Docker services, killing conflicting processes",
+        "docker:up:orbstack": "Start Docker services using OrbStack (macOS)",
+        "docker:down": "Stop all Docker services",
+        "docker:down:clean": "Stop Docker services and remove all volumes (deletes data)",
+        "docker:restart": "Restart all Docker services",
+        "docker:logs": "Follow Docker service logs",
+        "docker:ps": "List running Docker containers",
+        "docker:build": "Build the application Docker image (no cache)",
+        "docker:clean": "Remove all containers, networks, and volumes"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
