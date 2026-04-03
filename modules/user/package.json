@@ -1,7 +1,7 @@
 {
   "name": "@pixielity/laravel-user",
   "version": "0.1.0",
-  "description": "User module for Laravel applications",
+  "description": "Pixielity User module — user domain model, migrations, and service provider.",
   "homepage": "https://github.com/pixielity-inc/php-monorepo/tree/main/modules/user",
   "repository": {
     "type": "git",
@@ -28,5 +28,11 @@
   "engines": {
     "node": ">=18",
     "pnpm": ">=10"
+  },
+  "private": false,
+  "author": {
+    "name": "Pixielity Team",
+    "email": "dev@pixielity.com",
+    "url": "https://pixielity.com"
   }
 }

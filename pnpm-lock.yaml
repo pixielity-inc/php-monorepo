@@ -20,6 +20,10 @@ importers:
 
   applications/api: {}
 
+  modules/database: {}
+
+  modules/docker: {}
+
   modules/foundation: {}
 
   modules/framework: {}

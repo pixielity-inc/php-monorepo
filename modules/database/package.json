@@ -1,15 +1,12 @@
 {
-  "name": "@pixielity/laravel-framework",
+  "name": "@pixielity/laravel-database",
   "version": "0.1.0",
-  "description": "Pixielity Framework module — shared utilities, routing, container, serializer, and localization.",
-  "homepage": "https://github.com/pixielity-inc/php-monorepo/tree/main/modules/framework",
+  "description": "Pixielity database module — migrations, seeders, and database lifecycle management.",
+  "homepage": "https://github.com/pixielity-inc/php-monorepo/tree/main/modules/database",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pixielity-inc/php-monorepo.git",
-    "directory": "modules/framework"
-  },
-  "bugs": {
-    "url": "https://github.com/pixielity-inc/php-monorepo/issues"
+    "directory": "modules/database"
   },
   "license": "MIT",
   "scripts": {
@@ -18,11 +15,8 @@
     "lint": "vendor/bin/pint --test",
     "lint:fix": "vendor/bin/pint",
     "analyse": "vendor/bin/phpstan analyse --no-progress",
-    "refactor": "vendor/bin/rector process --dry-run",
-    "refactor:fix": "vendor/bin/rector process",
     "test": "vendor/bin/phpunit --testdox",
-    "test:coverage": "vendor/bin/phpunit --coverage-clover coverage.xml",
-    "clean": "rm -rf vendor .phpunit.result.cache coverage.xml",
+    "clean": "rm -rf vendor",
     "upgrade": "composer update"
   },
   "engines": {
@@ -30,6 +24,9 @@
     "pnpm": ">=10"
   },
   "private": false,
+  "bugs": {
+    "url": "https://github.com/pixielity-inc/php-monorepo/issues"
+  },
   "author": {
     "name": "Pixielity Team",
     "email": "dev@pixielity.com",

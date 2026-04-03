@@ -1,0 +1,30 @@
+{
+  "name": "@pixielity/laravel-docker",
+  "version": "0.1.0",
+  "description": "Pixielity Docker module — container lifecycle management Composer scripts.",
+  "homepage": "https://github.com/pixielity-inc/php-monorepo/tree/main/modules/docker",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pixielity-inc/php-monorepo.git",
+    "directory": "modules/docker"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "composer install --no-interaction --prefer-dist --optimize-autoloader",
+    "clean": "rm -rf vendor",
+    "upgrade": "composer update"
+  },
+  "engines": {
+    "node": ">=18",
+    "pnpm": ">=10"
+  },
+  "private": false,
+  "bugs": {
+    "url": "https://github.com/pixielity-inc/php-monorepo/issues"
+  },
+  "author": {
+    "name": "Pixielity Team",
+    "email": "dev@pixielity.com",
+    "url": "https://pixielity.com"
+  }
+}

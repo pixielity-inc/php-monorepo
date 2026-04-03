@@ -1,7 +1,7 @@
 {
   "name": "@pixielity/laravel-octane",
   "version": "0.1.0",
-  "description": "Laravel Octane integration module with simplified server management commands for production-grade headless API backends",
+  "description": "Pixielity Octane module — Laravel Octane integration with simplified server management.",
   "homepage": "https://github.com/pixielity-inc/php-monorepo/tree/main/modules/octane",
   "repository": {
     "type": "git",
@@ -28,5 +28,11 @@
   "engines": {
     "node": ">=18",
     "pnpm": ">=10"
+  },
+  "private": false,
+  "author": {
+    "name": "Pixielity Team",
+    "email": "dev@pixielity.com",
+    "url": "https://pixielity.com"
   }
 }

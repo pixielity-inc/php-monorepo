@@ -1,7 +1,7 @@
 {
   "name": "@pixielity/laravel-foundation",
   "version": "0.1.0",
-  "description": "Foundation module for Pixielity Laravel headless API backend - provides custom Application class, root route handlers, and base API structure",
+  "description": "Pixielity Foundation module — custom Application class, base API structure, and core providers.",
   "homepage": "https://github.com/pixielity-inc/php-monorepo/tree/main/modules/foundation",
   "repository": {
     "type": "git",
@@ -28,5 +28,11 @@
   "engines": {
     "node": ">=18",
     "pnpm": ">=10"
+  },
+  "private": false,
+  "author": {
+    "name": "Pixielity Team",
+    "email": "dev@pixielity.com",
+    "url": "https://pixielity.com"
   }
 }

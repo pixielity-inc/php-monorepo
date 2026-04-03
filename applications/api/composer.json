@@ -220,11 +220,6 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
-  "autoload-dev": {
-    "psr-4": {
-      "Pixielity\\Scripts\\": "../../scripts/"
-    }
-  },
   "repositories": [
     {
       "type": "path",

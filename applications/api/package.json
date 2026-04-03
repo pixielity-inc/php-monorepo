@@ -1,5 +1,5 @@
 {
-  "name": "@pixielity/api-app",
+  "name": "@pixielity/api",
   "version": "0.1.0",
   "description": "Pixielity Laravel API application.",
   "private": true,
@@ -41,5 +41,13 @@
   "engines": {
     "node": ">=18",
     "pnpm": ">=10"
+  },
+  "bugs": {
+    "url": "https://github.com/pixielity-inc/php-monorepo/issues"
+  },
+  "author": {
+    "name": "Pixielity Team",
+    "email": "dev@pixielity.com",
+    "url": "https://pixielity.com"
   }
 }
