@@ -129,41 +129,13 @@
     "octane:start:prod": "Pixielity\\Octane\\Scripts\\OctaneScripts::startProd",
     "octane:reload": "Pixielity\\Octane\\Scripts\\OctaneScripts::reload",
     "octane:stop": "Pixielity\\Octane\\Scripts\\OctaneScripts::stop",
-    "migrate": [
-      "php artisan migrate"
-    ],
-    "migrate:fresh": [
-      "php artisan migrate:fresh --seed"
-    ],
-    "migrate:rollback": [
-      "php artisan migrate:rollback"
-    ],
-    "db:seed": [
-      "php artisan db:seed"
-    ],
-    "optimize": [
-      "php artisan config:cache",
-      "php artisan route:cache",
-      "php artisan event:cache"
-    ],
-    "optimize:clear": [
-      "php artisan config:clear",
-      "php artisan route:clear",
-      "php artisan event:clear",
-      "php artisan cache:clear"
-    ],
-    "test": [
-      "@php artisan config:clear --ansi",
-      "@php artisan test"
-    ],
-    "test:coverage": [
-      "@php artisan config:clear --ansi",
-      "@php artisan test --coverage --coverage-clover=coverage.xml"
-    ],
-    "test:parallel": [
-      "@php artisan config:clear --ansi",
-      "@php artisan test --parallel"
-    ],
+    "migrate": "Pixielity\\Database\\Scripts\\DatabaseScripts::migrate",
+    "migrate:fresh": "Pixielity\\Database\\Scripts\\DatabaseScripts::fresh",
+    "migrate:rollback": "Pixielity\\Database\\Scripts\\DatabaseScripts::rollback",
+    "db:seed": "Pixielity\\Database\\Scripts\\DatabaseScripts::seed",
+    "test": "Pixielity\\Foundation\\Scripts\\TestScripts::run",
+    "test:coverage": "Pixielity\\Foundation\\Scripts\\TestScripts::coverage",
+    "test:parallel": "Pixielity\\Foundation\\Scripts\\TestScripts::parallel",
     "lint": "vendor/bin/pint --test",
     "lint:fix": "vendor/bin/pint",
     "analyse": "vendor/bin/phpstan analyse --memory-limit=512M --no-progress",
@@ -225,7 +197,13 @@
     "docker:clean": [
       "docker-compose -f docker/docker-compose.yml down -v --remove-orphans"
     ],
-    "octane:status": "Pixielity\\Octane\\Scripts\\OctaneScripts::status"
+    "octane:status": "Pixielity\\Octane\\Scripts\\OctaneScripts::status",
+    "cache:clear": "Pixielity\\Foundation\\Scripts\\CacheScripts::clear",
+    "cache:warm": "Pixielity\\Foundation\\Scripts\\CacheScripts::warm",
+    "cache:clean": "Pixielity\\Foundation\\Scripts\\CacheScripts::clean",
+    "test:filter": "Pixielity\\Foundation\\Scripts\\TestScripts::filter",
+    "migrate:status": "Pixielity\\Database\\Scripts\\DatabaseScripts::status",
+    "db:fresh": "Pixielity\\Database\\Scripts\\DatabaseScripts::freshAndSeed"
   },
   "extra": {
     "laravel": {
@@ -305,13 +283,13 @@
     "octane:start:prod": "Cache config/routes/events then start Octane for production",
     "octane:reload": "Reload Octane workers without downtime (use after deploy)",
     "octane:stop": "Stop the running Octane server",
-    "migrate": "Run pending migrations",
+    "migrate": "Run pending database migrations",
     "migrate:fresh": "Drop all tables and re-run migrations with seeders",
     "migrate:rollback": "Rollback the last migration batch",
-    "db:seed": "Run database seeders",
+    "db:seed": "Seed the database",
     "optimize": "Cache config, routes, and events for production",
     "optimize:clear": "Clear all application caches",
-    "test": "Run the full test suite",
+    "test": "Clear config cache then run the full test suite",
     "test:coverage": "Run tests with Clover XML coverage report",
     "test:parallel": "Run tests in parallel",
     "lint": "Check code style with Laravel Pint (no fix)",
@@ -341,6 +319,12 @@
     "docker:ps": "List running Docker containers",
     "docker:build": "Build the application Docker image",
     "docker:clean": "Remove all containers, networks, and volumes",
-    "octane:status": "Show Octane server status"
+    "octane:status": "Show Octane server status",
+    "cache:clear": "Flush all caches using cache:flush --force",
+    "cache:warm": "Cache config, routes, and events for production",
+    "cache:clean": "Clean specific cache types (pass types after --)",
+    "test:filter": "Run tests matching a filter (pass pattern after --)",
+    "migrate:status": "Show the status of each migration",
+    "db:fresh": "Drop all tables, migrate, and seed"
   }
 }
