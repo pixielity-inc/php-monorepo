@@ -1,159 +1,116 @@
-# Turborepo starter
+# php-monorepo
 
-This Turborepo starter is maintained by the Turborepo core team.
+A production-ready PHP monorepo powered by [Turborepo](https://turborepo.dev).
 
-## Using this example
+[![CI](https://github.com/your-org/php-monorepo/actions/workflows/ci.yml/badge.svg)](https://github.com/your-org/php-monorepo/actions/workflows/ci.yml)
+[![Security](https://github.com/your-org/php-monorepo/actions/workflows/security.yml/badge.svg)](https://github.com/your-org/php-monorepo/actions/workflows/security.yml)
 
-Run the following command:
+---
 
-```sh
-npx create-turbo@latest
+## Structure
+
+```
+php-monorepo/
+├── applications/          # Deployable apps
+│   └── example-app/       # Laravel 13 application
+├── modules/               # Shared PHP libraries (publishable to Packagist)
+│   └── example_package/   # Example utility module
+├── .github/
+│   ├── workflows/
+│   │   ├── ci.yml         # Lint + test on every PR / push
+│   │   ├── cd_deploy.yml  # Deploy applications on main / version tags
+│   │   ├── cd_publish.yml # Publish modules to Packagist on module tags
+│   │   ├── security.yml   # Weekly dependency audit + CodeQL
+│   │   └── release.yml    # GitHub Release on repo-level version tags
+│   ├── ISSUE_TEMPLATE/
+│   └── PULL_REQUEST_TEMPLATE/
+├── turbo.json             # Root Turborepo pipeline
+└── package.json           # npm workspaces root
 ```
 
-## What's inside?
+---
 
-This Turborepo includes the following packages/apps:
+## Quick start
 
-### Apps and Packages
+```bash
+# Install JS dependencies
+npm install
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+# Install Composer dependencies for all workspaces
+for dir in applications/*/  modules/*/; do
+  [ -f "$dir/composer.json" ] && composer install --working-dir="$dir"
+done
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+# Prepare the Laravel app
+cp applications/example-app/.env.example applications/example-app/.env
+php applications/example-app/artisan key:generate
+php applications/example-app/artisan migrate
 
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
-
-```sh
-cd my-turborepo
-turbo build
+# Start everything in dev mode
+npm run dev
 ```
 
-Without global `turbo`, use your package manager:
+---
 
-```sh
-cd my-turborepo
-npx turbo build
-yarn dlx turbo build
-pnpm exec turbo build
+## Common commands
+
+| Command           | Description                                      |
+|-------------------|--------------------------------------------------|
+| `npm run build`   | Build all workspaces in dependency order         |
+| `npm run dev`     | Start all workspaces in watch / dev mode         |
+| `npm run test`    | Run all test suites                              |
+| `npm run lint`    | Lint all workspaces                              |
+| `npm run clean`   | Remove all build artefacts                       |
+
+Filter to a single workspace:
+
+```bash
+npm run test -- --filter=@repo/example-package
+npm run build -- --filter=@repo/example-app
 ```
 
-You can build a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+---
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
+## Adding a new application
 
-```sh
-turbo build --filter=docs
+```bash
+laravel new applications/my-app --no-interaction
+# Add a name field to applications/my-app/package.json
+npm install
 ```
 
-Without global `turbo`:
+## Adding a new module
 
-```sh
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
+Copy `modules/example_package` as a template, update the namespace and
+`composer.json` name, then run `npm install`.
+
+## Publishing a module
+
+```bash
+# Bump version in modules/example_package/composer.json
+git add . && git commit -m "chore: bump example_package to 1.2.3"
+git tag example_package-v1.2.3
+git push && git push --tags
 ```
 
-### Develop
+The `cd_publish.yml` workflow handles the rest.
 
-To develop all apps and packages, run the following command:
+---
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
+## Required GitHub secrets
 
-```sh
-cd my-turborepo
-turbo dev
-```
+| Secret               | Used by          | Description                              |
+|----------------------|------------------|------------------------------------------|
+| `CODECOV_TOKEN`      | ci.yml           | Codecov upload token                     |
+| `DEPLOY_SSH_KEY`     | cd_deploy.yml    | Private SSH key for the deploy server    |
+| `DEPLOY_HOST`        | cd_deploy.yml    | Deploy server hostname                   |
+| `DEPLOY_USER`        | cd_deploy.yml    | SSH username                             |
+| `DEPLOY_PATH`        | cd_deploy.yml    | Absolute path on server                  |
+| `PACKAGIST_USERNAME` | cd_publish.yml   | Packagist username                       |
+| `PACKAGIST_TOKEN`    | cd_publish.yml   | Packagist API token                      |
 
-Without global `turbo`, use your package manager:
+---
 
-```sh
-cd my-turborepo
-npx turbo dev
-yarn exec turbo dev
-pnpm exec turbo dev
-```
+## License
 
-You can develop a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
-
-```sh
-turbo dev --filter=web
-```
-
-Without global `turbo`:
-
-```sh
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-```
-
-### Remote Caching
-
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
-
-```sh
-cd my-turborepo
-turbo login
-```
-
-Without global `turbo`, use your package manager:
-
-```sh
-cd my-turborepo
-npx turbo login
-yarn exec turbo login
-pnpm exec turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
-
-```sh
-turbo link
-```
-
-Without global `turbo`:
-
-```sh
-npx turbo link
-yarn exec turbo link
-pnpm exec turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turborepo.dev/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.dev/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.dev/docs/reference/configuration)
-- [CLI Usage](https://turborepo.dev/docs/reference/command-line-reference)
+MIT
