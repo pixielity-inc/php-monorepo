@@ -28,16 +28,22 @@
     "pixielity/laravel-user": "*"
   },
   "require-dev": {
+    "barryvdh/laravel-debugbar": "^4.1",
     "driftingly/rector-laravel": "^2.2",
     "fakerphp/faker": "^1.23",
-    "laravel/pail": "^1.2",
+    "larastan/larastan": "^3.9",
+    "laravel/boost": "^2.0",
+    "laravel/pail": "^1.2.5",
     "laravel/pint": "^1.29",
-    "larastan/larastan": "^3.0",
     "mockery/mockery": "^1.6",
     "nunomaduro/collision": "^8.6",
+    "nunomaduro/phpinsights": "^2.14",
+    "pestphp/pest": "^4.4",
+    "pestphp/pest-plugin-laravel": "^4.1",
     "phpstan/phpstan": "^2.1",
-    "phpunit/phpunit": "^12.5",
-    "rector/rector": "^2.3"
+    "phpunit/phpunit": "^12.5.12",
+    "rector/rector": "^2.3",
+    "spatie/laravel-ray": "^1.43"
   },
   "suggest": {
     "laravel/cashier": "Stripe billing and subscription management",
@@ -59,10 +65,8 @@
     "spatie/laravel-medialibrary": "Associate files with Eloquent models",
     "spatie/laravel-permission": "Role and permission management",
     "spatie/laravel-query-builder": "Easily build Eloquent queries from API requests",
-    "spatie/laravel-ray": "Debug with Ray app",
     "spatie/laravel-sluggable": "Generate slugs for Eloquent models",
     "spatie/laravel-translatable": "Making Eloquent models translatable",
-    "barryvdh/laravel-debugbar": "PHP Debugbar integration",
     "barryvdh/laravel-ide-helper": "IDE helper for Laravel facades and models",
     "pestphp/pest": "Elegant PHP testing framework",
     "pestphp/pest-plugin-laravel": "Pest plugin for Laravel"
@@ -73,6 +77,27 @@
     ]
   },
   "scripts": {
+    "post-install-cmd": [
+      "Pixielity\\Scripts\\ComposerScripts::ensureRepositories"
+    ],
+    "post-update-cmd": [
+      "Pixielity\\Scripts\\ComposerScripts::ensureRepositories",
+      "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
+    ],
+    "post-autoload-dump": [
+      "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+      "@php artisan package:discover --ansi"
+    ],
+    "post-root-package-install": [
+      "php bin/setup-env"
+    ],
+    "post-create-project-cmd": [
+      "php bin/setup-env",
+      "php artisan key:generate --ansi"
+    ],
+    "pre-package-uninstall": [
+      "Illuminate\\Foundation\\ComposerScripts::prePackageUninstall"
+    ],
     "setup": [
       "@setup:env",
       "@docker:up",
@@ -88,6 +113,85 @@
       "php bin/setup-env",
       "php artisan key:generate --ansi"
     ],
+    "dev": [
+      "Composer\\Config::disableProcessTimeout",
+      "php artisan serve"
+    ],
+    "dev:octane": [
+      "Composer\\Config::disableProcessTimeout",
+      "php artisan octane:start --server=frankenphp --watch"
+    ],
+    "dev:full": [
+      "Composer\\Config::disableProcessTimeout",
+      "npx concurrently -c \"#93c5fd,#c4b5fd,#fb7185\" \"php artisan octane:start --server=frankenphp --watch\" \"php artisan queue:listen --tries=1 --timeout=0\" \"php artisan pail --timeout=0\" --names=octane,queue,logs --kill-others"
+    ],
+    "octane:start": "Pixielity\\Octane\\Scripts\\OctaneScripts::start",
+    "octane:start:prod": "Pixielity\\Octane\\Scripts\\OctaneScripts::startProd",
+    "octane:reload": "Pixielity\\Octane\\Scripts\\OctaneScripts::reload",
+    "octane:stop": "Pixielity\\Octane\\Scripts\\OctaneScripts::stop",
+    "migrate": [
+      "php artisan migrate"
+    ],
+    "migrate:fresh": [
+      "php artisan migrate:fresh --seed"
+    ],
+    "migrate:rollback": [
+      "php artisan migrate:rollback"
+    ],
+    "db:seed": [
+      "php artisan db:seed"
+    ],
+    "optimize": [
+      "php artisan config:cache",
+      "php artisan route:cache",
+      "php artisan event:cache"
+    ],
+    "optimize:clear": [
+      "php artisan config:clear",
+      "php artisan route:clear",
+      "php artisan event:clear",
+      "php artisan cache:clear"
+    ],
+    "test": [
+      "@php artisan config:clear --ansi",
+      "@php artisan test"
+    ],
+    "test:coverage": [
+      "@php artisan config:clear --ansi",
+      "@php artisan test --coverage --coverage-clover=coverage.xml"
+    ],
+    "test:parallel": [
+      "@php artisan config:clear --ansi",
+      "@php artisan test --parallel"
+    ],
+    "lint": "vendor/bin/pint --test",
+    "lint:fix": "vendor/bin/pint",
+    "analyse": "vendor/bin/phpstan analyse --memory-limit=512M --no-progress",
+    "analyse:baseline": "vendor/bin/phpstan analyse --memory-limit=512M --generate-baseline",
+    "refactor": "vendor/bin/rector process --dry-run",
+    "refactor:fix": "vendor/bin/rector process",
+    "insights": [
+      "vendor/bin/phpinsights analyse --no-interaction"
+    ],
+    "insights:fix": [
+      "vendor/bin/phpinsights analyse --fix --no-interaction"
+    ],
+    "quality": [
+      "@lint",
+      "@analyse",
+      "@test"
+    ],
+    "quality:fix": [
+      "@lint:fix",
+      "@refactor:fix",
+      "@analyse"
+    ],
+    "env:dev": "Pixielity\\Scripts\\ComposerScripts::envDev",
+    "env:testing": "Pixielity\\Scripts\\ComposerScripts::envTesting",
+    "env:prod": "Pixielity\\Scripts\\ComposerScripts::envProd",
+    "env:status": "Pixielity\\Scripts\\ComposerScripts::envStatus",
+    "repos:sync": "Pixielity\\Scripts\\ComposerScripts::reposSync",
+    "repos:check": "Pixielity\\Scripts\\ComposerScripts::reposCheck",
     "docker:check": [
       "bash bin/docker-check-ports"
     ],
@@ -121,114 +225,7 @@
     "docker:clean": [
       "docker-compose -f docker/docker-compose.yml down -v --remove-orphans"
     ],
-    "dev": [
-      "Composer\\Config::disableProcessTimeout",
-      "php artisan serve"
-    ],
-    "dev:octane": [
-      "Composer\\Config::disableProcessTimeout",
-      "php artisan octane:start --server=frankenphp --watch"
-    ],
-    "dev:full": [
-      "Composer\\Config::disableProcessTimeout",
-      "npx concurrently -c \"#93c5fd,#c4b5fd,#fb7185\" \"php artisan octane:start --server=frankenphp --watch\" \"php artisan queue:listen --tries=1 --timeout=0\" \"php artisan pail --timeout=0\" --names=octane,queue,logs --kill-others"
-    ],
-    "octane": [
-      "Composer\\Config::disableProcessTimeout",
-      "php artisan octane:start --server=frankenphp --watch"
-    ],
-    "octane:prod": [
-      "php artisan config:cache",
-      "php artisan route:cache",
-      "php artisan event:cache",
-      "php artisan octane:start ----server=frankenphp --host=0.0.0.0 --port=8000"
-    ],
-    "octane:reload": [
-      "php artisan octane:reload"
-    ],
-    "octane:stop": [
-      "php artisan octane:stop"
-    ],
-    "optimize": [
-      "php artisan config:cache",
-      "php artisan route:cache",
-      "php artisan event:cache"
-    ],
-    "optimize:clear": [
-      "php artisan config:clear",
-      "php artisan route:clear",
-      "php artisan event:clear",
-      "php artisan cache:clear"
-    ],
-    "test": [
-      "php artisan config:clear --ansi",
-      "php artisan test"
-    ],
-    "test:coverage": [
-      "@php artisan config:clear --ansi",
-      "@php artisan test --coverage --coverage-clover=coverage.xml"
-    ],
-    "test:parallel": [
-      "@php artisan config:clear --ansi",
-      "@php artisan test --parallel"
-    ],
-    "format": [
-      "vendor/bin/pint"
-    ],
-    "format:test": [
-      "vendor/bin/pint --test"
-    ],
-    "refactor": "vendor/bin/rector process --dry-run",
-    "refactor:fix": "vendor/bin/rector process",
-    "analyse": "vendor/bin/phpstan analyse --memory-limit=512M --no-progress",
-    "analyse:baseline": "vendor/bin/phpstan analyse --memory-limit=512M --generate-baseline",
-    "insights": [
-      "vendor/bin/phpinsights analyse --no-interaction"
-    ],
-    "insights:fix": [
-      "vendor/bin/phpinsights analyse --fix --no-interaction"
-    ],
-    "quality": [
-      "@format",
-      "@refactor:dry",
-      "@analyse"
-    ],
-    "quality:fix": [
-      "@format",
-      "@refactor",
-      "@analyse"
-    ],
-    "lint": "vendor/bin/pint --test",
-    "lint:fix": "vendor/bin/pint",
-    "cache:clear": "@php artisan optimize:clear",
-    "cache:warm": "@php artisan optimize",
-    "env:dev": "Pixielity\\Scripts\\ComposerScripts::envDev",
-    "env:testing": "Pixielity\\Scripts\\ComposerScripts::envTesting",
-    "env:prod": "Pixielity\\Scripts\\ComposerScripts::envProd",
-    "env:status": "Pixielity\\Scripts\\ComposerScripts::envStatus",
-    "repos:sync": "Pixielity\\Scripts\\ComposerScripts::reposSync",
-    "repos:check": "Pixielity\\Scripts\\ComposerScripts::reposCheck",
-    "post-autoload-dump": [
-      "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-      "@php artisan package:discover --ansi"
-    ],
-    "post-update-cmd": [
-      "Pixielity\\Scripts\\ComposerScripts::ensureRepositories",
-      "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
-    ],
-    "post-root-package-install": [
-      "php bin/setup-env"
-    ],
-    "post-create-project-cmd": [
-      "php bin/setup-env",
-      "php artisan key:generate --ansi"
-    ],
-    "pre-package-uninstall": [
-      "Illuminate\\Foundation\\ComposerScripts::prePackageUninstall"
-    ],
-    "post-install-cmd": [
-      "Pixielity\\Scripts\\ComposerScripts::ensureRepositories"
-    ]
+    "octane:status": "Pixielity\\Octane\\Scripts\\OctaneScripts::status"
   },
   "extra": {
     "laravel": {
@@ -296,5 +293,54 @@
         "symlink": true
       }
     }
-  ]
+  ],
+  "scripts-descriptions": {
+    "setup": "Full setup: env + Docker + install + key + migrate",
+    "setup:env": "Copy and configure .env from template",
+    "setup:quick": "Quick setup without Docker",
+    "dev": "Start Laravel dev server (php artisan serve)",
+    "dev:octane": "Start Octane dev server with FrankenPHP + watch",
+    "dev:full": "Start Octane + queue + pail concurrently",
+    "octane:start": "Start Octane dev server (FrankenPHP + watch, reads OCTANE_SERVER/HOST/PORT)",
+    "octane:start:prod": "Cache config/routes/events then start Octane for production",
+    "octane:reload": "Reload Octane workers without downtime (use after deploy)",
+    "octane:stop": "Stop the running Octane server",
+    "migrate": "Run pending migrations",
+    "migrate:fresh": "Drop all tables and re-run migrations with seeders",
+    "migrate:rollback": "Rollback the last migration batch",
+    "db:seed": "Run database seeders",
+    "optimize": "Cache config, routes, and events for production",
+    "optimize:clear": "Clear all application caches",
+    "test": "Run the full test suite",
+    "test:coverage": "Run tests with Clover XML coverage report",
+    "test:parallel": "Run tests in parallel",
+    "lint": "Check code style with Laravel Pint (no fix)",
+    "lint:fix": "Fix code style issues with Laravel Pint",
+    "analyse": "Run PHPStan static analysis",
+    "analyse:baseline": "Generate PHPStan baseline file",
+    "refactor": "Preview Rector refactoring changes (dry-run)",
+    "refactor:fix": "Apply Rector refactoring changes",
+    "insights": "Run PHP Insights quality analysis",
+    "insights:fix": "Run PHP Insights and apply fixes",
+    "quality": "Run all quality checks: lint + analyse + test",
+    "quality:fix": "Fix all quality issues: lint:fix + refactor:fix + analyse",
+    "env:dev": "Switch to dev environment (stability, .env, path repos)",
+    "env:testing": "Switch to testing environment",
+    "env:prod": "Switch to production environment",
+    "env:status": "Show current environment status",
+    "repos:sync": "Add missing local module path repositories",
+    "repos:check": "Dry-run: list unregistered local module paths",
+    "docker:check": "Check if required ports are available",
+    "docker:up": "Start Docker services",
+    "docker:up:kill": "Start Docker services, killing conflicting processes",
+    "docker:up:orbstack": "Start Docker services using OrbStack",
+    "docker:down": "Stop Docker services",
+    "docker:down:clean": "Stop Docker services and remove volumes",
+    "docker:restart": "Restart all Docker services",
+    "docker:logs": "Follow Docker service logs",
+    "docker:ps": "List running Docker containers",
+    "docker:build": "Build the application Docker image",
+    "docker:clean": "Remove all containers, networks, and volumes",
+    "octane:status": "Show Octane server status"
+  }
 }
