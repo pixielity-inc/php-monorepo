@@ -1,111 +1,89 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360" width="1200" height="360">
-  <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="360" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#0D1117"/>
-      <stop offset="100%" stop-color="#12101A"/>
-    </linearGradient>
-    <linearGradient id="topLine" x1="0" y1="0" x2="1200" y2="0" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#8892BF" stop-opacity="0"/>
-      <stop offset="30%" stop-color="#8892BF"/>
-      <stop offset="70%" stop-color="#4F5B93"/>
-      <stop offset="100%" stop-color="#4F5B93" stop-opacity="0"/>
-    </linearGradient>
-    <linearGradient id="divLine" x1="0" y1="0" x2="0" y2="360" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#8892BF" stop-opacity="0"/>
-      <stop offset="40%" stop-color="#8892BF" stop-opacity="0.3"/>
-      <stop offset="60%" stop-color="#8892BF" stop-opacity="0.3"/>
-      <stop offset="100%" stop-color="#8892BF" stop-opacity="0"/>
-    </linearGradient>
-    <clipPath id="clip"><rect width="1200" height="360" rx="14"/></clipPath>
-  </defs>
+<svg width="100%" viewBox="0 0 1200 370" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <pattern id="dots3" x="0" y="0" width="32" height="32" patternUnits="userSpaceOnUse">
+    <circle cx="1" cy="1" r="1" fill="#1c0a00"/>
+  </pattern>
+  <linearGradient id="divider3" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#dc2626" stop-opacity="0"/>
+    <stop offset="40%" stop-color="#dc2626" stop-opacity="0.35"/>
+    <stop offset="60%" stop-color="#dc2626" stop-opacity="0.35"/>
+    <stop offset="100%" stop-color="#dc2626" stop-opacity="0"/>
+  </linearGradient>
+  <linearGradient id="accent3" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0%" stop-color="#dc2626"/>
+    <stop offset="100%" stop-color="#f97316"/>
+  </linearGradient>
+</defs>
 
-  <g clip-path="url(#clip)">
-    <rect width="1200" height="360" fill="url(#bg)"/>
-    <pattern id="dots" width="32" height="32" patternUnits="userSpaceOnUse">
-      <circle cx="16" cy="16" r="0.8" fill="#21262D"/>
-    </pattern>
-    <rect width="1200" height="360" fill="url(#dots)"/>
-    <rect x="0" y="0" width="1200" height="2.5" fill="url(#topLine)"/>
+<!-- Background -->
+<rect width="1200" height="360" fill="#0c0400" style="fill:rgb(12, 4, 0);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<rect width="1200" height="360" fill="url(#dots3)" style="stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
 
-    <!-- ═══════════════ LEFT PANEL ═══════════════ -->
+<!-- Top accent bar -->
+<rect width="1200" height="3" fill="url(#accent3)" style="stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
 
-    <!-- PHP official logo — purple pill with "php" text -->
-    <g transform="translate(52, 118)">
-      <!-- outer pill -->
-      <ellipse cx="68" cy="48" rx="68" ry="48" fill="#4F5B93"/>
-      <!-- inner pill highlight -->
-      <ellipse cx="68" cy="48" rx="58" ry="38" fill="#8892BF" opacity="0.25"/>
-      <!-- PHP text -->
-      <text x="68" y="57"
-        font-family="'Arial Black','Helvetica Neue',Helvetica,sans-serif"
-        font-size="30" font-weight="900" fill="#FFFFFF"
-        text-anchor="middle" letter-spacing="1">php</text>
-    </g>
+<!-- PHP logo pill -->
+<g transform="translate(44, 104)" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
+  <rect x="0" y="0" width="132" height="72" rx="36" fill="#4F5B93" style="fill:rgb(79, 91, 147);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <rect x="6" y="6" width="120" height="60" rx="30" fill="#6875A8" fill-opacity="0.4" style="fill:rgb(104, 117, 168);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="66" y="44" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="28" font-weight="700" fill="#ffffff" style="fill:rgb(255, 255, 255);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:28px;font-weight:700;text-anchor:middle;dominant-baseline:auto">php</text>
+</g>
 
-    <!-- Laravel flame — small, to the right of PHP logo -->
-    <g transform="translate(196, 128)" opacity="0.75">
-      <path d="M16,0 C18,12 26,18 28,32 C30,18 38,12 40,0 C38,14 32,20 28,32 C24,20 18,14 16,0Z" fill="#FF2D20"/>
-      <path d="M4,8 C6,18 12,22 14,32 C16,22 22,18 24,8 C22,18 18,22 14,32 C10,22 6,18 4,8Z" fill="#FF6B6B" opacity="0.7"/>
-    </g>
+<!-- Laravel flame (simple path) -->
+<g transform="translate(188, 104)" opacity="0.9" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.9;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
+  <path d="M18 0 C18 0 32 14 32 28 C32 36 26 42 18 42 C10 42 4 36 4 28 C4 20 10 14 10 14 C10 14 12 22 18 22 C24 22 24 16 18 0Z" fill="#ef4444" style="fill:rgb(239, 68, 68);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <path d="M18 16 C18 16 24 22 24 30 C24 35 21 38 18 38 C15 38 12 35 12 30 C12 26 15 22 15 22 C15 22 16 26 18 26 C20 26 20 22 18 16Z" fill="#fca5a5" opacity="0.6" style="fill:rgb(252, 165, 165);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.6;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+</g>
 
-    <!-- Title — starts at x=240 (clear of both icons) -->
-    <text x="240" y="152"
-      font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,sans-serif"
-      font-size="44" font-weight="700" fill="#E6EDF3" letter-spacing="-0.5">PHP Monorepo</text>
+<!-- Title -->
+<text x="246" y="130" font-family="system-ui,-apple-system,sans-serif" font-size="44" font-weight="700" fill="#fff1f2" style="fill:rgb(255, 241, 242);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:44px;font-weight:700;text-anchor:start;dominant-baseline:auto">PHP Monorepo</text>
 
-    <!-- Subtitle -->
-    <text x="240" y="190"
-      font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,sans-serif"
-      font-size="15.5" fill="#8B949E">Production-ready Laravel monorepo template</text>
-    <text x="240" y="212"
-      font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,sans-serif"
-      font-size="15.5" fill="#8B949E">Turborepo · nWidart Modules · Rector · PHPStan</text>
+<!-- Subtitles -->
+<text x="246" y="160" font-family="system-ui,-apple-system,sans-serif" font-size="15" fill="#991b1b" style="fill:rgb(153, 27, 27);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:15px;font-weight:400;text-anchor:start;dominant-baseline:auto">Production-ready Laravel monorepo template</text>
+<text x="246" y="181" font-family="system-ui,-apple-system,sans-serif" font-size="15" fill="#991b1b" style="fill:rgb(153, 27, 27);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:15px;font-weight:400;text-anchor:start;dominant-baseline:auto">Turborepo · nWidart Modules · Rector · PHPStan</text>
 
-    <!-- Badge row 1 -->
-    <g transform="translate(240, 232)">
-      <rect x="0"   y="0" width="90" height="26" rx="5" fill="#FF2D20" fill-opacity="0.1" stroke="#FF2D20" stroke-width="0.8" stroke-opacity="0.6"/>
-      <text x="45"  y="17.5" font-family="system-ui,sans-serif" font-size="11.5" font-weight="600" fill="#FCA5A5" text-anchor="middle">Laravel 13</text>
+<!-- Badge row 1 -->
+<g transform="translate(44, 200)" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
+  <rect x="0" y="0" width="90" height="26" rx="5" fill="#dc2626" fill-opacity="0.15" stroke="#dc2626" stroke-opacity="0.6" stroke-width="1" style="fill:rgb(220, 38, 38);stroke:rgb(220, 38, 38);color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="45" y="17.5" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="11.5" font-weight="600" fill="#fca5a5" style="fill:rgb(252, 165, 165);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:11.5px;font-weight:600;text-anchor:middle;dominant-baseline:auto">Laravel 13</text>
 
-      <rect x="100" y="0" width="76" height="26" rx="5" fill="#8892BF" fill-opacity="0.1" stroke="#8892BF" stroke-width="0.8" stroke-opacity="0.6"/>
-      <text x="138" y="17.5" font-family="system-ui,sans-serif" font-size="11.5" font-weight="600" fill="#A5B4FC" text-anchor="middle">PHP 8.4</text>
+  <rect x="98" y="0" width="76" height="26" rx="5" fill="#c2410c" fill-opacity="0.15" stroke="#c2410c" stroke-opacity="0.6" stroke-width="1" style="fill:rgb(194, 65, 12);stroke:rgb(194, 65, 12);color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="136" y="17.5" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="11.5" font-weight="600" fill="#fdba74" style="fill:rgb(253, 186, 116);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:11.5px;font-weight:600;text-anchor:middle;dominant-baseline:auto">PHP 8.4</text>
 
-      <rect x="186" y="0" width="90" height="26" rx="5" fill="#EF4444" fill-opacity="0.1" stroke="#EF4444" stroke-width="0.8" stroke-opacity="0.6"/>
-      <text x="231" y="17.5" font-family="system-ui,sans-serif" font-size="11.5" font-weight="600" fill="#FCA5A5" text-anchor="middle">Turborepo</text>
-    </g>
+  <rect x="182" y="0" width="90" height="26" rx="5" fill="#b91c1c" fill-opacity="0.15" stroke="#b91c1c" stroke-opacity="0.6" stroke-width="1" style="fill:rgb(185, 28, 28);stroke:rgb(185, 28, 28);color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="227" y="17.5" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="11.5" font-weight="600" fill="#fca5a5" style="fill:rgb(252, 165, 165);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:11.5px;font-weight:600;text-anchor:middle;dominant-baseline:auto">Turborepo</text>
+</g>
 
-    <!-- Badge row 2 -->
-    <g transform="translate(240, 268)">
-      <rect x="0"   y="0" width="110" height="26" rx="5" fill="#10B981" fill-opacity="0.1" stroke="#10B981" stroke-width="0.8" stroke-opacity="0.6"/>
-      <text x="55"  y="17.5" font-family="system-ui,sans-serif" font-size="11.5" font-weight="600" fill="#6EE7B7" text-anchor="middle">nWidart Mod.</text>
+<!-- Badge row 2 -->
+<g transform="translate(44, 234)" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
+  <rect x="0" y="0" width="100" height="26" rx="5" fill="#92400e" fill-opacity="0.15" stroke="#92400e" stroke-opacity="0.6" stroke-width="1" style="fill:rgb(146, 64, 14);stroke:rgb(146, 64, 14);color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="50" y="17.5" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="11.5" font-weight="600" fill="#fde68a" style="fill:rgb(253, 230, 138);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:11.5px;font-weight:600;text-anchor:middle;dominant-baseline:auto">nWidart Mod.</text>
 
-      <rect x="120" y="0" width="76" height="26" rx="5" fill="#F59E0B" fill-opacity="0.1" stroke="#F59E0B" stroke-width="0.8" stroke-opacity="0.6"/>
-      <text x="158" y="17.5" font-family="system-ui,sans-serif" font-size="11.5" font-weight="600" fill="#FCD34D" text-anchor="middle">Rector 2</text>
+  <rect x="108" y="0" width="84" height="26" rx="5" fill="#b45309" fill-opacity="0.15" stroke="#b45309" stroke-opacity="0.6" stroke-width="1" style="fill:rgb(180, 83, 9);stroke:rgb(180, 83, 9);color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="150" y="17.5" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="11.5" font-weight="600" fill="#fcd34d" style="fill:rgb(252, 211, 77);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:11.5px;font-weight:600;text-anchor:middle;dominant-baseline:auto">Rector 2</text>
 
-      <rect x="206" y="0" width="84" height="26" rx="5" fill="#60A5FA" fill-opacity="0.1" stroke="#60A5FA" stroke-width="0.8" stroke-opacity="0.6"/>
-      <text x="248" y="17.5" font-family="system-ui,sans-serif" font-size="11.5" font-weight="600" fill="#93C5FD" text-anchor="middle">PHPStan 2</text>
-    </g>
+  <rect x="200" y="0" width="88" height="26" rx="5" fill="#78350f" fill-opacity="0.2" stroke="#78350f" stroke-opacity="0.7" stroke-width="1" style="fill:rgb(120, 53, 15);stroke:rgb(120, 53, 15);color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="244" y="17.5" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="11.5" font-weight="600" fill="#fde68a" style="fill:rgb(253, 230, 138);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:11.5px;font-weight:600;text-anchor:middle;dominant-baseline:auto">PHPStan 2</text>
+</g>
 
-    <!-- divider -->
-    <rect x="640" y="0" width="1" height="360" fill="url(#divLine)"/>
+<!-- Divider -->
+<line x1="640" y1="20" x2="640" y2="320" stroke="url(#divider3)" stroke-width="1" style="fill:rgb(0, 0, 0);color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
 
-    <!-- ═══════════════ RIGHT PANEL ═══════════════ -->
-    <text x="672" y="72"
-      font-family="system-ui,sans-serif" font-size="10.5" font-weight="700"
-      fill="#484F58" letter-spacing="2.5">FEATURES</text>
+<!-- FEATURES label -->
+<text x="672" y="68" font-family="system-ui,-apple-system,sans-serif" font-size="11" font-weight="600" fill="#7f1d1d" letter-spacing="2" style="fill:rgb(127, 29, 29);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:11px;font-weight:600;text-anchor:start;dominant-baseline:auto">FEATURES</text>
 
-    <g font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,sans-serif"
-       font-size="14" fill="#C9D1D9">
-      <text x="672" y="108"><tspan fill="#8892BF">›</tspan><tspan dx="10">Laravel 13 + nWidart Modules (monorepo)</tspan></text>
-      <text x="672" y="144"><tspan fill="#8892BF">›</tspan><tspan dx="10">Auto path repos · composer env:dev/prod</tspan></text>
-      <text x="672" y="180"><tspan fill="#8892BF">›</tspan><tspan dx="10">PHPStan 2 · Rector 2 · Laravel Pint</tspan></text>
-      <text x="672" y="216"><tspan fill="#8892BF">›</tspan><tspan dx="10">GitHub Actions — CI, deploy, publish</tspan></text>
-      <text x="672" y="252"><tspan fill="#8892BF">›</tspan><tspan dx="10">Kiro MCP — Laravel docs + Playwright</tspan></text>
-      <text x="672" y="288"><tspan fill="#8892BF">›</tspan><tspan dx="10">Packagist publish · CodeQL · Dependabot</tspan></text>
-    </g>
+<!-- Feature lines -->
+<g font-family="system-ui,-apple-system,sans-serif" font-size="14" fill="#fff1f2" style="fill:rgb(255, 241, 242);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:14px;font-weight:400;text-anchor:start;dominant-baseline:auto">
+  <text x="672" y="98" style="fill:rgb(255, 241, 242);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:14px;font-weight:400;text-anchor:start;dominant-baseline:auto"><tspan fill="#ef4444" font-weight="700" style="fill:rgb(239, 68, 68);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:14px;font-weight:700;text-anchor:start;dominant-baseline:auto">› </tspan>Laravel 13 + nWidart Modules (monorepo)</text>
+  <text x="672" y="126" style="fill:rgb(255, 241, 242);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:14px;font-weight:400;text-anchor:start;dominant-baseline:auto"><tspan fill="#ef4444" font-weight="700" style="fill:rgb(239, 68, 68);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:14px;font-weight:700;text-anchor:start;dominant-baseline:auto">› </tspan>Auto path repos · composer env:dev/prod</text>
+  <text x="672" y="154" style="fill:rgb(255, 241, 242);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:14px;font-weight:400;text-anchor:start;dominant-baseline:auto"><tspan fill="#ef4444" font-weight="700" style="fill:rgb(239, 68, 68);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:14px;font-weight:700;text-anchor:start;dominant-baseline:auto">› </tspan>PHPStan 2 · Rector 2 · Laravel Pint</text>
+  <text x="672" y="182" style="fill:rgb(255, 241, 242);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:14px;font-weight:400;text-anchor:start;dominant-baseline:auto"><tspan fill="#ef4444" font-weight="700" style="fill:rgb(239, 68, 68);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:14px;font-weight:700;text-anchor:start;dominant-baseline:auto">› </tspan>GitHub Actions — CI, deploy, publish</text>
+  <text x="672" y="210" style="fill:rgb(255, 241, 242);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:14px;font-weight:400;text-anchor:start;dominant-baseline:auto"><tspan fill="#ef4444" font-weight="700" style="fill:rgb(239, 68, 68);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:14px;font-weight:700;text-anchor:start;dominant-baseline:auto">› </tspan>Kiro MCP — Laravel docs + Playwright</text>
+  <text x="672" y="238" style="fill:rgb(255, 241, 242);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:14px;font-weight:400;text-anchor:start;dominant-baseline:auto"><tspan fill="#ef4444" font-weight="700" style="fill:rgb(239, 68, 68);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:14px;font-weight:700;text-anchor:start;dominant-baseline:auto">› </tspan>Packagist publish · CodeQL · Dependabot</text>
+</g>
 
-    <!-- bottom bar -->
-    <rect x="0" y="328" width="1200" height="32" fill="#010409" fill-opacity="0.7"/>
-    <text x="56" y="349" font-family="system-ui,sans-serif" font-size="11.5" fill="#484F58">github.com/pixielity-inc/php-monorepo</text>
-    <text x="1144" y="349" font-family="system-ui,sans-serif" font-size="11.5" fill="#484F58" text-anchor="end">MIT License</text>
-  </g>
+<!-- Bottom bar -->
+<rect y="318" width="1200" height="42" fill="#060100" style="fill:rgb(6, 1, 0);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<text x="32" y="344" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#7f1d1d" style="fill:rgb(127, 29, 29);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:13px;font-weight:400;text-anchor:start;dominant-baseline:auto">github.com/pixielity-inc/php-monorepo</text>
+<text x="1168" y="344" text-anchor="end" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#7f1d1d" style="fill:rgb(127, 29, 29);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:13px;font-weight:400;text-anchor:end;dominant-baseline:auto">MIT License</text>
 </svg>
