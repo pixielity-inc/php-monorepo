@@ -90,3 +90,4 @@ Thumbs.db
 # Vercel (if used for any JS apps)
 # -----------------------------------------------------------------------------
 .vercel/
+package-lock.json
