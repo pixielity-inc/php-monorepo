@@ -1,0 +1,45 @@
+{
+  "name": "@repo/example-app",
+  "version": "0.1.0",
+  "description": "Laravel 13 application — example-app.",
+  "private": true,
+  "homepage": "https://github.com/your-org/php-monorepo/tree/main/applications/example-app",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/your-org/php-monorepo.git",
+    "directory": "applications/example-app"
+  },
+  "license": "MIT",
+  "scripts": {
+    "dev":              "php artisan serve",
+    "start":            "php artisan serve --host=0.0.0.0 --port=8000",
+    "build":            "composer install --no-interaction --prefer-dist --optimize-autoloader",
+    "build:prod":       "composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev",
+    "lint":             "vendor/bin/pint --test",
+    "lint:fix":         "vendor/bin/pint",
+    "analyse":          "vendor/bin/phpstan analyse --no-progress",
+    "refactor":         "vendor/bin/rector process --dry-run",
+    "refactor:fix":     "vendor/bin/rector process",
+    "test":             "php artisan test",
+    "test:coverage":    "php artisan test --coverage --coverage-clover=coverage.xml",
+    "test:parallel":    "php artisan test --parallel",
+    "migrate":          "php artisan migrate",
+    "migrate:fresh":    "php artisan migrate:fresh --seed",
+    "migrate:rollback": "php artisan migrate:rollback",
+    "db:seed":          "php artisan db:seed",
+    "queue:work":       "php artisan queue:work",
+    "queue:listen":     "php artisan queue:listen",
+    "schedule:run":     "php artisan schedule:run",
+    "cache:clear":      "php artisan optimize:clear",
+    "cache:warm":       "php artisan optimize",
+    "route:list":       "php artisan route:list",
+    "tinker":           "php artisan tinker",
+    "clean":            "rm -rf vendor bootstrap/cache/*.php",
+    "clean:all":        "rm -rf vendor bootstrap/cache/*.php storage/framework/cache/data/*",
+    "upgrade":          "composer update"
+  },
+  "engines": {
+    "node": ">=18",
+    "npm": ">=10"
+  }
+}
