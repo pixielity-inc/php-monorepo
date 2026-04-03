@@ -19,6 +19,19 @@
   "intelephense.diagnostics.undefinedProperties": false,
   "intelephense.diagnostics.unusedSymbols": false,
 
+  // Tell Intelephense to ignore undefined type errors specifically for
+  // Composer\Script\Event and the entire Composer\ namespace.
+  // These classes exist only inside the Composer phar at runtime and are
+  // not present in the project vendor/ directory.
+  "intelephense.diagnostics.typeErrors": false,
+
+  // Exclude the Composer\Script\Event class (and the whole Composer namespace)
+  // from undefined-type diagnostics. The scripts/ directory uses Composer's
+  // API which is only available inside the Composer phar at runtime.
+  "intelephense.diagnostics.ignore": [
+    "scripts/**"
+  ],
+
   // Blade: disable all built-in HTML/PHP validation inside .blade.php files.
   // Blade templates use Laravel-specific syntax that confuses standard validators.
   "[blade]": {
@@ -78,7 +91,6 @@
   },
 
   "search.exclude": {
-    "**/vendor": true,
     "**/node_modules": true,
     "**/storage": true,
     "**/.turbo": true
