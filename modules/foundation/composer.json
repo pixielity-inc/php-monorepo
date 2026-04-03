@@ -36,7 +36,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Pixielity\\Foundation\\Tests\\": "tests/"
+            "Pixielity\\Foundation\\Tests\\": "tests/",
+            "Pixielity\\Foundation\\Scripts\\": "scripts/"
         }
     },
     "extra": {
@@ -59,5 +60,14 @@
         "allow-plugins": {
             "olvlvl/composer-attribute-collector": true
         }
+    },
+    "scripts": {
+        "cache:clear": "Pixielity\\Foundation\\Scripts\\CacheScripts::clear",
+        "cache:warm": "Pixielity\\Foundation\\Scripts\\CacheScripts::warm",
+        "cache:clean": "Pixielity\\Foundation\\Scripts\\CacheScripts::clean",
+        "test": "Pixielity\\Foundation\\Scripts\\TestScripts::run",
+        "test:coverage": "Pixielity\\Foundation\\Scripts\\TestScripts::coverage",
+        "test:parallel": "Pixielity\\Foundation\\Scripts\\TestScripts::parallel",
+        "test:filter": "Pixielity\\Foundation\\Scripts\\TestScripts::filter"
     }
 }
