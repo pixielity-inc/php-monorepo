@@ -1,58 +1,59 @@
 {
-  "name": "pixielity/php-monorepo",
-  "description": "Root Composer orchestrator for the Pixielity PHP monorepo. Discovers workspaces dynamically.",
-  "type": "project",
-  "license": "MIT",
-  "require": {
-    "php": "^8.4"
-  },
-  "autoload": {
-    "psr-4": {
-      "Pixielity\\Scripts\\": "scripts/"
-    }
-  },
-  "scripts": {
-    "workspaces:list": "Pixielity\\Scripts\\WorkspaceDiscovery::listWorkspaces",
-    "env:dev": "Pixielity\\Scripts\\ComposerScripts::envDevAll",
-    "env:testing": "Pixielity\\Scripts\\ComposerScripts::envTestingAll",
-    "env:prod": "Pixielity\\Scripts\\ComposerScripts::envProdAll",
-    "env:status": "Pixielity\\Scripts\\ComposerScripts::envStatusAll",
-    "repos:sync": "Pixielity\\Scripts\\ComposerScripts::reposSyncAll",
-    "repos:check": "Pixielity\\Scripts\\ComposerScripts::reposCheckAll",
-    "install:all": "Pixielity\\Scripts\\WorkspaceDiscovery::runAll install",
-    "update:all": "Pixielity\\Scripts\\WorkspaceDiscovery::runAll update",
-    "test:all": "Pixielity\\Scripts\\WorkspaceDiscovery::runAll test",
-    "lint:all": "Pixielity\\Scripts\\WorkspaceDiscovery::runAll lint",
-    "analyse:all": "Pixielity\\Scripts\\WorkspaceDiscovery::runAll analyse",
-    "refactor:all": "Pixielity\\Scripts\\WorkspaceDiscovery::runAll refactor"
-  },
-  "config": {
-    "optimize-autoloader": true,
-    "sort-packages": true
-  },
-  "minimum-stability": "stable",
-  "prefer-stable": true,
-  "repositories": [
-    {
-      "type": "path",
-      "url": "./modules/*",
-      "options": {
-        "symlink": true
-      }
+    "name": "pixielity/php-monorepo",
+    "description": "Root Composer orchestrator for the Pixielity PHP monorepo. Discovers workspaces dynamically.",
+    "type": "project",
+    "license": "MIT",
+    "require": {
+        "php": "^8.4"
     },
-    {
-      "type": "path",
-      "url": "./modules/*/*",
-      "options": {
-        "symlink": true
-      }
+    "autoload": {
+        "psr-4": {
+            "Pixielity\\Scripts\\": "scripts/"
+        }
     },
-    {
-      "type": "path",
-      "url": "./modules/*/*/*",
-      "options": {
-        "symlink": true
-      }
-    }
-  ]
+    "scripts": {
+        "workspaces:list": "Pixielity\\Scripts\\WorkspaceDiscovery::listWorkspaces",
+        "env:dev": "Pixielity\\Scripts\\ComposerScripts::envDevAll",
+        "env:testing": "Pixielity\\Scripts\\ComposerScripts::envTestingAll",
+        "env:prod": "Pixielity\\Scripts\\ComposerScripts::envProdAll",
+        "env:status": "Pixielity\\Scripts\\ComposerScripts::envStatusAll",
+        "repos:sync": "Pixielity\\Scripts\\ComposerScripts::reposSyncAll",
+        "repos:check": "Pixielity\\Scripts\\ComposerScripts::reposCheckAll",
+        "install:all": "Pixielity\\Scripts\\WorkspaceDiscovery::installAll",
+        "update:all": "Pixielity\\Scripts\\WorkspaceDiscovery::runAll update",
+        "test:all": "Pixielity\\Scripts\\WorkspaceDiscovery::runAll test",
+        "lint:all": "Pixielity\\Scripts\\WorkspaceDiscovery::runAll lint",
+        "analyse:all": "Pixielity\\Scripts\\WorkspaceDiscovery::runAll analyse",
+        "refactor:all": "Pixielity\\Scripts\\WorkspaceDiscovery::runAll refactor",
+        "repos:sync:all": "Pixielity\\Scripts\\WorkspaceDiscovery::reposSyncAll"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "path",
+            "url": "./modules/*",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "type": "path",
+            "url": "./modules/*/*",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "type": "path",
+            "url": "./modules/*/*/*",
+            "options": {
+                "symlink": true
+            }
+        }
+    ]
 }

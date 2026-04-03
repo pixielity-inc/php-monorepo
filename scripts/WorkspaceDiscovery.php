@@ -37,6 +37,100 @@ class WorkspaceDiscovery
     ];
 
     /**
+     * Run `composer install` in every discovered workspace.
+     *
+     * Called by the root package.json `postinstall` hook via:
+     *   node -e "require('child_process').execSync('composer run install:all', {stdio:'inherit'})"
+     *
+     * Or directly: composer install:all
+     *
+     * @param Event $event Composer script event.
+     */
+    public static function installAll(Event $event): void
+    {
+        $io   = $event->getIO();
+        $root = getcwd();
+        $ws   = self::discover($root);
+
+        if (empty($ws)) {
+            $io->write('<warning>No workspaces discovered.</warning>');
+            return;
+        }
+
+        $io->write("<info>🐘 composer install across " . count($ws) . " workspace(s)...</info>");
+
+        $flags  = '--no-interaction --prefer-dist --optimize-autoloader';
+        $failed = [];
+
+        foreach ($ws as $workspace) {
+            $rel = self::relative($workspace, $root);
+            $io->write("<comment>→ {$rel}</comment>");
+
+            $bin     = self::findComposerBin();
+            $cmd     = escapeshellcmd($bin) . " install {$flags} --working-dir=" . escapeshellarg($workspace);
+            $exitCode = 0;
+
+            passthru($cmd, $exitCode);
+
+            if ($exitCode !== 0) {
+                $failed[] = $rel;
+            }
+        }
+
+        if (!empty($failed)) {
+            $io->writeError('<error>composer install failed in:</error>');
+            foreach ($failed as $path) {
+                $io->writeError("  ✘ {$path}");
+            }
+            exit(1);
+        }
+
+        $io->write('<info>✔ All workspaces installed.</info>');
+    }
+
+    /**
+     * Run `composer repos:sync` in every discovered workspace.
+     *
+     * Called by the root package.json `preinstall` hook so path repositories
+     * are registered before `composer install` runs.
+     *
+     * Or directly: composer repos:sync:all
+     *
+     * @param Event $event Composer script event.
+     */
+    public static function reposSyncAll(Event $event): void
+    {
+        $io   = $event->getIO();
+        $root = getcwd();
+        $ws   = self::discover($root);
+
+        if (empty($ws)) {
+            $io->write('<warning>No workspaces discovered.</warning>');
+            return;
+        }
+
+        $io->write("<info>📦 repos:sync across " . count($ws) . " workspace(s)...</info>");
+
+        foreach ($ws as $workspace) {
+            $rel = self::relative($workspace, $root);
+            $io->write("<comment>→ {$rel}</comment>");
+
+            $bin     = self::findComposerBin();
+            $cmd     = escapeshellcmd($bin) . ' repos:sync --working-dir=' . escapeshellarg($workspace);
+            $exitCode = 0;
+
+            passthru($cmd, $exitCode);
+
+            // Non-fatal — workspace may not have repos:sync yet.
+            if ($exitCode !== 0) {
+                $io->write("  <fg=yellow>⚠ repos:sync skipped (script not found)</>");
+            }
+        }
+
+        $io->write('<info>✔ repos:sync complete.</info>');
+    }
+
+    /**
      * Run a Composer script command across every discovered workspace.
      *
      * Reads the script name from the first element of $event->getArguments().

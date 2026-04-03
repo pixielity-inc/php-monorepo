@@ -2,35 +2,16 @@
 /**
  * scripts/repos-sync-all.mjs
  *
- * Runs `composer repos:sync` in every workspace that has a composer.json.
- * Called by the root package.json `preinstall` hook so that path repositories
- * are registered before `composer install` runs.
+ * Thin wrapper called by the root package.json `preinstall` hook.
+ * Delegates to WorkspaceDiscovery::reposSyncAll via composer.
  *
- * Usage: node scripts/repos-sync-all.mjs
+ * The actual logic lives in scripts/WorkspaceDiscovery.php.
  */
-
 import { execSync } from 'child_process';
-import { existsSync, readdirSync } from 'fs';
-import { join } from 'path';
 
-const WORKSPACE_ROOTS = ['applications', 'modules'];
-
-for (const dir of WORKSPACE_ROOTS) {
-  if (!existsSync(dir)) continue;
-
-  for (const workspace of readdirSync(dir)) {
-    const wsPath = join(dir, workspace);
-    const composerJson = join(wsPath, 'composer.json');
-
-    if (!existsSync(composerJson)) continue;
-
-    console.log(`\n📦 repos:sync → ${wsPath}`);
-
-    try {
-      execSync('composer repos:sync', { cwd: wsPath, stdio: 'inherit' });
-    } catch {
-      // Non-fatal — workspace may not have the script yet.
-      console.warn(`  ⚠ repos:sync failed in ${wsPath} (skipping)`);
-    }
-  }
+try {
+  execSync('composer repos:sync:all', { stdio: 'inherit' });
+} catch {
+  // Non-fatal — composer may not be installed yet on first clone.
+  console.warn('⚠ repos:sync:all skipped (composer not available)');
 }
