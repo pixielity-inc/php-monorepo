@@ -1,12 +1,12 @@
 {
-  "name": "@repo/example-app",
+  "name": "@pixielity/example-app",
   "version": "0.1.0",
   "description": "Laravel 13 application — example-app.",
   "private": true,
-  "homepage": "https://github.com/your-org/php-monorepo/tree/main/applications/example-app",
+  "homepage": "https://github.com/pixielity-inc/php-monorepo/tree/main/applications/example-app",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/your-org/php-monorepo.git",
+    "url": "git+https://github.com/pixielity-inc/php-monorepo.git",
     "directory": "applications/example-app"
   },
   "license": "MIT",

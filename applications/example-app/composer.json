@@ -1,6 +1,6 @@
 {
   "$schema": "https://getcomposer.org/schema.json",
-  "name": "your-org/example-app",
+  "name": "pixielity/example-app",
   "type": "project",
   "description": "Laravel 13 application — example-app.",
   "keywords": [
@@ -8,7 +8,7 @@
     "framework",
     "application"
   ],
-  "homepage": "https://github.com/your-org/php-monorepo",
+  "homepage": "https://github.com/pixielity-inc/php-monorepo",
   "license": "MIT",
   "authors": [
     {
@@ -20,9 +20,10 @@
   "require": {
     "php": "^8.3",
     "laravel/framework": "^13.0",
-    "laravel/tinker": "^3.0",
+    "laravel/horizon": "^5.0",
     "laravel/sanctum": "^4.0",
-    "laravel/horizon": "^5.0"
+    "laravel/tinker": "^3.0",
+    "nwidart/laravel-modules": "^13.0"
   },
   "require-dev": {
     "driftingly/rector-laravel": "^2.2",
@@ -124,9 +125,14 @@
     "sort-packages": true,
     "allow-plugins": {
       "pestphp/pest-plugin": true,
-      "php-http/discovery": true
+      "php-http/discovery": true,
+      "wikimedia/composer-merge-plugin": true
     }
   },
   "minimum-stability": "stable",
-  "prefer-stable": true
+  "prefer-stable": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pixielity-inc/php-monorepo"
+  }
 }

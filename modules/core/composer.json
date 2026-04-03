@@ -1,0 +1,83 @@
+{
+    "name": "pixielity/laravel-core",
+    "description": "Core shared utilities module — provides base contracts, exceptions, and helpers consumed by all applications in this monorepo.",
+    "type": "library",
+    "license": "MIT",
+    "version": "0.1.0",
+    "keywords": [
+        "monorepo",
+        "module",
+        "php",
+        "utilities",
+        "library"
+    ],
+    "homepage": "https://github.com/pixielity-inc/php-monorepo/tree/main/modules/core",
+    "readme": "README.md",
+    "authors": [
+        {
+            "name": "Your Name",
+            "email": "you@example.com",
+            "homepage": "https://example.com",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/pixielity-inc/php-monorepo/issues",
+        "source": "https://github.com/pixielity-inc/php-monorepo/tree/main/modules/core",
+        "docs": "https://github.com/pixielity-inc/php-monorepo/blob/main/modules/core/README.md"
+    },
+    "funding": [
+        {
+            "type": "github",
+            "url": "https://github.com/sponsors/pixielity-inc"
+        }
+    ],
+    "require": {
+        "php": "^8.2"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.0",
+        "phpstan/phpstan": "^2.0",
+        "phpunit/phpunit": "^12.0",
+        "rector/rector": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Pixielity\\Core\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Pixielity\\Core\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test":          "vendor/bin/phpunit --testdox",
+        "test:coverage": "vendor/bin/phpunit --coverage-clover coverage.xml",
+        "lint":          "vendor/bin/pint --test",
+        "lint:fix":      "vendor/bin/pint",
+        "analyse":       "vendor/bin/phpstan analyse --no-progress",
+        "refactor":      "vendor/bin/rector process --dry-run",
+        "refactor:fix":  "vendor/bin/rector process",
+        "check":         [
+            "@lint",
+            "@analyse",
+            "@test"
+        ],
+        "post-install-cmd": [
+            "@php -r \"echo 'example_package installed.\\n';\""
+        ]
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true,
+        "allow-plugins": {}
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "0.1.x-dev"
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

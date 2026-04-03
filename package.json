@@ -1,15 +1,15 @@
 {
-  "name": "php-monorepo",
+  "name": "pixielity-php-monorepo",
   "version": "0.0.0",
-  "description": "Production-ready PHP monorepo powered by Turborepo.",
+  "description": "Production-ready PHP/Laravel monorepo template powered by Turborepo.",
   "private": true,
-  "homepage": "https://github.com/your-org/php-monorepo#readme",
+  "homepage": "https://github.com/pixielity-inc/php-monorepo#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/your-org/php-monorepo.git"
+    "url": "git+https://github.com/pixielity-inc/php-monorepo.git"
   },
   "bugs": {
-    "url": "https://github.com/your-org/php-monorepo/issues"
+    "url": "https://github.com/pixielity-inc/php-monorepo/issues"
   },
   "license": "MIT",
   "author": {
