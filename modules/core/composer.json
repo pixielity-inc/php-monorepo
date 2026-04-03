@@ -48,25 +48,32 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Pixielity\\Core\\Tests\\": "tests/"
+            "Pixielity\\Core\\Tests\\": "tests/",
+            "Pixielity\\Scripts\\": "../../scripts/"
         }
     },
     "scripts": {
-        "test":          "vendor/bin/phpunit --testdox",
+        "test": "vendor/bin/phpunit --testdox",
         "test:coverage": "vendor/bin/phpunit --coverage-clover coverage.xml",
-        "lint":          "vendor/bin/pint --test",
-        "lint:fix":      "vendor/bin/pint",
-        "analyse":       "vendor/bin/phpstan analyse --no-progress",
-        "refactor":      "vendor/bin/rector process --dry-run",
-        "refactor:fix":  "vendor/bin/rector process",
-        "check":         [
+        "lint": "vendor/bin/pint --test",
+        "lint:fix": "vendor/bin/pint",
+        "analyse": "vendor/bin/phpstan analyse --no-progress",
+        "refactor": "vendor/bin/rector process --dry-run",
+        "refactor:fix": "vendor/bin/rector process",
+        "check": [
             "@lint",
             "@analyse",
             "@test"
         ],
         "post-install-cmd": [
-            "@php -r \"echo 'example_package installed.\\n';\""
-        ]
+            "Pixielity\\Scripts\\ComposerScripts::ensureRepositories"
+        ],
+        "env:dev": "Pixielity\\Scripts\\ComposerScripts::envDev",
+        "env:testing": "Pixielity\\Scripts\\ComposerScripts::envTesting",
+        "env:prod": "Pixielity\\Scripts\\ComposerScripts::envProd",
+        "env:status": "Pixielity\\Scripts\\ComposerScripts::envStatus",
+        "repos:sync": "Pixielity\\Scripts\\ComposerScripts::reposSync",
+        "repos:check": "Pixielity\\Scripts\\ComposerScripts::reposCheck"
     },
     "config": {
         "optimize-autoloader": true,
@@ -78,6 +85,6 @@
             "dev-main": "0.1.x-dev"
         }
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true
 }

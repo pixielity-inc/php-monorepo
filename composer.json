@@ -1,0 +1,64 @@
+{
+    "name": "pixielity/php-monorepo",
+    "description": "Root Composer orchestrator for the Pixielity PHP monorepo.",
+    "type": "project",
+    "license": "MIT",
+    "require": {
+        "php": "^8.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Pixielity\\Scripts\\": "scripts/"
+        }
+    },
+    "scripts": {
+        "env:dev": [
+            "@php -r \"echo \"Switching all workspaces to [dev]...\\n\";\"",
+            "@composer env:dev -d applications/example-app",
+            "@composer env:dev -d modules/core"
+        ],
+        "env:testing": [
+            "@php -r \"echo \"Switching all workspaces to [testing]...\\n\";\"",
+            "@composer env:testing -d applications/example-app",
+            "@composer env:testing -d modules/core"
+        ],
+        "env:prod": [
+            "@php -r \"echo \"Switching all workspaces to [prod]...\\n\";\"",
+            "@composer env:prod -d applications/example-app",
+            "@composer env:prod -d modules/core"
+        ],
+        "env:status": [
+            "@composer env:status -d applications/example-app"
+        ],
+        "repos:sync": [
+            "@composer repos:sync -d applications/example-app",
+            "@composer repos:sync -d modules/core"
+        ],
+        "repos:check": [
+            "@composer repos:check -d applications/example-app",
+            "@composer repos:check -d modules/core"
+        ],
+        "install:all": [
+            "@composer install -d applications/example-app",
+            "@composer install -d modules/core"
+        ],
+        "update:all": [
+            "@composer update -d applications/example-app",
+            "@composer update -d modules/core"
+        ],
+        "test:all": [
+            "@composer test -d applications/example-app",
+            "@composer test -d modules/core"
+        ],
+        "lint:all": [
+            "@composer lint -d applications/example-app",
+            "@composer lint -d modules/core"
+        ]
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
