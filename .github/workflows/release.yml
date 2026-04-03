@@ -1,0 +1,52 @@
+# .github/workflows/release.yml
+#
+# Release — creates a GitHub Release when a repo-level version tag is pushed.
+#
+# This is for tagging the entire monorepo (e.g. a template release),
+# as opposed to cd_publish.yml which handles per-module releases.
+#
+# Tag format: v<semver>  (e.g. v1.0.0)
+#
+# What it does:
+#   1. Generates a changelog from conventional commits since the last tag
+#   2. Creates a GitHub Release with the generated notes
+#   3. Attaches a source archive as a release asset
+
+name: Release
+
+on:
+  push:
+    tags:
+      - "v[0-9]+.[0-9]+.[0-9]+"
+
+jobs:
+  release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          # Fetch full history so the changelog generator can walk commits.
+          fetch-depth: 0
+
+      - name: Extract version from tag
+        id: version
+        run: |
+          VERSION="${GITHUB_REF#refs/tags/v}"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: "v${{ steps.version.outputs.version }}"
+          # Auto-generate release notes from PR titles and commit messages.
+          generate_release_notes: true
+          draft: false
+          prerelease: ${{ contains(github.ref_name, '-') }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,90 @@
+# .github/workflows/security.yml
+#
+# Security scanning — runs weekly and on every push to main.
+#
+# Checks:
+#   1. Composer audit    — known vulnerabilities in PHP dependencies
+#   2. npm audit         — known vulnerabilities in JS dependencies
+#   3. CodeQL analysis   — static analysis for PHP and JavaScript
+#
+# Results appear in the GitHub Security tab (repository → Security → Code scanning).
+
+name: Security
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    # Run every Monday at 08:00 UTC
+    - cron: "0 8 * * 1"
+
+jobs:
+  # ---------------------------------------------------------------------------
+  # Dependency vulnerability audit
+  # ---------------------------------------------------------------------------
+  audit:
+    name: Dependency audit
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.4"
+          tools: composer:v2
+          coverage: none
+
+      - name: npm audit
+        # --audit-level=high fails only on high/critical vulnerabilities.
+        run: npm audit --audit-level=high
+        continue-on-error: true
+
+      - name: Composer audit (all workspaces)
+        run: |
+          for dir in applications/*/  modules/*/; do
+            if [ -f "$dir/composer.json" ]; then
+              echo "→ composer audit in $dir"
+              composer audit --working-dir="$dir" --format=plain || true
+            fi
+          done
+
+  # ---------------------------------------------------------------------------
+  # CodeQL static analysis
+  # ---------------------------------------------------------------------------
+  codeql:
+    name: CodeQL analysis
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    strategy:
+      matrix:
+        language: [javascript, php]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v3
+
+      - name: Perform CodeQL analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:${{ matrix.language }}"

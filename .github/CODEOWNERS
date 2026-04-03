@@ -1,0 +1,38 @@
+# CODEOWNERS — php-monorepo
+#
+# Defines who is automatically requested for review when a PR touches
+# specific files or directories.
+#
+# Docs: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# ---------------------------------------------------------------------------
+# Default — all files require review from the core team
+# ---------------------------------------------------------------------------
+* @your-org/core-team
+
+# ---------------------------------------------------------------------------
+# CI / tooling
+# ---------------------------------------------------------------------------
+.github/                    @your-org/platform
+.githooks/                  @your-org/platform
+turbo.json                  @your-org/platform
+package.json                @your-org/platform
+pint.json                   @your-org/platform
+phpstan.neon                @your-org/platform
+
+# ---------------------------------------------------------------------------
+# Applications
+# ---------------------------------------------------------------------------
+applications/example-app/   @your-org/backend-team
+
+# ---------------------------------------------------------------------------
+# Shared modules (publishable — require extra scrutiny)
+# ---------------------------------------------------------------------------
+modules/                    @your-org/core-team @your-org/backend-team
+
+# ---------------------------------------------------------------------------
+# Documentation
+# ---------------------------------------------------------------------------
+*.md                        @your-org/core-team
+CONTRIBUTING.md             @your-org/core-team
+CHANGELOG.md                @your-org/core-team

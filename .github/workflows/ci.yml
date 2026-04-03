@@ -1,0 +1,148 @@
+# .github/workflows/ci.yml
+#
+# Continuous Integration — runs on every PR and every push to main/develop.
+#
+# Pipeline stages (in order):
+#   1. Checkout + tool setup (Node, PHP, Composer, Turbo)
+#   2. Dependency install (npm workspaces + all composer.json files)
+#   3. Lint  — PHP CS / ESLint across all workspaces
+#   4. Test  — PHPUnit for every module + Laravel feature/unit tests
+#   5. Coverage upload to Codecov
+#
+# Required repository secrets (Settings → Secrets → Actions):
+#   CODECOV_TOKEN  — from https://codecov.io (optional but recommended)
+
+name: CI
+
+on:
+  pull_request:
+    branches: [main, develop]
+  push:
+    branches: [main, develop]
+
+# Cancel in-progress runs for the same branch/PR to save CI minutes.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ci:
+    name: Lint · Test · Coverage
+    runs-on: ubuntu-latest
+
+    strategy:
+      # Test against multiple PHP versions to catch compatibility issues early.
+      matrix:
+        php: ["8.2", "8.3", "8.4"]
+
+    steps:
+      # -----------------------------------------------------------------------
+      # 1. Checkout
+      # -----------------------------------------------------------------------
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # -----------------------------------------------------------------------
+      # 2. Node.js — required for Turborepo and any JS tooling
+      # -----------------------------------------------------------------------
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      # -----------------------------------------------------------------------
+      # 3. PHP — matrix version
+      # -----------------------------------------------------------------------
+      - name: Setup PHP ${{ matrix.php }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          # Extensions required by Laravel and common packages.
+          extensions: mbstring, xml, ctype, fileinfo, pdo, sqlite3, dom, curl, zip
+          # Enable Xdebug for code coverage collection.
+          coverage: xdebug
+          tools: composer:v2
+
+      # -----------------------------------------------------------------------
+      # 4. Composer cache — speeds up repeated installs significantly
+      # -----------------------------------------------------------------------
+      - name: Get Composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: composer-${{ runner.os }}-php${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
+          restore-keys: composer-${{ runner.os }}-php${{ matrix.php }}-
+
+      # -----------------------------------------------------------------------
+      # 5. npm cache + install
+      # -----------------------------------------------------------------------
+      - name: Cache npm dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: npm-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: npm-${{ runner.os }}-
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      # -----------------------------------------------------------------------
+      # 6. Install Composer dependencies for every workspace
+      #    We iterate over every composer.json found under applications/ and
+      #    modules/ so each workspace gets its own vendor/ directory.
+      # -----------------------------------------------------------------------
+      - name: Install Composer dependencies (all workspaces)
+        run: |
+          for dir in applications/*/  modules/*/; do
+            if [ -f "$dir/composer.json" ]; then
+              echo "→ composer install in $dir"
+              composer install --no-interaction --prefer-dist --optimize-autoloader --working-dir="$dir"
+            fi
+          done
+        working-directory: ${{ github.workspace }}/php-monorepo
+
+      # -----------------------------------------------------------------------
+      # 7. Laravel application setup (copy .env, generate key, run migrations)
+      # -----------------------------------------------------------------------
+      - name: Prepare Laravel applications
+        run: |
+          for dir in applications/*/; do
+            if [ -f "$dir/artisan" ]; then
+              echo "→ Preparing Laravel app in $dir"
+              cp "$dir/.env.example" "$dir/.env"
+              php "$dir/artisan" key:generate
+              php "$dir/artisan" migrate --force
+            fi
+          done
+        working-directory: ${{ github.workspace }}/php-monorepo
+
+      # -----------------------------------------------------------------------
+      # 8. Lint — run turbo lint across all workspaces
+      # -----------------------------------------------------------------------
+      - name: Lint
+        run: npm run lint
+        working-directory: ${{ github.workspace }}/php-monorepo
+
+      # -----------------------------------------------------------------------
+      # 9. Test — run turbo test across all workspaces
+      # -----------------------------------------------------------------------
+      - name: Test
+        run: npm run test
+        working-directory: ${{ github.workspace }}/php-monorepo
+
+      # -----------------------------------------------------------------------
+      # 10. Upload coverage to Codecov
+      # -----------------------------------------------------------------------
+      - name: Upload coverage
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          # Collect coverage from all workspaces.
+          files: "**/coverage/lcov.info,**/coverage.xml,**/clover.xml"
+          fail_ci_if_error: false
+          verbose: true

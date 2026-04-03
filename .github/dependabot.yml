@@ -1,0 +1,94 @@
+# .github/dependabot.yml — php-monorepo
+#
+# Dependabot keeps Composer, npm, and GitHub Actions dependencies up-to-date.
+#
+# Docs: https://docs.github.com/en/code-security/dependabot/dependabot-version-updates
+
+version: 2
+
+updates:
+  # ---------------------------------------------------------------------------
+  # Composer — applications/example-app
+  # ---------------------------------------------------------------------------
+  - package-ecosystem: composer
+    directory: /applications/example-app
+    schedule:
+      interval: weekly
+      day: monday
+      time: "08:00"
+      timezone: UTC
+    groups:
+      composer-dependencies:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+    labels:
+      - dependencies
+      - php
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "chore(deps)"
+    ignore:
+      - dependency-name: "laravel/framework"
+        update-types: ["version-update:semver-major"]
+
+  # ---------------------------------------------------------------------------
+  # Composer — modules/example_package
+  # ---------------------------------------------------------------------------
+  - package-ecosystem: composer
+    directory: /modules/example_package
+    schedule:
+      interval: weekly
+      day: monday
+      time: "08:00"
+      timezone: UTC
+    groups:
+      composer-module-dependencies:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+    labels:
+      - dependencies
+      - php
+    open-pull-requests-limit: 3
+    commit-message:
+      prefix: "chore(deps)"
+
+  # ---------------------------------------------------------------------------
+  # npm — root workspace
+  # ---------------------------------------------------------------------------
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "08:00"
+      timezone: UTC
+    groups:
+      npm-dependencies:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+    labels:
+      - dependencies
+      - javascript
+    open-pull-requests-limit: 3
+    commit-message:
+      prefix: "chore(deps)"
+
+  # ---------------------------------------------------------------------------
+  # GitHub Actions
+  # ---------------------------------------------------------------------------
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "08:00"
+      timezone: UTC
+    groups:
+      github-actions:
+        patterns: ["*"]
+    labels:
+      - dependencies
+      - ci
+    open-pull-requests-limit: 3
+    commit-message:
+      prefix: "ci(deps)"
