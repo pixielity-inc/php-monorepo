@@ -1,0 +1,13 @@
+{
+    "name": "Database",
+    "alias": "database",
+    "description": "Pixielity database module — migrations, seeders, and database lifecycle management.",
+    "keywords": ["database", "migrations", "seeders", "pixielity"],
+    "priority": 1,
+    "providers": [
+        "Pixielity\\Database\\Providers\\DatabaseServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
