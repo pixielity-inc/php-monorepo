@@ -1,6 +1,6 @@
 {
     "name": "pixielity/laravel-user",
-    "description": "User module for Laravel applications",
+    "description": "Pixielity User module — user domain model, migrations, factory, and service provider.",
     "type": "library",
     "license": "MIT",
     "autoload": {
@@ -15,5 +15,67 @@
         "illuminate/auth": "^13.0"
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "keywords": [
+        "laravel",
+        "user",
+        "authentication",
+        "domain",
+        "pixielity"
+    ],
+    "homepage": "https://github.com/pixielity-inc/php-monorepo/tree/main/modules/user",
+    "authors": [
+        {
+            "name": "Pixielity Team",
+            "email": "dev@pixielity.com",
+            "homepage": "https://pixielity.com",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/pixielity-inc/php-monorepo/issues",
+        "source": "https://github.com/pixielity-inc/php-monorepo/tree/main/modules/user",
+        "docs": "https://github.com/pixielity-inc/php-monorepo/blob/main/modules/user/README.md"
+    },
+    "funding": [
+        {
+            "type": "github",
+            "url": "https://github.com/sponsors/pixielity-inc"
+        }
+    ],
+    "require-dev": {
+        "laravel/pint": "^1.0",
+        "phpstan/phpstan": "^2.0",
+        "phpunit/phpunit": "^12.0",
+        "rector/rector": "^2.0"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Pixielity\\User\\Scripts\\": "scripts/"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit --testdox",
+        "test:coverage": "vendor/bin/phpunit --coverage-clover coverage.xml",
+        "lint": "vendor/bin/pint --test",
+        "lint:fix": "vendor/bin/pint",
+        "analyse": "vendor/bin/phpstan analyse --no-progress --memory-limit=512M",
+        "refactor": "vendor/bin/rector process --dry-run",
+        "refactor:fix": "vendor/bin/rector process",
+        "check": [
+            "@lint",
+            "@analyse",
+            "@test"
+        ]
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "0.1.x-dev"
+        }
+    }
 }

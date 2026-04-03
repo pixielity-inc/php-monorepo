@@ -1,51 +1,76 @@
 {
-  "name": "pixielity/laravel-serializer",
-  "description": "Data serialization and transformation utilities",
-  "type": "library",
-  "license": "MIT",
-  "keywords": [
-    "serializer",
-    "transformation",
-    "data",
-    "laravel",
-    "pixielity"
-  ],
-  "authors": [
-    {
-      "name": "Pixielity Team",
-      "email": "dev@pixielity.com"
+    "name": "pixielity/laravel-serializer",
+    "description": "Pixielity Serializer module — JSON serialization contracts and helpers.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "serializer",
+        "laravel",
+        "pixielity"
+    ],
+    "authors": [
+        {
+            "name": "Pixielity Team",
+            "email": "dev@pixielity.com",
+            "homepage": "https://pixielity.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.4|^8.5",
+        "league/fractal": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Pixielity\\Serializer\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "aliases": {
+                "Serializer": "Pixielity\\Serializer\\Facades\\Serializer"
+            }
+        },
+        "branch-alias": {
+            "dev-main": "0.1.x-dev"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.0",
+        "mockery/mockery": "^1.6",
+        "orchestra/testbench": "^10.0"
+    },
+    "homepage": "https://github.com/pixielity-inc/php-monorepo/tree/main/modules/framework/src/Serializer",
+    "support": {
+        "issues": "https://github.com/pixielity-inc/php-monorepo/issues",
+        "source": "https://github.com/pixielity-inc/php-monorepo/tree/main/modules/framework/src/Serializer",
+        "docs": "https://github.com/pixielity-inc/php-monorepo/blob/main/modules/framework/src/Serializer/README.md"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "funding": [
+        {
+            "type": "github",
+            "url": "https://github.com/sponsors/pixielity-inc"
+        }
+    ],
+    "scripts": {
+        "test": "vendor/bin/phpunit --testdox",
+        "test:coverage": "vendor/bin/phpunit --coverage-clover coverage.xml",
+        "lint": "vendor/bin/pint --test",
+        "lint:fix": "vendor/bin/pint",
+        "analyse": "vendor/bin/phpstan analyse --no-progress --memory-limit=512M",
+        "refactor": "vendor/bin/rector process --dry-run",
+        "refactor:fix": "vendor/bin/rector process",
+        "check": [
+            "@lint",
+            "@analyse",
+            "@test"
+        ]
     }
-  ],
-  "require": {
-    "php": "^8.4|^8.5",
-    "league/fractal": "*"
-  },
-  "autoload": {
-    "psr-4": {
-      "Pixielity\\Serializer\\": "src/"
-    }
-  },
-  "extra": {
-    "laravel": {
-      "aliases": {
-        "Serializer": "Pixielity\\Serializer\\Facades\\Serializer"
-      }
-    }
-  },
-  "require-dev": {
-    "phpunit/phpunit": "^11.0",
-    "mockery/mockery": "^1.6",
-    "orchestra/testbench": "^10.0"
-  },
-  "homepage": "https://gitlab.com/pixielity/laravel/framework/serializer",
-  "support": {
-    "issues": "https://gitlab.com/pixielity/laravel/framework/serializer/-/issues",
-    "source": "https://gitlab.com/pixielity/laravel/framework/serializer"
-  },
-  "config": {
-    "sort-packages": true,
-    "allow-plugins": {}
-  },
-  "minimum-stability": "stable",
-  "prefer-stable": true
 }

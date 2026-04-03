@@ -1,11 +1,11 @@
 {
     "name": "pixielity/laravel-foundation",
-    "description": "Foundation module for Pixielity Laravel headless API backend - provides custom Application class, root route handlers, and base API structure",
+    "description": "Pixielity Foundation module — custom Application class, base API structure, and core providers.",
     "type": "library",
     "keywords": [
         "laravel",
-        "module",
         "foundation",
+        "application",
         "api",
         "headless",
         "pixielity"
@@ -13,8 +13,10 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Pixielity Inc",
-            "email": "hello@pixielity.com"
+            "name": "Pixielity Team",
+            "email": "dev@pixielity.com",
+            "homepage": "https://pixielity.com",
+            "role": "Developer"
         }
     ],
     "require": {
@@ -46,6 +48,9 @@
                 "Pixielity\\Foundation\\Providers\\FoundationServiceProvider"
             ],
             "aliases": {}
+        },
+        "branch-alias": {
+            "dev-main": "0.1.x-dev"
         }
     },
     "minimum-stability": "dev",
@@ -57,6 +62,9 @@
         }
     ],
     "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
         "allow-plugins": {
             "olvlvl/composer-attribute-collector": true
         }
@@ -82,5 +90,17 @@
         "env:prod": "Pixielity\\Foundation\\Scripts\\EnvScripts::prod",
         "env:status": "Pixielity\\Foundation\\Scripts\\EnvScripts::status",
         "setup:env": "Pixielity\\Foundation\\Scripts\\EnvScripts::setup"
-    }
+    },
+    "homepage": "https://github.com/pixielity-inc/php-monorepo/tree/main/modules/foundation",
+    "support": {
+        "issues": "https://github.com/pixielity-inc/php-monorepo/issues",
+        "source": "https://github.com/pixielity-inc/php-monorepo/tree/main/modules/foundation",
+        "docs": "https://github.com/pixielity-inc/php-monorepo/blob/main/modules/foundation/README.md"
+    },
+    "funding": [
+        {
+            "type": "github",
+            "url": "https://github.com/sponsors/pixielity-inc"
+        }
+    ]
 }

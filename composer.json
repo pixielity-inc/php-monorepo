@@ -29,6 +29,7 @@
     },
     "config": {
         "optimize-autoloader": true,
+        "preferred-install": "dist",
         "sort-packages": true
     },
     "minimum-stability": "stable",
@@ -55,5 +56,25 @@
                 "symlink": true
             }
         }
-    ]
+    ],
+    "keywords": [
+        "monorepo",
+        "laravel",
+        "php",
+        "pixielity",
+        "turborepo"
+    ],
+    "homepage": "https://github.com/pixielity-inc/php-monorepo",
+    "authors": [
+        {
+            "name": "Pixielity Team",
+            "email": "dev@pixielity.com",
+            "homepage": "https://pixielity.com",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/pixielity-inc/php-monorepo/issues",
+        "source": "https://github.com/pixielity-inc/php-monorepo"
+    }
 }

@@ -1,98 +1,108 @@
 {
-  "name": "pixielity/laravel-routing",
-  "description": "Attribute-based routing system for Laravel with NestJS-inspired decorators",
-  "type": "library",
-  "license": "MIT",
-  "keywords": [
-    "laravel",
-    "routing",
-    "attributes",
-    "decorators",
-    "php8",
-    "nestjs",
-    "route-attributes",
-    "controller-attributes",
-    "middleware-attributes"
-  ],
-  "authors": [
-    {
-      "name": "Pixielity Team",
-      "email": "dev@pixielity.com"
-    }
-  ],
-  "homepage": "https://gitlab.com/pixielity/laravel/framework/routing",
-  "support": {
-    "issues": "https://gitlab.com/pixielity/laravel/framework/routing/-/issues",
-    "source": "https://gitlab.com/pixielity/laravel/framework/routing"
-  },
-  "require": {
-    "php": "^8.4|^8.5",
-    "zircote/swagger-php": "*",
-    "illuminate/contracts": "^13.0|^12.0"
-  },
-  "require-dev": {
-    "phpunit/phpunit": "^11.0",
-    "orchestra/testbench": "^10.0",
-    "mockery/mockery": "^1.6",
-    "phpstan/phpstan": "^2.0",
-    "laravel/pint": "^1.0"
-  },
-  "autoload": {
-    "psr-4": {
-      "Pixielity\\Routing\\": "src/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "Pixielity\\Routing\\Tests\\": "tests/"
-    }
-  },
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://gitlab.com/pixielity/laravel-/foundation"
+    "name": "pixielity/laravel-routing",
+    "description": "Pixielity Routing module — attribute-based route registration.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "routing",
+        "laravel",
+        "pixielity"
+    ],
+    "authors": [
+        {
+            "name": "Pixielity Team",
+            "email": "dev@pixielity.com",
+            "homepage": "https://pixielity.com",
+            "role": "Developer"
+        }
+    ],
+    "homepage": "https://github.com/pixielity-inc/php-monorepo/tree/main/modules/framework/src/Routing",
+    "support": {
+        "issues": "https://github.com/pixielity-inc/php-monorepo/issues",
+        "source": "https://github.com/pixielity-inc/php-monorepo/tree/main/modules/framework/src/Routing",
+        "docs": "https://github.com/pixielity-inc/php-monorepo/blob/main/modules/framework/src/Routing/README.md"
     },
-    {
-      "type": "vcs",
-      "url": "https://gitlab.com/pixielity/laravel-/framework/meta"
+    "require": {
+        "php": "^8.4|^8.5",
+        "zircote/swagger-php": "*",
+        "illuminate/contracts": "^13.0|^12.0"
     },
-    {
-      "type": "vcs",
-      "url": "https://gitlab.com/pixielity/laravel-/discovery"
+    "require-dev": {
+        "phpunit/phpunit": "^11.0",
+        "orchestra/testbench": "^10.0",
+        "mockery/mockery": "^1.6",
+        "phpstan/phpstan": "^2.0",
+        "laravel/pint": "^1.0"
     },
-    {
-      "type": "vcs",
-      "url": "https://gitlab.com/pixielity/laravel-/contracts"
+    "autoload": {
+        "psr-4": {
+            "Pixielity\\Routing\\": "src/"
+        }
     },
-    {
-      "type": "vcs",
-      "url": "https://gitlab.com/pixielity/laravel-/telemetry/meta"
-    }
-  ],
-  "extra": {
-    "laravel": {
-      "providers": [
-        "Pixielity\\Routing\\Providers\\RoutingServiceProvider"
-      ]
+    "autoload-dev": {
+        "psr-4": {
+            "Pixielity\\Routing\\Tests\\": "tests/"
+        }
     },
-    "branch-alias": {
-      "dev-main": "1.x-dev"
-    }
-  },
-  "scripts": {
-    "test": "vendor/bin/phpunit",
-    "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
-    "format": "vendor/bin/pint",
-    "analyse": "vendor/bin/phpstan analyse src --memory-limit=1G"
-  },
-  "config": {
-    "sort-packages": true,
-    "preferred-install": "dist",
-    "optimize-autoloader": true,
-    "allow-plugins": {
-      "php-http/discovery": true
-    }
-  },
-  "minimum-stability": "stable",
-  "prefer-stable": true
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://gitlab.com/pixielity/laravel-/foundation"
+        },
+        {
+            "type": "vcs",
+            "url": "https://gitlab.com/pixielity/laravel-/framework/meta"
+        },
+        {
+            "type": "vcs",
+            "url": "https://gitlab.com/pixielity/laravel-/discovery"
+        },
+        {
+            "type": "vcs",
+            "url": "https://gitlab.com/pixielity/laravel-/contracts"
+        },
+        {
+            "type": "vcs",
+            "url": "https://gitlab.com/pixielity/laravel-/telemetry/meta"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Pixielity\\Routing\\Providers\\RoutingServiceProvider"
+            ]
+        },
+        "branch-alias": {
+            "dev-main": "0.1.x-dev"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test:coverage": "vendor/bin/phpunit --coverage-clover coverage.xml",
+        "lint": "vendor/bin/pint --test",
+        "lint:fix": "vendor/bin/pint",
+        "analyse": "vendor/bin/phpstan analyse src --memory-limit=1G",
+        "refactor": "vendor/bin/rector process --dry-run",
+        "refactor:fix": "vendor/bin/rector process",
+        "check": [
+            "@lint",
+            "@analyse",
+            "@test"
+        ],
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
+        "format": "vendor/bin/pint"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "funding": [
+        {
+            "type": "github",
+            "url": "https://github.com/sponsors/pixielity-inc"
+        }
+    ]
 }

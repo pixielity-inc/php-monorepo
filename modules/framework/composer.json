@@ -5,33 +5,25 @@
     "authors": [
         {
             "name": "Pixielity Team",
-            "email": "dev@pixielity.com"
+            "email": "dev@pixielity.com",
+            "homepage": "https://pixielity.com",
+            "role": "Developer"
         }
     ],
-    "homepage": "https://gitlab.com/pixielity/laravel-/framework/meta",
+    "homepage": "https://github.com/pixielity-inc/php-monorepo/tree/main/modules/framework",
     "support": {
-        "issues": "https://gitlab.com/pixielity/laravel-/framework/meta/-/issues",
-        "source": "https://gitlab.com/pixielity/laravel-/framework/meta"
+        "issues": "https://github.com/pixielity-inc/php-monorepo/issues",
+        "source": "https://github.com/pixielity-inc/php-monorepo/tree/main/modules/framework",
+        "docs": "https://github.com/pixielity-inc/php-monorepo/blob/main/modules/framework/README.md"
     },
     "keywords": [
         "framework",
         "laravel",
-        "pixielity",
-        "utilities",
-        "database",
-        "media",
-        "serialization",
-        "firebase",
-        "pusher",
-        "swagger",
-        "query-builder",
-        "settings",
-        "sluggable",
-        "tags",
-        "versioning",
-        "repository",
-        "search",
-        "scout"
+        "routing",
+        "container",
+        "serializer",
+        "localization",
+        "pixielity"
     ],
     "prefer-stable": true,
     "minimum-stability": "stable",
@@ -92,8 +84,17 @@
     "scripts": {
         "test": "vendor/bin/phpunit",
         "test:coverage": "vendor/bin/phpunit --coverage-html coverage",
-        "test:filter": "vendor/bin/phpunit --filter",
+        "lint": "vendor/bin/pint --test",
+        "lint:fix": "vendor/bin/pint",
         "analyse": "vendor/bin/phpstan analyse --memory-limit=2G",
+        "refactor": "vendor/bin/rector process --dry-run",
+        "refactor:fix": "vendor/bin/rector process",
+        "check": [
+            "@lint",
+            "@analyse",
+            "@test"
+        ],
+        "test:filter": "vendor/bin/phpunit --filter",
         "analyse:baseline": "vendor/bin/phpstan analyse --memory-limit=2G --generate-baseline",
         "format": "@php vendor/bin/pint --ansi",
         "format:test": "@php vendor/bin/pint --test --ansi",
@@ -140,6 +141,9 @@
                 "Pixielity\\Localization\\Providers\\LocalizationServiceProvider"
             ],
             "aliases": {}
+        },
+        "branch-alias": {
+            "dev-main": "0.1.x-dev"
         }
     },
     "replace": {
@@ -158,5 +162,12 @@
             "php-http/discovery": true,
             "olvlvl/composer-attribute-collector": true
         }
-    }
+    },
+    "description": "Pixielity Framework module — shared utilities, routing, container, serializer, and localization.",
+    "funding": [
+        {
+            "type": "github",
+            "url": "https://github.com/sponsors/pixielity-inc"
+        }
+    ]
 }

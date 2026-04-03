@@ -16,12 +16,14 @@
         {
             "name": "Pixielity Team",
             "email": "dev@pixielity.com",
+            "homepage": "https://pixielity.com",
             "role": "Developer"
         }
     ],
     "support": {
         "issues": "https://github.com/pixielity-inc/php-monorepo/issues",
-        "source": "https://github.com/pixielity-inc/php-monorepo/tree/main/modules/database"
+        "source": "https://github.com/pixielity-inc/php-monorepo/tree/main/modules/database",
+        "docs": "https://github.com/pixielity-inc/php-monorepo/blob/main/modules/database/README.md"
     },
     "require": {
         "php": "^8.4",
@@ -44,26 +46,29 @@
         }
     },
     "extra": {
-        "laravel": {
-            "providers": [
-                "Pixielity\\Database\\Providers\\DatabaseServiceProvider"
-            ]
-        },
         "branch-alias": {
             "dev-main": "0.1.x-dev"
         }
     },
     "scripts": {
+        "test": "vendor/bin/phpunit --testdox",
+        "test:coverage": "vendor/bin/phpunit --coverage-clover coverage.xml",
+        "lint": "vendor/bin/pint --test",
+        "lint:fix": "vendor/bin/pint",
+        "analyse": "vendor/bin/phpstan analyse --no-progress",
+        "refactor": "vendor/bin/rector process --dry-run",
+        "refactor:fix": "vendor/bin/rector process",
+        "check": [
+            "@lint",
+            "@analyse",
+            "@test"
+        ],
         "migrate": "Pixielity\\Database\\Scripts\\DatabaseScripts::migrate",
         "migrate:fresh": "Pixielity\\Database\\Scripts\\DatabaseScripts::fresh",
         "migrate:rollback": "Pixielity\\Database\\Scripts\\DatabaseScripts::rollback",
         "migrate:status": "Pixielity\\Database\\Scripts\\DatabaseScripts::status",
         "db:seed": "Pixielity\\Database\\Scripts\\DatabaseScripts::seed",
-        "db:fresh": "Pixielity\\Database\\Scripts\\DatabaseScripts::freshAndSeed",
-        "lint": "vendor/bin/pint --test",
-        "lint:fix": "vendor/bin/pint",
-        "analyse": "vendor/bin/phpstan analyse --no-progress",
-        "test": "vendor/bin/phpunit --testdox"
+        "db:fresh": "Pixielity\\Database\\Scripts\\DatabaseScripts::freshAndSeed"
     },
     "scripts-descriptions": {
         "migrate": "Run pending database migrations",
@@ -75,8 +80,15 @@
     },
     "config": {
         "optimize-autoloader": true,
+        "preferred-install": "dist",
         "sort-packages": true
     },
     "minimum-stability": "stable",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "funding": [
+        {
+            "type": "github",
+            "url": "https://github.com/sponsors/pixielity-inc"
+        }
+    ]
 }

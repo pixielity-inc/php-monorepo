@@ -1,20 +1,19 @@
 {
     "name": "pixielity/laravel-enum",
-    "description": "Modern PHP 8.1+ enum system with metadata, attributes, and helper traits",
+    "description": "Pixielity Enum module — rich PHP enum utilities with labels, metadata, and traits.",
     "type": "library",
     "license": "MIT",
     "keywords": [
         "enum",
-        "php81",
-        "attributes",
-        "metadata",
         "laravel",
         "pixielity"
     ],
     "authors": [
         {
             "name": "Pixielity Team",
-            "email": "dev@pixielity.com"
+            "email": "dev@pixielity.com",
+            "homepage": "https://pixielity.com",
+            "role": "Developer"
         }
     ],
     "require": {
@@ -34,15 +33,42 @@
             "Pixielity\\Enum\\Tests\\": "tests/"
         }
     },
-    "homepage": "https://gitlab.com/pixielity/laravel/framework/enum",
+    "homepage": "https://github.com/pixielity-inc/php-monorepo/tree/main/modules/framework/src/Enum",
     "support": {
-        "issues": "https://gitlab.com/pixielity/laravel/framework/enum/-/issues",
-        "source": "https://gitlab.com/pixielity/laravel/framework/enum"
+        "issues": "https://github.com/pixielity-inc/php-monorepo/issues",
+        "source": "https://github.com/pixielity-inc/php-monorepo/tree/main/modules/framework/src/Enum",
+        "docs": "https://github.com/pixielity-inc/php-monorepo/blob/main/modules/framework/src/Enum/README.md"
     },
     "config": {
-        "sort-packages": true,
-        "allow-plugins": {}
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
     },
     "minimum-stability": "stable",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "funding": [
+        {
+            "type": "github",
+            "url": "https://github.com/sponsors/pixielity-inc"
+        }
+    ],
+    "scripts": {
+        "test": "vendor/bin/phpunit --testdox",
+        "test:coverage": "vendor/bin/phpunit --coverage-clover coverage.xml",
+        "lint": "vendor/bin/pint --test",
+        "lint:fix": "vendor/bin/pint",
+        "analyse": "vendor/bin/phpstan analyse --no-progress --memory-limit=512M",
+        "refactor": "vendor/bin/rector process --dry-run",
+        "refactor:fix": "vendor/bin/rector process",
+        "check": [
+            "@lint",
+            "@analyse",
+            "@test"
+        ]
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "0.1.x-dev"
+        }
+    }
 }

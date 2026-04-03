@@ -1,23 +1,23 @@
 {
     "name": "pixielity/laravel-octane",
-    "description": "Laravel Octane integration module with simplified server management commands for production-grade headless API backends",
+    "description": "Pixielity Octane module — Laravel Octane integration with simplified server management.",
     "type": "library",
     "keywords": [
         "laravel",
         "octane",
-        "roadrunner",
         "frankenphp",
+        "roadrunner",
         "server",
         "performance",
-        "api",
-        "headless",
         "pixielity"
     ],
     "license": "MIT",
     "authors": [
         {
-            "name": "Pixielity Inc",
-            "email": "hello@pixielity.com"
+            "name": "Pixielity Team",
+            "email": "dev@pixielity.com",
+            "homepage": "https://pixielity.com",
+            "role": "Developer"
         }
     ],
     "require": {
@@ -39,6 +39,9 @@
             "providers": [
                 "Pixielity\\Octane\\Providers\\OctaneServiceProvider"
             ]
+        },
+        "branch-alias": {
+            "dev-main": "0.1.x-dev"
         }
     },
     "minimum-stability": "stable",
@@ -49,10 +52,40 @@
         }
     },
     "scripts": {
+        "test": "vendor/bin/phpunit --testdox",
+        "test:coverage": "vendor/bin/phpunit --coverage-clover coverage.xml",
+        "lint": "vendor/bin/pint --test",
+        "lint:fix": "vendor/bin/pint",
+        "analyse": "vendor/bin/phpstan analyse --no-progress --memory-limit=512M",
+        "refactor": "vendor/bin/rector process --dry-run",
+        "refactor:fix": "vendor/bin/rector process",
+        "check": [
+            "@lint",
+            "@analyse",
+            "@test"
+        ],
         "octane:start": "Pixielity\\Octane\\Scripts\\OctaneScripts::start",
         "octane:start:prod": "Pixielity\\Octane\\Scripts\\OctaneScripts::startProd",
         "octane:reload": "Pixielity\\Octane\\Scripts\\OctaneScripts::reload",
         "octane:stop": "Pixielity\\Octane\\Scripts\\OctaneScripts::stop",
         "octane:status": "Pixielity\\Octane\\Scripts\\OctaneScripts::status"
+    },
+    "homepage": "https://github.com/pixielity-inc/php-monorepo/tree/main/modules/octane",
+    "support": {
+        "issues": "https://github.com/pixielity-inc/php-monorepo/issues",
+        "source": "https://github.com/pixielity-inc/php-monorepo/tree/main/modules/octane",
+        "docs": "https://github.com/pixielity-inc/php-monorepo/blob/main/modules/octane/README.md"
+    },
+    "funding": [
+        {
+            "type": "github",
+            "url": "https://github.com/sponsors/pixielity-inc"
+        }
+    ],
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "allow-plugins": {}
     }
 }
