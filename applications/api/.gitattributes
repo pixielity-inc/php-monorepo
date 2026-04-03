@@ -1,0 +1,35 @@
+* text=auto eol=lf
+
+*.blade.php diff=html
+*.css diff=css
+*.html diff=html
+*.md diff=markdown
+*.php diff=php
+
+# ==============================================================================
+# Shell Scripts & Executables - Force LF (Linux/Mac/Docker compatibility)
+# ==============================================================================
+*.sh text eol=lf
+artisan text eol=lf
+bin/* text eol=lf
+
+# ==============================================================================
+# Docker Files - Force LF (Container compatibility)
+# ==============================================================================
+Dockerfile text eol=lf
+docker-compose*.yml text eol=lf
+*.dockerfile text eol=lf
+
+# ==============================================================================
+# Configuration Files - Force LF
+# ==============================================================================
+.env* text eol=lf
+*.conf text eol=lf
+*.config text eol=lf
+
+# ==============================================================================
+# Export Ignore
+# ==============================================================================
+/.github export-ignore
+CHANGELOG.md export-ignore
+.styleci.yml export-ignore

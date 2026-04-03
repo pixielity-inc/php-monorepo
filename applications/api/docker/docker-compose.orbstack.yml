@@ -1,0 +1,110 @@
+# ==============================================================================
+# OrbStack Domain Configuration
+# ==============================================================================
+# This file adds OrbStack domain labels to all services
+# Domains are configurable via environments/.env.docker
+#
+# Usage:
+#   docker-compose -f docker-compose.yml -f docker-compose.orbstack.yml up -d
+#
+# Configure domains in .env.docker:
+#   DOMAIN_LTD=.local
+#   APP_DOMAIN=laravel
+#   API_DOMAIN=api
+#   etc.
+# ==============================================================================
+
+services:
+  app:
+    hostname: ${APP_CONTAINER_NAME:-laravel-app}
+    labels:
+      - "dev.orbstack.domains=${APP_DOMAIN:-laravel}${DOMAIN_LTD:-.local},${API_DOMAIN:-api}${DOMAIN_LTD:-.local}"
+      - "dev.orbstack.http-port=${APP_PORT:-8000}"
+
+  postgres:
+    hostname: ${POSTGRES_CONTAINER_NAME:-laravel-postgres}
+    labels:
+      - "dev.orbstack.domains=${POSTGRES_DOMAIN:-postgres}${DOMAIN_LTD:-.local},${DB_DOMAIN:-db}${DOMAIN_LTD:-.local}"
+      - "dev.orbstack.tcp-ports=${POSTGRES_PORT:-5432}"
+
+  pgadmin:
+    hostname: ${PGADMIN_CONTAINER_NAME:-laravel-pgadmin}
+    labels:
+      - "dev.orbstack.domains=${PGADMIN_DOMAIN:-pgadmin}${DOMAIN_LTD:-.local}"
+      - "dev.orbstack.http-port=80"
+
+  redis:
+    hostname: ${REDIS_CONTAINER_NAME:-laravel-redis}
+    labels:
+      - "dev.orbstack.domains=${REDIS_DOMAIN:-redis}${DOMAIN_LTD:-.local},${CACHE_DOMAIN:-cache}${DOMAIN_LTD:-.local}"
+      - "dev.orbstack.tcp-ports=${REDIS_PORT:-6379}"
+
+  minio:
+    hostname: ${MINIO_CONTAINER_NAME:-laravel-minio}
+    labels:
+      - "dev.orbstack.domains=${MINIO_DOMAIN:-minio}${DOMAIN_LTD:-.local},${S3_DOMAIN:-s3}${DOMAIN_LTD:-.local}"
+      - "dev.orbstack.http-port=${MINIO_CONSOLE_PORT:-9001}"
+
+  meilisearch:
+    hostname: ${MEILISEARCH_CONTAINER_NAME:-laravel-meilisearch}
+    labels:
+      - "dev.orbstack.domains=${MEILISEARCH_DOMAIN:-meilisearch}${DOMAIN_LTD:-.local},${SEARCH_DOMAIN:-search}${DOMAIN_LTD:-.local}"
+      - "dev.orbstack.http-port=${MEILISEARCH_PORT:-7700}"
+
+  mailpit:
+    hostname: ${MAILPIT_CONTAINER_NAME:-laravel-mailpit}
+    labels:
+      - "dev.orbstack.domains=${MAILPIT_DOMAIN:-mailpit}${DOMAIN_LTD:-.local},${MAIL_DOMAIN:-mail}${DOMAIN_LTD:-.local}"
+      - "dev.orbstack.http-port=${MAILPIT_UI_PORT:-8025}"
+
+  reverb:
+    hostname: ${REVERB_CONTAINER_NAME:-laravel-reverb}
+    labels:
+      - "dev.orbstack.domains=${REVERB_DOMAIN:-reverb}${DOMAIN_LTD:-.local},${WS_DOMAIN:-ws}${DOMAIN_LTD:-.local}"
+      - "dev.orbstack.http-port=${REVERB_PORT:-8080}"
+
+  scheduler:
+    hostname: ${SCHEDULER_CONTAINER_NAME:-laravel-scheduler}
+
+  mysql:
+    hostname: ${MYSQL_CONTAINER_NAME:-laravel-mysql}
+    labels:
+      - "dev.orbstack.domains=${MYSQL_DOMAIN:-mysql}${DOMAIN_LTD:-.local}"
+      - "dev.orbstack.tcp-ports=${MYSQL_PORT:-3306}"
+
+  phpmyadmin:
+    hostname: ${PHPMYADMIN_CONTAINER_NAME:-laravel-phpmyadmin}
+    labels:
+      - "dev.orbstack.domains=${PHPMYADMIN_DOMAIN:-phpmyadmin}${DOMAIN_LTD:-.local}"
+      - "dev.orbstack.http-port=80"
+
+  mongodb:
+    hostname: ${MONGODB_CONTAINER_NAME:-laravel-mongodb}
+    labels:
+      - "dev.orbstack.domains=${MONGODB_DOMAIN:-mongodb}${DOMAIN_LTD:-.local},${MONGO_DOMAIN:-mongo}${DOMAIN_LTD:-.local}"
+      - "dev.orbstack.tcp-ports=${MONGODB_PORT:-27017}"
+
+  elasticsearch:
+    hostname: ${ELASTICSEARCH_CONTAINER_NAME:-laravel-elasticsearch}
+    labels:
+      - "dev.orbstack.domains=${ELASTICSEARCH_DOMAIN:-elasticsearch}${DOMAIN_LTD:-.local},${ES_DOMAIN:-es}${DOMAIN_LTD:-.local}"
+      - "dev.orbstack.http-port=${ELASTICSEARCH_PORT:-9200}"
+
+  elasticvue:
+    hostname: ${ELASTICVUE_CONTAINER_NAME:-laravel-elasticvue}
+    labels:
+      - "dev.orbstack.domains=${ELASTICVUE_DOMAIN:-elasticvue}${DOMAIN_LTD:-.local}"
+      - "dev.orbstack.http-port=${ELASTICVUE_PORT:-8080}"
+
+  kafka:
+    hostname: ${KAFKA_CONTAINER_NAME:-laravel-kafka}
+    labels:
+      - "dev.orbstack.domains=${KAFKA_DOMAIN:-kafka}${DOMAIN_LTD:-.local}"
+      - "dev.orbstack.tcp-ports=${KAFKA_PORT:-9092}"
+
+  rabbitmq:
+    hostname: ${RABBITMQ_CONTAINER_NAME:-laravel-rabbitmq}
+    labels:
+      - "dev.orbstack.domains=${RABBITMQ_DOMAIN:-rabbitmq}${DOMAIN_LTD:-.local},${AMQP_DOMAIN:-amqp}${DOMAIN_LTD:-.local}"
+      - "dev.orbstack.http-port=${RABBITMQ_MANAGEMENT_PORT:-15672}"
+      - "dev.orbstack.tcp-ports=${RABBITMQ_PORT:-5672}"

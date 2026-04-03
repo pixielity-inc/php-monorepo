@@ -1,0 +1,94 @@
+# ==============================================================================
+# Laravel Headless API Backend - Apache Configuration
+# ==============================================================================
+# Production-ready .htaccess for API-only Laravel application
+# ==============================================================================
+
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews -Indexes
+    </IfModule>
+
+    RewriteEngine On
+
+    # Handle Authorization Header (Bearer tokens, etc.)
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # Handle X-XSRF-Token Header
+    RewriteCond %{HTTP:x-xsrf-token} .
+    RewriteRule .* - [E=HTTP_X_XSRF_TOKEN:%{HTTP:X-XSRF-Token}]
+
+    # Handle API Key Header
+    RewriteCond %{HTTP:X-API-Key} .
+    RewriteRule .* - [E=HTTP_X_API_KEY:%{HTTP:X-API-Key}]
+
+    # Redirect Trailing Slashes If Not A Folder...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [L,R=301]
+
+    # Send Requests To Front Controller...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+</IfModule>
+
+# ==============================================================================
+# Security Headers for API
+# ==============================================================================
+
+<IfModule mod_headers.c>
+    # Remove server signature
+    Header unset X-Powered-By
+    Header always unset X-Powered-By
+
+    # Prevent MIME type sniffing
+    Header always set X-Content-Type-Options "nosniff"
+
+    # Prevent clickjacking (API shouldn't be framed)
+    Header always set X-Frame-Options "DENY"
+
+    # XSS Protection
+    Header always set X-XSS-Protection "1; mode=block"
+
+    # Referrer Policy
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+    # Content Security Policy for API (no scripts, styles, etc.)
+    Header always set Content-Security-Policy "default-src 'none'; frame-ancestors 'none'"
+
+    # HSTS (HTTP Strict Transport Security) - Uncomment for HTTPS
+    # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+</IfModule>
+
+# ==============================================================================
+# Compression
+# ==============================================================================
+
+<IfModule mod_deflate.c>
+    # Compress JSON responses
+    AddOutputFilterByType DEFLATE application/json
+    AddOutputFilterByType DEFLATE application/ld+json
+    AddOutputFilterByType DEFLATE application/xml
+    AddOutputFilterByType DEFLATE text/xml
+    AddOutputFilterByType DEFLATE text/plain
+</IfModule>
+
+# ==============================================================================
+# Disable Directory Browsing
+# ==============================================================================
+
+Options -Indexes
+
+# ==============================================================================
+# Prevent Access to Sensitive Files
+# ==============================================================================
+
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>
+
+<FilesMatch "(composer\.json|composer\.lock|package\.json|package-lock\.json|yarn\.lock)$">
+    Require all denied
+</FilesMatch>

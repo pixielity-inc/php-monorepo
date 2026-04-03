@@ -1,0 +1,72 @@
+#!/usr/bin/env php
+<?php
+
+/**
+ * Environment Setup Script
+ * 
+ * This script sets up environment files and symlinks for the Laravel application.
+ * It creates .env files from examples and creates symlinks in the correct locations.
+ */
+
+$rootDir = dirname(__DIR__);
+$envDir = $rootDir . '/environments';
+$dockerDir = $rootDir . '/docker';
+
+echo "🚀 Setting up environment files...\n\n";
+
+// Step 1: Create .env from .env.example if it doesn't exist
+if (!file_exists("$envDir/.env")) {
+    if (copy("$envDir/.env.example", "$envDir/.env")) {
+        echo "✅ Created environments/.env from .env.example\n";
+    } else {
+        echo "❌ Failed to create environments/.env\n";
+        exit(1);
+    }
+} else {
+    echo "ℹ️  environments/.env already exists\n";
+}
+
+// Step 2: Create .env.docker from .env.docker.example if it doesn't exist
+if (!file_exists("$envDir/.env.docker")) {
+    if (copy("$envDir/.env.docker.example", "$envDir/.env.docker")) {
+        echo "✅ Created environments/.env.docker from .env.docker.example\n";
+    } else {
+        echo "❌ Failed to create environments/.env.docker\n";
+        exit(1);
+    }
+} else {
+    echo "ℹ️  environments/.env.docker already exists\n";
+}
+
+// Step 3: Create symlink from root to environments/.env
+$rootEnvLink = $rootDir . '/.env';
+if (!file_exists($rootEnvLink) && !is_link($rootEnvLink)) {
+    if (symlink('environments/.env', $rootEnvLink)) {
+        echo "✅ Created symlink: .env → environments/.env\n";
+    } else {
+        echo "❌ Failed to create .env symlink\n";
+        exit(1);
+    }
+} else {
+    echo "ℹ️  .env symlink already exists\n";
+}
+
+// Step 4: Create symlink from docker to environments/.env.docker
+$dockerEnvLink = $dockerDir . '/.env.docker';
+if (!file_exists($dockerEnvLink) && !is_link($dockerEnvLink)) {
+    if (symlink('../environments/.env.docker', $dockerEnvLink)) {
+        echo "✅ Created symlink: docker/.env.docker → ../environments/.env.docker\n";
+    } else {
+        echo "❌ Failed to create docker/.env.docker symlink\n";
+        exit(1);
+    }
+} else {
+    echo "ℹ️  docker/.env.docker symlink already exists\n";
+}
+
+echo "\n✨ Environment setup complete!\n";
+echo "\n📝 Next steps:\n";
+echo "   1. Update environments/.env with your application settings\n";
+echo "   2. Update environments/.env.docker with your Docker configuration\n";
+echo "   3. Run: php artisan key:generate\n";
+echo "   4. Run: php artisan migrate\n";

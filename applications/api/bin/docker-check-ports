@@ -1,0 +1,258 @@
+#!/usr/bin/env bash
+
+# ==============================================================================
+# Docker Port Checker
+# ==============================================================================
+# Checks if required ports are available before starting Docker containers
+# Optionally kills processes using those ports
+#
+# Usage:
+#   ./bin/docker-check-ports              # Check only
+#   ./bin/docker-check-ports --kill       # Check and kill conflicting processes
+#   ./bin/docker-check-ports --kill --yes # Kill without confirmation
+# ==============================================================================
+
+set -e
+
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+# Script directory
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+
+# Load environment variables
+ENV_FILE="$PROJECT_ROOT/docker/.env.docker"
+
+if [ ! -f "$ENV_FILE" ]; then
+    echo -e "${RED}Error: $ENV_FILE not found${NC}"
+    exit 1
+fi
+
+# Source the env file
+set -a
+source "$ENV_FILE"
+set +a
+
+# Parse arguments
+KILL_PROCESSES=false
+AUTO_YES=false
+
+for arg in "$@"; do
+    case $arg in
+        --kill|-k)
+            KILL_PROCESSES=true
+            ;;
+        --yes|-y)
+            AUTO_YES=true
+            ;;
+        --help|-h)
+            echo "Usage: $0 [OPTIONS]"
+            echo ""
+            echo "Options:"
+            echo "  --kill, -k    Kill processes using conflicting ports"
+            echo "  --yes, -y     Auto-confirm killing processes (use with --kill)"
+            echo "  --help, -h    Show this help message"
+            exit 0
+            ;;
+    esac
+done
+
+# Define ports to check (from .env.docker)
+# Format: "ServiceName:Port"
+PORTS=(
+    "Application:${APP_PORT:-8000}"
+    "PostgreSQL:${POSTGRES_PORT:-5432}"
+    "pgAdmin:${PGADMIN_PORT:-5050}"
+    "Redis:${REDIS_PORT:-6379}"
+    "MinIO_API:${MINIO_PORT:-9000}"
+    "MinIO_Console:${MINIO_CONSOLE_PORT:-9001}"
+    "Meilisearch:${MEILISEARCH_PORT:-7700}"
+    "Mailpit_SMTP:${MAILPIT_SMTP_PORT:-1025}"
+    "Mailpit_UI:${MAILPIT_UI_PORT:-8025}"
+    "MySQL:${MYSQL_PORT:-3306}"
+    "phpMyAdmin:${PHPMYADMIN_PORT:-8081}"
+    "MongoDB:${MONGODB_PORT:-27017}"
+    "Elasticsearch:${ELASTICSEARCH_PORT:-9200}"
+    "ElasticVue:${ELASTICVUE_PORT:-8080}"
+    "Kafka:${KAFKA_PORT:-9092}"
+    "RabbitMQ:${RABBITMQ_PORT:-5672}"
+    "RabbitMQ_Management:${RABBITMQ_MANAGEMENT_PORT:-15672}"
+    "Reverb:${REVERB_PORT:-6001}"
+)
+
+# Function to check if port is in use
+check_port() {
+    local port=$1
+    local pid=""
+    
+    if command -v lsof &> /dev/null; then
+        # macOS/Linux with lsof
+        pid=$(lsof -i ":$port" -sTCP:LISTEN -t 2>/dev/null | head -1)
+    elif command -v netstat &> /dev/null; then
+        # Linux/Windows with netstat
+        if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "win32" ]]; then
+            # Windows
+            pid=$(netstat -ano 2>/dev/null | grep ":$port " | grep "LISTENING" | awk '{print $5}' | head -1)
+        else
+            # Linux
+            pid=$(netstat -tlnp 2>/dev/null | grep ":$port " | awk '{print $7}' | cut -d'/' -f1 | head -1)
+        fi
+    elif command -v ss &> /dev/null; then
+        # Linux with ss
+        pid=$(ss -tlnp 2>/dev/null | grep ":$port " | awk '{print $6}' | cut -d',' -f2 | cut -d'=' -f2 | head -1)
+    fi
+    
+    echo "$pid"
+}
+
+# Function to get process info
+get_process_info() {
+    local pid=$1
+    
+    if [ -z "$pid" ]; then
+        echo "Unknown"
+        return
+    fi
+    
+    if command -v ps &> /dev/null; then
+        ps -p "$pid" -o comm= 2>/dev/null || echo "Unknown"
+    else
+        echo "PID: $pid"
+    fi
+}
+
+# Function to kill process
+kill_process() {
+    local pid=$1
+    local port=$2
+    local service=$3
+    
+    if [ -z "$pid" ]; then
+        return
+    fi
+    
+    local process_info=$(get_process_info "$pid")
+    
+    if [ "$AUTO_YES" = false ]; then
+        echo -e "${YELLOW}Kill process $pid ($process_info) using port $port ($service)? [y/N]${NC}"
+        read -r response
+        if [[ ! "$response" =~ ^[Yy]$ ]]; then
+            echo -e "${BLUE}Skipped${NC}"
+            return
+        fi
+    fi
+    
+    echo -e "${YELLOW}Killing process $pid...${NC}"
+    
+    if kill -9 "$pid" 2>/dev/null; then
+        echo -e "${GREEN}✓ Process killed${NC}"
+    else
+        echo -e "${RED}✗ Failed to kill process (may require sudo)${NC}"
+        if [ "$AUTO_YES" = false ]; then
+            echo -e "${YELLOW}Try with sudo? [y/N]${NC}"
+            read -r response
+            if [[ "$response" =~ ^[Yy]$ ]]; then
+                sudo kill -9 "$pid" && echo -e "${GREEN}✓ Process killed${NC}" || echo -e "${RED}✗ Failed${NC}"
+            fi
+        fi
+    fi
+}
+
+# Main check
+echo -e "${BLUE}==============================================================================${NC}"
+echo -e "${BLUE}Docker Port Checker${NC}"
+echo -e "${BLUE}==============================================================================${NC}"
+echo ""
+
+CONFLICTS_FOUND=false
+declare -a CONFLICT_PIDS=()
+declare -a CONFLICT_PORTS=()
+declare -a CONFLICT_SERVICES=()
+
+# Table header
+printf "%-25s %-10s %-15s %-50s\n" "SERVICE" "PORT" "STATUS" "PROCESS"
+printf "%-25s %-10s %-15s %-50s\n" "$(printf '%.0s-' {1..25})" "$(printf '%.0s-' {1..10})" "$(printf '%.0s-' {1..15})" "$(printf '%.0s-' {1..50})"
+
+for entry in "${PORTS[@]}"; do
+    # Split entry into service and port
+    service="${entry%%:*}"
+    port="${entry##*:}"
+    
+    # Skip empty ports
+    if [ -z "$port" ]; then
+        continue
+    fi
+    
+    pid=$(check_port "$port")
+    
+    if [ -n "$pid" ]; then
+        process_info=$(get_process_info "$pid")
+        # Truncate long process names
+        process_display="${process_info:0:45}"
+        if [ ${#process_info} -gt 45 ]; then
+            process_display="${process_display}..."
+        fi
+        printf "%-25s %-10s ${RED}%-15s${NC} %-50s\n" "$service" "$port" "✗ IN USE" "PID: $pid ($process_display)"
+        CONFLICTS_FOUND=true
+        CONFLICT_PIDS+=("$pid")
+        CONFLICT_PORTS+=("$port")
+        CONFLICT_SERVICES+=("$service")
+    else
+        printf "%-25s %-10s ${GREEN}%-15s${NC} %-50s\n" "$service" "$port" "✓ Available" "-"
+    fi
+done
+
+echo ""
+
+# Handle conflicts
+if [ "$CONFLICTS_FOUND" = true ]; then
+    echo -e "${RED}==============================================================================${NC}"
+    echo -e "${RED}Port Conflicts Detected!${NC}"
+    echo -e "${RED}==============================================================================${NC}"
+    echo ""
+    
+    if [ "$KILL_PROCESSES" = true ]; then
+        echo -e "${YELLOW}Attempting to kill conflicting processes...${NC}"
+        echo ""
+        
+        for i in "${!CONFLICT_PIDS[@]}"; do
+            kill_process "${CONFLICT_PIDS[$i]}" "${CONFLICT_PORTS[$i]}" "${CONFLICT_SERVICES[$i]}"
+        done
+        
+        echo ""
+        echo -e "${GREEN}Done! You can now start Docker containers.${NC}"
+    else
+        echo -e "${YELLOW}Conflicting Processes:${NC}"
+        echo ""
+        printf "%-25s %-10s %-15s\n" "SERVICE" "PORT" "PID"
+        printf "%-25s %-10s %-15s\n" "$(printf '%.0s-' {1..25})" "$(printf '%.0s-' {1..10})" "$(printf '%.0s-' {1..15})"
+        for i in "${!CONFLICT_PIDS[@]}"; do
+            printf "%-25s %-10s %-15s\n" "${CONFLICT_SERVICES[$i]}" "${CONFLICT_PORTS[$i]}" "${CONFLICT_PIDS[$i]}"
+        done
+        echo ""
+        echo -e "${YELLOW}To automatically kill these processes, run:${NC}"
+        echo -e "${BLUE}  $0 --kill${NC}"
+        echo ""
+        echo -e "${YELLOW}Or manually kill them:${NC}"
+        for i in "${!CONFLICT_PIDS[@]}"; do
+            echo -e "${BLUE}  kill -9 ${CONFLICT_PIDS[$i]}  # ${CONFLICT_SERVICES[$i]} (port ${CONFLICT_PORTS[$i]})${NC}"
+        done
+    fi
+    
+    echo ""
+    exit 1
+else
+    echo -e "${GREEN}==============================================================================${NC}"
+    echo -e "${GREEN}All ports are available!${NC}"
+    echo -e "${GREEN}==============================================================================${NC}"
+    echo ""
+    echo -e "${GREEN}You can safely start Docker containers:${NC}"
+    echo -e "${BLUE}  docker-compose -f docker/docker-compose.yml up -d${NC}"
+    echo ""
+    exit 0
+fi

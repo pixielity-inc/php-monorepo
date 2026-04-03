@@ -1,0 +1,15 @@
+{
+    "name": "User",
+    "alias": "user",
+    "description": "User module for Laravel applications with authentication support",
+    "keywords": [
+        "user",
+        "authentication",
+        "auth"
+    ],
+    "priority": 10,
+    "providers": [
+        "Pixielity\\User\\Providers\\UserServiceProvider"
+    ],
+    "files": []
+}

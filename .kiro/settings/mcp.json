@@ -1,13 +1,16 @@
 {
   "mcpServers": {
+    "laravel-boost": {
+      "command": "php",
+      "args": ["artisan", "boost:mcp"],
+      "disabled": false,
+      "autoApprove": []
+    },
     "laravel": {
       "command": "npx",
       "args": ["-y", "mcp-remote", "https://gitmcp.io/laravel/laravel"],
       "disabled": false,
-      "autoApprove": [
-        "search_docs",
-        "get_doc_page"
-      ]
+      "autoApprove": ["search_docs", "get_doc_page"]
     },
     "github": {
       "command": "npx",

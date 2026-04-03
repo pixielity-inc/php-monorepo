@@ -1,0 +1,60 @@
+# ==============================================================================
+# Laravel Application - Base Docker Compose
+# ==============================================================================
+# Base configuration with the Laravel application only
+# Use with service-specific compose files for additional services
+#
+# Usage:
+#   docker-compose up -d
+#   docker-compose -f docker-compose.yml -f services/compose.redis.yml up -d
+# ==============================================================================
+
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+      args:
+        PHP_VERSION: ${PHP_VERSION:-8.4}
+        NODE_VERSION: ${NODE_VERSION:-20}
+        COMPOSER_VERSION: ${COMPOSER_VERSION:-2}
+    container_name: ${APP_CONTAINER_NAME:-laravel-app}
+    ports:
+      - "${APP_PORT:-8000}:8000"
+    env_file:
+      - ../environments/.env.docker
+      - ../.env
+    environment:
+      - APP_ENV=${APP_ENV:-production}
+      - APP_DEBUG=${APP_DEBUG:-false}
+      - DB_CONNECTION=${DB_CONNECTION:-sqlite}
+      - TZ=${TZ:-UTC}
+    volumes:
+      - ../storage:/var/www/html/storage
+      - ../bootstrap/cache:/var/www/html/bootstrap/cache
+      - ../database/database.sqlite:/var/www/html/database/database.sqlite
+    restart: ${APP_RESTART_POLICY:-unless-stopped}
+    networks:
+      - ${DOCKER_NETWORK_NAME:-laravel}
+    deploy:
+      resources:
+        limits:
+          memory: ${APP_MEMORY_LIMIT:-1g}
+          cpus: ${APP_CPU_LIMIT:-1.0}
+        reservations:
+          memory: ${APP_MEMORY_RESERVATION:-512m}
+          cpus: ${APP_CPU_RESERVATION:-0.5}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/up"]
+      interval: ${APP_HEALTHCHECK_INTERVAL:-30s}
+      timeout: ${APP_HEALTHCHECK_TIMEOUT:-10s}
+      retries: ${APP_HEALTHCHECK_RETRIES:-3}
+    logging:
+      driver: ${LOG_DRIVER:-json-file}
+      options:
+        max-size: ${LOG_MAX_SIZE:-10m}
+        max-file: ${LOG_MAX_FILE:-3}
+
+networks:
+  laravel:
+    driver: ${DOCKER_NETWORK_DRIVER:-bridge}

@@ -1,0 +1,69 @@
+# ==============================================================================
+# Laravel Application - Base Dockencludes
+# ==============================================================================
+# Complete setup with all services using modular includes
+# For production, use selective service files based on your needs
+#
+# Setup:
+#   1. Configure environments/.env.docker for Docker infrastructure settings
+#   2. Configure .env for Laravel application settings
+#   3. Run: docker-compose -f docker/docker-compose.yml up -d
+#
+# All Docker service configurations are loaded from .env.docker
+# ==============================================================================
+
+include:
+  # Core application
+  # - path: compose.app.yml
+
+  # Database services
+  - path: services/compose.postgres.yml
+
+  # Cache & Queue
+  - path: services/compose.redis.yml
+
+  # Storage
+  - path: services/compose.minio.yml
+
+  # Search
+  - path: services/compose.meilisearch.yml
+
+  # Mail
+  - path: services/compose.mailpit.yml
+
+  # WebSocket & Workers
+  # - path: services/compose.reverb.yml
+  # - path: services/compose.workers.yml
+
+# Optional services (uncomment to enable):
+  # - path: services/compose.mysql.yml
+  # - path: services/compose.mongodb.yml
+  # - path: services/compose.elasticsearch.yml
+  # - path: services/compose.kafka.yml
+  # - path: services/compose.rabbitmq.yml
+
+networks:
+  laravel:
+    driver: ${DOCKER_NETWORK_DRIVER:-bridge}
+
+volumes:
+  postgres_data:
+    driver: ${VOLUME_DRIVER:-local}
+  pgadmin_data:
+    driver: ${VOLUME_DRIVER:-local}
+  redis_data:
+    driver: ${VOLUME_DRIVER:-local}
+  minio_data:
+    driver: ${VOLUME_DRIVER:-local}
+  meilisearch_data:
+    driver: ${VOLUME_DRIVER:-local}
+  mysql_data:
+    driver: ${VOLUME_DRIVER:-local}
+  mongodb_data:
+    driver: ${VOLUME_DRIVER:-local}
+  elasticsearch_data:
+    driver: ${VOLUME_DRIVER:-local}
+  kafka_data:
+    driver: ${VOLUME_DRIVER:-local}
+  rabbitmq_data:
+    driver: ${VOLUME_DRIVER:-local}

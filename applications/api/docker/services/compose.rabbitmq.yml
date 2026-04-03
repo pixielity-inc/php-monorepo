@@ -1,0 +1,40 @@
+# ==============================================================================
+# RabbitMQ Service
+# ==============================================================================
+# Message broker for queues and pub/sub messaging
+#
+# Usage:
+#   docker-compose -f docker-compose.yml -f compose.rabbitmq.yml up -d
+#
+# Access:
+#   Management UI: http://localhost:15672 (guest/guest)
+#   AMQP: localhost:5672
+# ==============================================================================
+
+services:
+  rabbitmq:
+    env_file:
+      - ../../environments/.env
+      - ../../environments/.env.docker
+    image: rabbitmq:3-management-alpine
+    container_name: laravel-rabbitmq
+    ports:
+      - "${RABBITMQ_PORT:-5672}:5672"
+      - "${RABBITMQ_MANAGEMENT_PORT:-15672}:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER:-guest}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD:-guest}
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+      - laravel
+
+volumes:
+  rabbitmq_data:
+    driver: local

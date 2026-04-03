@@ -1,0 +1,39 @@
+# ==============================================================================
+# Meilisearch Service
+# ==============================================================================
+# Fast, typo-tolerant search engine
+#
+# Usage:
+#   docker-compose -f docker-compose.yml -f compose.meilisearch.yml up -d
+#
+# Access:
+#   http://localhost:7700
+# ==============================================================================
+
+services:
+  meilisearch:
+    env_file:
+      - ../../environments/.env
+      - ../../environments/.env.docker
+    image: getmeili/meilisearch:v1.11
+    container_name: laravel-meilisearch
+    ports:
+      - "${MEILISEARCH_PORT:-7700}:7700"
+    environment:
+      MEILI_MASTER_KEY: ${MEILISEARCH_MASTER_KEY:-masterKeySecure123456}
+      MEILI_ENV: ${MEILISEARCH_ENV:-production}
+      MEILI_NO_ANALYTICS: ${MEILI_NO_ANALYTICS:-true}
+    volumes:
+      - meilisearch_data:/meili_data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:7700/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - laravel
+
+volumes:
+  meilisearch_data:
+    driver: local

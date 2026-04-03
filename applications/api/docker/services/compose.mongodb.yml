@@ -1,0 +1,39 @@
+# ==============================================================================
+# MongoDB Service
+# ==============================================================================
+# NoSQL document database
+#
+# Usage:
+#   docker-compose -f docker-compose.yml -f compose.mongodb.yml up -d
+#
+# Access:
+#   mongodb://localhost:27017
+# ==============================================================================
+
+services:
+  mongodb:
+    env_file:
+      - ../../environments/.env
+      - ../../environments/.env.docker
+    image: mongo:8
+    container_name: laravel-mongodb
+    ports:
+      - "${MONGODB_PORT:-27017}:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USERNAME:-root}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD:-secret}
+      MONGO_INITDB_DATABASE: ${MONGODB_DATABASE:-laravel}
+    volumes:
+      - mongodb_data:/data/db
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - laravel
+
+volumes:
+  mongodb_data:
+    driver: local

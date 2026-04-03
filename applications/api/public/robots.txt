@@ -1,0 +1,9 @@
+# ==============================================================================
+# Robots.txt - Headless API Backend
+# ==============================================================================
+# This is a headless API backend - no pages should be crawled or indexed
+# All search engine bots and crawlers are disallowed
+# ==============================================================================
+
+User-agent: *
+Disallow: /

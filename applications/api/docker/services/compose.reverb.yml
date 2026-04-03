@@ -1,0 +1,41 @@
+# ==============================================================================
+# Laravel Reverb Service
+# ==============================================================================
+# Laravel's official WebSocket server for real-time broadcasting
+#
+# Usage:
+#   docker-compose -f docker-compose.yml -f compose.reverb.yml up -d
+#
+# Access:
+#   WebSocket: ws://localhost:8080
+#   API: http://localhost:8080
+#
+# Note: Requires laravel/reverb package installed in your Laravel app
+# ==============================================================================
+
+services:
+  reverb:
+    env_file:
+      - ../../environments/.env
+      - ../../environments/.env.docker
+    build:
+      context: ../..
+      dockerfile: docker/Dockerfile
+    container_name: laravel-reverb
+    command: sh -c "bin/artisan reverb:start --host=0.0.0.0 --port=$${REVERB_PORT:-6001}"
+    ports:
+      - "${REVERB_PORT:-6001}:${REVERB_PORT:-6001}"
+    environment:
+      - REVERB_APP_ID=${REVERB_APP_ID:-app-id}
+      - REVERB_APP_KEY=${REVERB_APP_KEY:-app-key}
+      - REVERB_APP_SECRET=${REVERB_APP_SECRET:-app-secret}
+      - REVERB_HOST=${REVERB_HOST:-0.0.0.0}
+      - REVERB_PORT=${REVERB_PORT:-6001}
+      - REVERB_SCHEME=${REVERB_SCHEME:-http}
+    volumes:
+      - ../../storage:/var/www/html/storage
+    restart: unless-stopped
+    depends_on:
+      - app
+    networks:
+      - laravel

@@ -1,0 +1,14 @@
+{
+    "agents": [
+        "kiro"
+    ],
+    "guidelines": true,
+    "mcp": true,
+    "nightwatch_mcp": false,
+    "sail": false,
+    "skills": [
+        "laravel-best-practices",
+        "laravel-module-structure",
+        "tailwindcss-development"
+    ]
+}

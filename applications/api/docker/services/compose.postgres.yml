@@ -1,0 +1,73 @@
+# ==============================================================================
+# PostgreSQL Service
+# ==============================================================================
+# Production-grade relational database with pgAdmin
+#
+# Usage:
+#   docker-compose -f docker-compose.yml -f compose.postgres.yml up -d
+#
+# Access:
+#   PostgreSQL: localhost:5432
+#   pgAdmin: http://localhost:5050 (admin@admin.com / admin)
+# ==============================================================================
+
+services:
+  postgres:
+    env_file:
+      - ../../environments/.env.docker
+      - ../../environments/.env
+    image: postgres:16-alpine
+    container_name: laravel-postgres
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    environment:
+      POSTGRES_DB: ${DB_DATABASE:-laravel}
+      POSTGRES_USER: ${DB_USERNAME:-laravel}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-secret}
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=en_US.UTF-8"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-laravel}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - laravel
+
+  pgadmin:
+    env_file:
+      - ../../environments/.env.docker
+      - ../../environments/.env
+    image: dpage/pgadmin4:latest
+    container_name: laravel-pgadmin
+    ports:
+      - "${PGADMIN_PORT:-5050}:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL:-admin@admin.com}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD:-admin}
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: 'False'
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+      - ../pgadmin/servers.json:/pgadmin4/servers.json:ro
+      - ../pgadmin/pgpass:/var/lib/pgadmin/pgpass:ro
+    depends_on:
+      - postgres
+    restart: unless-stopped
+    networks:
+      - laravel
+    entrypoint: >
+      /bin/sh -c "
+      cp /var/lib/pgadmin/pgpass /tmp/pgpass 2>/dev/null || true;
+      chmod 600 /tmp/pgpass 2>/dev/null || true;
+      export PGPASSFILE=/tmp/pgpass;
+      /entrypoint.sh
+      "
+
+volumes:
+  postgres_data:
+    driver: local
+  pgadmin_data:
+    driver: local

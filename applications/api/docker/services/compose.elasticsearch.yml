@@ -1,0 +1,58 @@
+# ==============================================================================
+# Elasticsearch Service
+# ==============================================================================
+# Advanced search and analytics engine with ElasticVue management UI
+#
+# Usage:
+#   docker-compose -f docker-compose.yml -f compose.elasticsearch.yml up -d
+#
+# Access:
+#   Elasticsearch: http://localhost:9200
+#   ElasticVue UI: http://localhost:8080
+# ==============================================================================
+
+services:
+  elasticsearch:
+    env_file:
+      - ../../environments/.env
+      - ../../environments/.env.docker
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.16.1
+    container_name: laravel-elasticsearch
+    ports:
+      - "${ELASTICSEARCH_PORT:-9200}:9200"
+      - "9300:9300"
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - ELASTIC_PASSWORD=${ELASTICSEARCH_PASSWORD:-elastic}
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:9200/_cluster/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+      - laravel
+
+  elasticvue:
+    env_file:
+      - ../../environments/.env
+      - ../../environments/.env.docker
+    image: cars10/elasticvue:latest
+    container_name: laravel-elasticvue
+    ports:
+      - "${ELASTICVUE_PORT:-8080}:8080"
+    environment:
+      - ELASTICVUE_CLUSTERS=[{"name":"Local","uri":"http://elasticsearch:9200"}]
+    depends_on:
+      - elasticsearch
+    restart: unless-stopped
+    networks:
+      - laravel
+
+volumes:
+  elasticsearch_data:
+    driver: local

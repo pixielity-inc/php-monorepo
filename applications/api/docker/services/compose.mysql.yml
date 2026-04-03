@@ -1,0 +1,61 @@
+# ==============================================================================
+# MySQL Service
+# ==============================================================================
+# Alternative relational database option with phpMyAdmin
+#
+# Usage:
+#   docker-compose -f docker-compose.yml -f compose.mysql.yml up -d
+#
+# Access:
+#   MySQL: localhost:3306
+#   phpMyAdmin: http://localhost:8081
+# ==============================================================================
+
+services:
+  mysql:
+    env_file:
+      - ../../environments/.env
+      - ../../environments/.env.docker
+    image: mysql:8.4
+    container_name: laravel-mysql
+    ports:
+      - "${DB_PORT:-3306}:3306"
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE:-laravel}
+      MYSQL_USER: ${DB_USERNAME:-laravel}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-secret}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-root_secret}
+    volumes:
+      - mysql_data:/var/lib/mysql
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - laravel
+
+  phpmyadmin:
+    env_file:
+      - ../../environments/.env
+      - ../../environments/.env.docker
+    image: phpmyadmin:latest
+    container_name: laravel-phpmyadmin
+    ports:
+      - "${PHPMYADMIN_PORT:-8081}:80"
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_USER: ${DB_USERNAME:-laravel}
+      PMA_PASSWORD: ${DB_PASSWORD:-secret}
+      UPLOAD_LIMIT: 100M
+    depends_on:
+      - mysql
+    restart: unless-stopped
+    networks:
+      - laravel
+
+volumes:
+  mysql_data:
+    driver: local
