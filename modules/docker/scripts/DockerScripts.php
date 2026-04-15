@@ -32,10 +32,14 @@ use Composer\Script\Event;
  */
 class DockerScripts
 {
-    /** Default docker-compose file. */
+    /** 
+ * Default docker-compose file. 
+ */
     private const COMPOSE_FILE = 'docker/docker-compose.yml';
 
-    /** Application docker-compose file. */
+    /** 
+ * Application docker-compose file. 
+ */
     private const COMPOSE_APP_FILE = 'docker/compose.app.yml';
 
     // -------------------------------------------------------------------------
