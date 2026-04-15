@@ -1,0 +1,25 @@
+{
+  "name": "pixielity/laravel-developer",
+  "description": "App marketplace — third-party app installation, OAuth2 scopes, consent screen, webhooks",
+  "type": "library",
+  "license": "MIT",
+  "require": {
+    "php": "^8.5",
+    "pixielity/laravel-crud": "@dev",
+    "pixielity/laravel-database": "@dev",
+    "pixielity/laravel-discovery": "@dev",
+    "pixielity/laravel-framework": "@dev"
+  },
+  "autoload": {
+    "psr-4": {
+      "Pixielity\\Developer\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Pixielity\\Developer\\Providers\\DeveloperServiceProvider"
+      ]
+    }
+  }
+}
