@@ -5,17 +5,19 @@ declare(strict_types=1);
 namespace Pixielity\Foundation\Solutions;
 
 use Illuminate\Support\Facades\App;
+use Pixielity\Foundation\Attributes\AsSolutionProvider;
 use Pixielity\Support\Reflection;
-use Spatie\Ignition\Contracts\HasSolutionsForThrowable;
+use Spatie\ErrorSolutions\Contracts\HasSolutionsForThrowable;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Throwable;
 
 /**
  * Class AiSolutionProvider.
  *
- * This class implements the HasSolutionForThrowable interface to provide
- * solutions for throwable exceptions in the Pixielity Integration .
+ * Provides AI-generated solutions for throwable exceptions using OpenAI.
+ * Automatically discovered and registered via the #[AsSolutionProvider] attribute.
  */
+#[AsSolutionProvider]
 class AiSolutionProvider implements HasSolutionsForThrowable
 {
     /**
@@ -29,7 +31,7 @@ class AiSolutionProvider implements HasSolutionsForThrowable
         // Skip AI solutions for common client errors where a solution is obvious or non-technical
         if (Reflection::implements($throwable, HttpException::class)) {
             $statusCode = $throwable->getStatusCode();
-            if (in_array($statusCode, [401, 403, 404, 429])) {
+            if (in_array($statusCode, [401, 403, 404, 429], true)) {
                 return false;
             }
         }

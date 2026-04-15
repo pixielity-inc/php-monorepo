@@ -45,7 +45,9 @@ trait HasExecutableCommands
      */
     public static function formatExecutableCommandString(string|array $string, string $executionType): string
     {
-        /** @var self $app */
+        /** 
+ * @var self $app 
+ */
         $app = app();
 
         // If the command is an array, format it into a string

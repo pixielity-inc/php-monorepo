@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Pixielity\Foundation\Contracts;
 
-use Spatie\Ignition\Contracts\Solution as BaseSolution;
+use Spatie\ErrorSolutions\Contracts\Solution as BaseSolution;
 
 /**
  * Interface for defining a solution with a title, description, and documentation links.

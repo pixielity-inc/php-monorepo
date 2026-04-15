@@ -3,8 +3,10 @@
 namespace Pixielity\Foundation\Providers;
 
 use Nwidart\Modules\Support\ModuleServiceProvider;
-use Pixielity\Routing\Providers\RoutingServiceProvider;
-use Pixielity\Routing\RouteRegistrar;
+use Pixielity\Discovery\Facades\Discovery;
+use Pixielity\Foundation\Attributes\AsSolutionProvider;
+use Pixielity\Support\Reflection;
+use Spatie\ErrorSolutions\Contracts\SolutionProviderRepository;
 
 class FoundationServiceProvider extends ModuleServiceProvider
 {
@@ -19,49 +21,23 @@ class FoundationServiceProvider extends ModuleServiceProvider
     protected string $nameLower = 'foundation';
 
     /**
-     * Command classes to register.
-     *
-     * @var string[]
-     */
-    // protected array $commands = [];
-
-    /**
      * Provider classes to register.
      *
      * @var string[]
      */
-    protected array $providers = [
-        // RouteServiceProvider removed - using route attributes instead
-    ];
-
-    /**
-     * Define module schedules.
-     *
-     * @param  $schedule
-     */
-    // protected function configureSchedules(Schedule $schedule): void
-    // {
-    //     $schedule->command('inspire')->hourly();
-    // }
+    protected array $providers = [];
 
     /**
      * Boot the service provider.
      *
-     * Routes are automatically registered by Spatie's RouteAttributesServiceProvider
-     * using our custom RouteRegistrar (bound in RoutingServiceProvider) which
-     * discovers controllers via the #[AsController] attribute.
-     *
      * We override boot() to skip ModuleServiceProvider's registerTranslations()
      * call which requires the module to be registered in nWidart's module registry.
-     * Foundation is a Composer package, not a nWidart module folder, so we
-     * handle registration manually.
      */
     public function boot(): void
     {
-        // Intentionally skip parent::boot() to avoid module_path() call.
-        // ModuleServiceProvider::boot() calls registerTranslations() which
-        // calls module_path($this->name, 'lang') — this fails when the module
-        // is installed as a Composer package rather than a nWidart module folder.
+        $this->loadViewsFrom(__DIR__ . '/../views', 'foundation');
+
+        $this->registerDiscoveredSolutionProviders();
     }
 
     /**
@@ -69,6 +45,36 @@ class FoundationServiceProvider extends ModuleServiceProvider
      */
     public function register(): void
     {
-        // Intentionally skip parent::register() for the same reason.
+        // Intentionally skip parent::register() to avoid module_path() call.
+    }
+
+    /**
+     * Discover and register all classes with #[AsSolutionProvider] attribute.
+     *
+     * Only registers when debug mode is enabled and spatie/error-solutions
+     * is available (typically dev environments).
+     */
+    protected function registerDiscoveredSolutionProviders(): void
+    {
+        if (! $this->app->hasDebugModeEnabled()) {
+            return;
+        }
+
+        if (! $this->app->bound(SolutionProviderRepository::class)) {
+            return;
+        }
+
+        $providers = Discovery::attribute(AsSolutionProvider::class)
+            ->cached('foundation.solution-providers')
+            ->get()
+            ->keys()
+            ->filter(Reflection::exists(...))
+            ->values()
+            ->all();
+
+        if ($providers !== []) {
+            $this->app->make(SolutionProviderRepository::class)
+                ->registerSolutionProviders($providers);
+        }
     }
 }

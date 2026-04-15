@@ -72,7 +72,9 @@ trait HasServiceProviders
     public function register($provider, $force = false)
     {
         // Call parent registration first
-        /** @var ServiceProvider $registered */
+        /** 
+ * @var ServiceProvider $registered 
+ */
         $registered = parent::register($provider, $force);
 
         // If priority sorting is enabled and we have multiple providers, sort them

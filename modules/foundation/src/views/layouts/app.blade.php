@@ -9,7 +9,7 @@ Used across all pixielity for consistent UI.
 
 ## Theme Support:
 - Auto-detection: Automatically detects system/device theme preference
-- Override: Pass $theme variable to override auto-detection
+- Override: Compiler $theme variable to override auto-detection
 - Values: 'dark', 'light', or 'auto' (default)
 
 ## Usage:

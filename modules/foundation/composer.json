@@ -1,106 +1,114 @@
 {
-    "name": "pixielity/laravel-foundation",
-    "description": "Pixielity Foundation module — custom Application class, base API structure, and core providers.",
-    "type": "library",
-    "keywords": [
-        "laravel",
-        "foundation",
-        "application",
-        "api",
-        "headless",
-        "pixielity"
-    ],
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Pixielity Team",
-            "email": "dev@pixielity.com",
-            "homepage": "https://pixielity.com",
-            "role": "Developer"
-        }
-    ],
-    "require": {
-        "php": "^8.4|^8.5",
-        "illuminate/support": "^13.0",
-        "illuminate/routing": "^13.0",
-        "pixielity/laravel-discovery": "*",
-        "pixielity/laravel-framework": "@dev",
-        "maantje/react-email": "^1.0",
-        "jaybizzle/crawler-detect": "^1.3"
+  "name": "pixielity/laravel-foundation",
+  "description": "Pixielity Foundation module — custom Application class, base API structure, and core providers.",
+  "type": "library",
+  "keywords": [
+    "laravel",
+    "foundation",
+    "application",
+    "api",
+    "headless",
+    "pixielity"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Pixielity Team",
+      "email": "dev@pixielity.com",
+      "homepage": "https://pixielity.com",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": "^8.4|^8.5",
+    "illuminate/support": "^13.0",
+    "illuminate/routing": "^13.0",
+    "pixielity/laravel-discovery": "*",
+    "pixielity/laravel-framework": "@dev",
+    "maantje/react-email": "^1.0",
+    "jaybizzle/crawler-detect": "^1.3",
+    "openai-php/laravel": "^0.19",
+    "pixielity/stub-generator": "^1.0",
+    "spatie/laravel-error-solutions": "^1.1",
+    "spatie/backtrace": "^1.6"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^13.0|^12.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Pixielity\\Foundation\\": "src/",
+      "Pixielity\\Foundation\\Scripts\\": "scripts/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Pixielity\\Foundation\\Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Pixielity\\Foundation\\Providers\\FoundationServiceProvider"
+      ],
+      "aliases": []
     },
-    "require-dev": {
-        "phpunit/phpunit": "^13.0|^12.0"
-    },
-    "autoload": {
-        "psr-4": {
-            "Pixielity\\Foundation\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Pixielity\\Foundation\\Tests\\": "tests/",
-            "Pixielity\\Foundation\\Scripts\\": "scripts/"
-        }
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Pixielity\\Foundation\\Providers\\FoundationServiceProvider"
-            ],
-            "aliases": {}
-        },
-        "branch-alias": {
-            "dev-main": "0.1.x-dev"
-        }
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../*"
-        }
-    ],
-    "config": {
-        "optimize-autoloader": true,
-        "preferred-install": "dist",
-        "sort-packages": true,
-        "allow-plugins": {
-            "olvlvl/composer-attribute-collector": true
-        }
-    },
-    "scripts": {
-        "cache:clear": "Pixielity\\Foundation\\Scripts\\CacheScripts::clear",
-        "cache:warm": "Pixielity\\Foundation\\Scripts\\CacheScripts::warm",
-        "cache:clean": "Pixielity\\Foundation\\Scripts\\CacheScripts::clean",
-        "test": "Pixielity\\Foundation\\Scripts\\TestScripts::run",
-        "test:coverage": "Pixielity\\Foundation\\Scripts\\TestScripts::coverage",
-        "test:parallel": "Pixielity\\Foundation\\Scripts\\TestScripts::parallel",
-        "test:filter": "Pixielity\\Foundation\\Scripts\\TestScripts::filter",
-        "lint": "Pixielity\\Foundation\\Scripts\\LintScripts::check",
-        "lint:fix": "Pixielity\\Foundation\\Scripts\\LintScripts::fix",
-        "analyse": "Pixielity\\Foundation\\Scripts\\AnalyseScripts::run",
-        "analyse:baseline": "Pixielity\\Foundation\\Scripts\\AnalyseScripts::baseline",
-        "refactor": "Pixielity\\Foundation\\Scripts\\RefactorScripts::dryRun",
-        "refactor:fix": "Pixielity\\Foundation\\Scripts\\RefactorScripts::apply",
-        "insights": "Pixielity\\Foundation\\Scripts\\InsightsScripts::run",
-        "insights:fix": "Pixielity\\Foundation\\Scripts\\InsightsScripts::fix",
-        "env:dev": "Pixielity\\Foundation\\Scripts\\EnvScripts::dev",
-        "env:testing": "Pixielity\\Foundation\\Scripts\\EnvScripts::testing",
-        "env:prod": "Pixielity\\Foundation\\Scripts\\EnvScripts::prod",
-        "env:status": "Pixielity\\Foundation\\Scripts\\EnvScripts::status",
-        "setup:env": "Pixielity\\Foundation\\Scripts\\EnvScripts::setup"
-    },
-    "homepage": "https://github.com/pixielity-inc/php-monorepo/tree/main/modules/foundation",
-    "support": {
-        "issues": "https://github.com/pixielity-inc/php-monorepo/issues",
-        "source": "https://github.com/pixielity-inc/php-monorepo/tree/main/modules/foundation",
-        "docs": "https://github.com/pixielity-inc/php-monorepo/blob/main/modules/foundation/README.md"
-    },
-    "funding": [
-        {
-            "type": "github",
-            "url": "https://github.com/sponsors/pixielity-inc"
-        }
-    ]
+    "branch-alias": {
+      "dev-main": "0.1.x-dev"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "config": {
+    "optimize-autoloader": true,
+    "preferred-install": "dist",
+    "sort-packages": true,
+    "allow-plugins": {
+      "olvlvl/composer-attribute-collector": true,
+      "php-http/discovery": true
+    }
+  },
+  "scripts": {
+    "cache:clear": "Pixielity\\Foundation\\Scripts\\CacheScripts::clear",
+    "cache:warm": "Pixielity\\Foundation\\Scripts\\CacheScripts::warm",
+    "cache:clean": "Pixielity\\Foundation\\Scripts\\CacheScripts::clean",
+    "test": "Pixielity\\Foundation\\Scripts\\TestScripts::run",
+    "test:coverage": "Pixielity\\Foundation\\Scripts\\TestScripts::coverage",
+    "test:parallel": "Pixielity\\Foundation\\Scripts\\TestScripts::parallel",
+    "test:filter": "Pixielity\\Foundation\\Scripts\\TestScripts::filter",
+    "lint": "Pixielity\\Foundation\\Scripts\\LintScripts::check",
+    "lint:fix": "Pixielity\\Foundation\\Scripts\\LintScripts::fix",
+    "analyse": "Pixielity\\Foundation\\Scripts\\AnalyseScripts::run",
+    "analyse:baseline": "Pixielity\\Foundation\\Scripts\\AnalyseScripts::baseline",
+    "refactor": "Pixielity\\Foundation\\Scripts\\RefactorScripts::dryRun",
+    "refactor:fix": "Pixielity\\Foundation\\Scripts\\RefactorScripts::apply",
+    "insights": "Pixielity\\Foundation\\Scripts\\InsightsScripts::run",
+    "insights:fix": "Pixielity\\Foundation\\Scripts\\InsightsScripts::fix",
+    "env:dev": "Pixielity\\Foundation\\Scripts\\EnvScripts::dev",
+    "env:testing": "Pixielity\\Foundation\\Scripts\\EnvScripts::testing",
+    "env:prod": "Pixielity\\Foundation\\Scripts\\EnvScripts::prod",
+    "env:status": "Pixielity\\Foundation\\Scripts\\EnvScripts::status",
+    "setup:env": "Pixielity\\Foundation\\Scripts\\EnvScripts::setup"
+  },
+  "homepage": "https://github.com/pixielity-inc/php-monorepo/tree/main/modules/foundation",
+  "support": {
+    "issues": "https://github.com/pixielity-inc/php-monorepo/issues",
+    "source": "https://github.com/pixielity-inc/php-monorepo/tree/main/modules/foundation",
+    "docs": "https://github.com/pixielity-inc/php-monorepo/blob/main/modules/foundation/README.md"
+  },
+  "funding": [
+    {
+      "type": "github",
+      "url": "https://github.com/sponsors/pixielity-inc"
+    }
+  ],
+  "repositories": [
+    {
+      "type": "path",
+      "url": "../framework",
+      "options": {
+        "symlink": true
+      }
+    }
+  ]
 }
