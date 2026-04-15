@@ -2,7 +2,6 @@
 
 namespace Pixielity\Routing;
 
-use Override;
 use Pixielity\Support\Arr;
 use Pixielity\Support\Str;
 use ReflectionAttribute;
@@ -67,7 +66,9 @@ class ClassRouteAttributes extends SpatieClassRouteAttributes
     {
         $groups = [];
 
-        /** @var ReflectionClass[] $attributes */
+        /**
+         * @var ReflectionClass[] $attributes
+         */
         $attributes = $this->reflectionClass->getAttributes(Group::class, ReflectionAttribute::IS_INSTANCEOF);
 
         if (count($attributes) > 0) {

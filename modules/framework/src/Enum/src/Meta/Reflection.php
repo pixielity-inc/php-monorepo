@@ -66,7 +66,9 @@ class Reflection
         $attributes = $reflectionEnumUnitCase->getAttributes();
 
         // Instantiate each ReflectionAttribute
-        /** @var Property[] $properties */
+        /**
+         * @var Property[] $properties
+         */
         $properties = Arr::map(
             $attributes,
             fn (ReflectionAttribute $reflectionAttribute): object => $reflectionAttribute->newInstance()
@@ -100,7 +102,9 @@ class Reflection
         $attributes = $reflectionClass->getAttributes(Meta::class);
 
         if ($attributes !== []) {
-            /** @var Meta $meta */
+            /**
+             * @var Meta $meta
+             */
             $meta = $attributes[0]->newInstance();
 
             return $meta->metaProperties;

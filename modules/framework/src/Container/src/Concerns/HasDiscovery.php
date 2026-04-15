@@ -164,7 +164,9 @@ trait HasDiscovery
 
                 // Process each #[Tagged] attribute and group by tag
                 foreach ($attributes as $attribute) {
-                    /** @var Tagged $tagged */
+                    /**
+                     * @var Tagged $tagged
+                     */
                     $tagged = $attribute->newInstance();
 
                     // Add class to the tag group
@@ -211,7 +213,9 @@ trait HasDiscovery
                 $isScoped = Reflection::hasAttribute($class, Scoped::class);
 
                 foreach ($attributes as $attribute) {
-                    /** @var Bind $bind */
+                    /**
+                     * @var Bind $bind
+                     */
                     $bind = $attribute->newInstance();
 
                     // Check if the current environment is supported

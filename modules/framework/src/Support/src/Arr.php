@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Pixielity\Support;
 
 use Illuminate\Support\Arr as BaseArr;
-use Override;
 
 /**
  * Class Arr.

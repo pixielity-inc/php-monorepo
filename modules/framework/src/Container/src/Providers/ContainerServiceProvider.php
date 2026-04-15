@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Pixielity\Container\Providers;
 
-use Override;
 use Pixielity\Container\Concerns\HasDiscovery;
 use Pixielity\Support\ServiceProvider;
 

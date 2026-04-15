@@ -55,12 +55,16 @@ class Meta
         // When an array is passed, it'll be wrapped in an outer array due to the ...variadic parameter
         if (isset($metaProperties[0]) && is_array($metaProperties[0])) {
             // Extract the inner array
-            /** @var array<class-string<Property>> $extracted */
+            /**
+             * @var array<class-string<Property>> $extracted
+             */
             $extracted = $metaProperties[0];
             $this->metaProperties = $extracted;
         } else {
             // Filter out non-string values and cast to proper type
-            /** @var array<class-string<Property>> $filtered */
+            /**
+             * @var array<class-string<Property>> $filtered
+             */
             $filtered = Arr::filter($metaProperties, 'is_string');
             $this->metaProperties = $filtered;
         }

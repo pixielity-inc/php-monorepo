@@ -150,7 +150,9 @@ trait InteractsWithServices
             ));
         }
 
-        /** @var UseService $serviceAttribute */
+        /**
+         * @var UseService $serviceAttribute
+         */
         $serviceAttribute = $attributes[0]->newInstance();
         $interface = $serviceAttribute->interface;
 

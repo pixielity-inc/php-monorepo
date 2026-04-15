@@ -32,7 +32,7 @@ trait HasLaravelPaths
      * - nx.json (Nx)
      * - apps/ directory (common monorepo structure)
      *
-     * @param string $fromPath Starting path to check from
+     * @param  string  $fromPath  Starting path to check from
      * @return bool True if monorepo detected
      */
     public static function isMonorepo(string $fromPath): bool
@@ -46,7 +46,7 @@ trait HasLaravelPaths
      * Searches upward from the given path to find the monorepo root by looking for
      * monorepo indicator files (turbo.json, pnpm-workspace.yaml, etc.).
      *
-     * @param string $fromPath Starting path to search from
+     * @param  string  $fromPath  Starting path to search from
      * @return string|null The monorepo root path, or null if not in a monorepo
      */
     public static function findMonorepoRoot(string $fromPath): ?string
@@ -97,8 +97,8 @@ trait HasLaravelPaths
      * // Returns: /monorepo/modules/Auth/src
      * ```
      *
-     * @param  string $fromPath    Starting path (usually __DIR__ from bootstrap)
-     * @param  string ...$segments Optional subdirectories within modules
+     * @param  string  $fromPath  Starting path (usually __DIR__ from bootstrap)
+     * @param  string  ...$segments  Optional subdirectories within modules
      * @return string The path to modules directory or subdirectory
      */
     public static function modules(string $fromPath, string ...$segments): string
@@ -132,8 +132,8 @@ trait HasLaravelPaths
      * // Returns: /monorepo/apps/web/public
      * ```
      *
-     * @param  string $fromPath    Starting path (usually __DIR__ from bootstrap)
-     * @param  string ...$segments Optional subdirectories within apps
+     * @param  string  $fromPath  Starting path (usually __DIR__ from bootstrap)
+     * @param  string  ...$segments  Optional subdirectories within apps
      * @return string The path to apps directory or subdirectory
      */
     public static function apps(string $fromPath, string ...$segments): string
@@ -163,8 +163,8 @@ trait HasLaravelPaths
      * // Returns: /monorepo
      * ```
      *
-     * @param  string $fromPath Starting path (usually __DIR__ from bootstrap)
-     * @param  int    $levels   Number of levels to go up if auto-detection fails (default: 3)
+     * @param  string  $fromPath  Starting path (usually __DIR__ from bootstrap)
+     * @param  int  $levels  Number of levels to go up if auto-detection fails (default: 3)
      * @return string The path to monorepo root
      */
     public static function monorepoRoot(string $fromPath, int $levels = 3): string
@@ -192,8 +192,8 @@ trait HasLaravelPaths
      * // Returns: /monorepo/apps/api/storage/logs
      * ```
      *
-     * @param  string $basePath    Application base path
-     * @param  string ...$segments Optional subdirectories within storage
+     * @param  string  $basePath  Application base path
+     * @param  string  ...$segments  Optional subdirectories within storage
      * @return string The path to storage directory or subdirectory
      */
     public static function storage(string $basePath, string ...$segments): string
@@ -213,8 +213,8 @@ trait HasLaravelPaths
      * // Returns: /monorepo/apps/api/public/assets/images
      * ```
      *
-     * @param  string $basePath    Application base path
-     * @param  string ...$segments Optional subdirectories within public
+     * @param  string  $basePath  Application base path
+     * @param  string  ...$segments  Optional subdirectories within public
      * @return string The path to public directory or subdirectory
      */
     public static function public(string $basePath, string ...$segments): string
@@ -234,8 +234,8 @@ trait HasLaravelPaths
      * // Returns: /monorepo/apps/api/src/config/app.php
      * ```
      *
-     * @param  string $srcPath     Application source path
-     * @param  string ...$segments Optional subdirectories or files within config
+     * @param  string  $srcPath  Application source path
+     * @param  string  ...$segments  Optional subdirectories or files within config
      * @return string The path to config directory or file
      */
     public static function config(string $srcPath, string ...$segments): string
@@ -255,8 +255,8 @@ trait HasLaravelPaths
      * // Returns: /monorepo/apps/api/src/database/migrations
      * ```
      *
-     * @param  string $srcPath     Application source path
-     * @param  string ...$segments Optional subdirectories within database
+     * @param  string  $srcPath  Application source path
+     * @param  string  ...$segments  Optional subdirectories within database
      * @return string The path to database directory or subdirectory
      */
     public static function database(string $srcPath, string ...$segments): string
@@ -276,8 +276,8 @@ trait HasLaravelPaths
      * // Returns: /monorepo/apps/api/src/resources/views
      * ```
      *
-     * @param  string $srcPath     Application source path
-     * @param  string ...$segments Optional subdirectories within resources
+     * @param  string  $srcPath  Application source path
+     * @param  string  ...$segments  Optional subdirectories within resources
      * @return string The path to resources directory or subdirectory
      */
     public static function resources(string $srcPath, string ...$segments): string
@@ -297,8 +297,8 @@ trait HasLaravelPaths
      * // Returns: /monorepo/apps/api/src/routes/api.php
      * ```
      *
-     * @param  string $srcPath     Application source path
-     * @param  string ...$segments Optional subdirectories or files within routes
+     * @param  string  $srcPath  Application source path
+     * @param  string  ...$segments  Optional subdirectories or files within routes
      * @return string The path to routes directory or file
      */
     public static function routes(string $srcPath, string ...$segments): string
@@ -318,8 +318,8 @@ trait HasLaravelPaths
      * // Returns: /monorepo/apps/api/bootstrap/cache
      * ```
      *
-     * @param  string $basePath    Application base path
-     * @param  string ...$segments Optional subdirectories within bootstrap
+     * @param  string  $basePath  Application base path
+     * @param  string  ...$segments  Optional subdirectories within bootstrap
      * @return string The path to bootstrap directory or subdirectory
      */
     public static function bootstrap(string $basePath, string ...$segments): string
@@ -339,8 +339,8 @@ trait HasLaravelPaths
      * // Returns: /monorepo/apps/api/tests/Feature
      * ```
      *
-     * @param  string $basePath    Application base path
-     * @param  string ...$segments Optional subdirectories within tests
+     * @param  string  $basePath  Application base path
+     * @param  string  ...$segments  Optional subdirectories within tests
      * @return string The path to tests directory or subdirectory
      */
     public static function tests(string $basePath, string ...$segments): string

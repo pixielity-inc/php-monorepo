@@ -313,7 +313,9 @@ class DataObject implements DataObjectInterface
             $result = [];
 
             // Loop through each key in the array and get the corresponding data
-            /** @var array<string> $key */
+            /** 
+ * @var array<string> $key 
+ */
             foreach ($key as $k) {
                 $result[$k] = $this->getData($k);
             }
@@ -326,7 +328,9 @@ class DataObject implements DataObjectInterface
         $data = $this->attributes[$key] ?? null;
 
         // If no data is found for the key and the key contains a '/' (which implies nested keys)
-        /** @var non-empty-string $key */
+        /** 
+ * @var non-empty-string $key 
+ */
         if ($data === null && is_string($key) && Str::contains($key, DIRECTORY_SEPARATOR)) {
             // Process the key with slashes (e.g., 'a/b/c') as nested keys and retrieve the data
             $data = $this->getDataByPath($key);

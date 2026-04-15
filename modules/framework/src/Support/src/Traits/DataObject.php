@@ -110,8 +110,6 @@ trait DataObject
      */
     protected ?DataObjectClass $dataObject = null;
 
-    /** Forward method calls to the DataObject instance. */
-
     /**
      * Forward method calls to the DataObject instance.
      *

@@ -197,7 +197,9 @@ class Get extends SpatieGet
             $attributes = Reflection::getAttributes($className, OA\Schema::class);
 
             if ($attributes !== []) {
-                /** @var OA\Schema $schema */
+                /**
+                 * @var OA\Schema $schema
+                 */
                 $schema = $attributes[0]->newInstance();
 
                 return $schema->schema ?: Reflection::getShortName($className);

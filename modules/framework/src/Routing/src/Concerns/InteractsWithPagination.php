@@ -182,7 +182,9 @@ trait InteractsWithPagination
 
         $this->validatePagination($page, $perPage);
 
-        /** @var LengthAwarePaginator $lengthAwarePaginator */
+        /**
+         * @var LengthAwarePaginator $lengthAwarePaginator
+         */
         $lengthAwarePaginator = $builder->paginate($perPage, ['*'], PaginatorConstants::PAGE, $page);
 
         return $this->paginatedResponse($lengthAwarePaginator);

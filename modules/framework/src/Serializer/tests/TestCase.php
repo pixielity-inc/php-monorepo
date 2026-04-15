@@ -7,7 +7,6 @@ namespace Pixielity\Serializer\Tests;
 use Illuminate\Foundation\Application;
 use Mockery;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Override;
 
 /**
  * Base Test Case for ServiceProvider Package Tests.

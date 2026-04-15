@@ -149,7 +149,9 @@ class TimezoneMiddleware
             'timezone' => $timezone,
         ]);
 
-        /** @var Response $response */
+        /**
+         * @var Response $response
+         */
         $response = $next($request);
 
         // Add timezone to response headers

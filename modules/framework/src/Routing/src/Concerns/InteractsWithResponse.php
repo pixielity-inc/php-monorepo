@@ -182,4 +182,21 @@ trait InteractsWithResponse
     {
         return $this->response()->serverError($message);
     }
+
+    /**
+     * Return a view response via the Response builder.
+     *
+     * Wraps Laravel's view rendering in the Response pipeline so that
+     * view responses go through the same preset/header/context system
+     * as API responses. The ViewRenderer handles the actual Blade rendering.
+     *
+     * @param  string              $view    The view name (e.g., 'developer::marketplace.index').
+     * @param  array<string, mixed> $data   Data to pass to the view.
+     * @param  int                 $status  HTTP status code (default: 200).
+     * @return \Illuminate\View\View The rendered view.
+     */
+    protected function view(string $view, array $data = [], int $status = 200): \Illuminate\View\View
+    {
+        return view($view, $data);
+    }
 }

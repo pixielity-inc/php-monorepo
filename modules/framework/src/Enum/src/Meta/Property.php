@@ -94,7 +94,9 @@ abstract class Property
     public static function method(): string
     {
         if (Reflection::propertyExists(static::class, 'method')) {
-            /** @var string $method */
+            /**
+             * @var string $method
+             */
             $method = new ReflectionClass(static::class)->getStaticPropertyValue('method');
 
             return $method;

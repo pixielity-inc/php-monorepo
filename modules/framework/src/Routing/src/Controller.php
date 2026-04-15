@@ -9,6 +9,7 @@ use Illuminate\Routing\Controller as LaravelController;
 use Illuminate\Support\Traits\Macroable;
 use Pixielity\Routing\Concerns\InteractsWithAuth;
 use Pixielity\Routing\Concerns\InteractsWithBulkOperations;
+use Pixielity\Routing\Concerns\InteractsWithDataTransformation;
 use Pixielity\Routing\Concerns\InteractsWithPagination;
 use Pixielity\Routing\Concerns\InteractsWithRequest;
 use Pixielity\Routing\Concerns\InteractsWithResources;
@@ -145,10 +146,12 @@ abstract class Controller extends LaravelController
      * - InteractsWithResources: API resource transformation
      * - InteractsWithBulkOperations: Bulk create/update/delete operations
      * - InteractsWithServices: Service resolution and access
+     * - InteractsWithDataTransformation: Spatie Data DTO transformation via #[UseData]
      */
     use InteractsWithAuth;
 
     use InteractsWithBulkOperations;
+    use InteractsWithDataTransformation;
     use InteractsWithPagination;
     use InteractsWithRequest;
     use InteractsWithResources;

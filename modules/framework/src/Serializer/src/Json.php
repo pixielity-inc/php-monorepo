@@ -37,7 +37,9 @@ class Json implements JsonInterface
     {
         try {
             // Attempt to encode the provided data into a JSON string
-            /** @var int<1, max> $depth */
+            /**
+             * @var int<1, max> $depth
+             */
             $json = json_encode($data, JSON_THROW_ON_ERROR | $options, $depth);
 
             if ($json === false) {
@@ -84,7 +86,9 @@ class Json implements JsonInterface
             throw_if($string === '', InvalidArgumentException::class, 'Cannot decode an empty JSON string.');
 
             // Attempt to decode the provided JSON string
-            /** @var int<1, max> $depth */
+            /**
+             * @var int<1, max> $depth
+             */
             $data = json_decode($string, $associative, $depth, JSON_THROW_ON_ERROR | $options);
 
             if ($data === null && $string !== 'null') {
