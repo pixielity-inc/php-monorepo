@@ -1,0 +1,9 @@
+{
+  "name": "Compiler",
+  "alias": "compiler",
+  "description": "Unified compilation system — discovers and executes compiler passes via php artisan app:compile",
+  "version": "1.0.0",
+  "keywords": ["compiler", "compile", "di", "discovery", "cache"],
+  "active": true,
+  "order": 0
+}

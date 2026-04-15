@@ -1,0 +1,13 @@
+{
+  "name": "Response",
+  "alias": "response",
+  "version": "1.0.0",
+  "description": "Unified fluent API response system with content negotiation, presets, and HATEOAS support",
+  "keywords": ["response", "api", "json", "content-negotiation", "hateoas"],
+  "active": true,
+  "priority": 5,
+  "providers": ["Pixielity\\Response\\Providers\\ResponseServiceProvider"],
+  "aliases": {},
+  "files": [],
+  "requires": ["support", "container"]
+}

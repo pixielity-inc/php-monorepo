@@ -1,0 +1,73 @@
+{
+  "name": "pixielity/laravel-response",
+  "description": "Unified fluent API response system with content negotiation, presets, and HATEOAS support",
+  "type": "library",
+  "license": "MIT",
+  "keywords": [
+    "response",
+    "api",
+    "json-api",
+    "content-negotiation",
+    "hateoas",
+    "laravel",
+    "pixielity"
+  ],
+  "authors": [
+    {
+      "name": "Pixielity Team",
+      "email": "dev@pixielity.com"
+    }
+  ],
+  "homepage": "https://gitlab.com/pixielity/laravel/framework/response",
+  "support": {
+    "issues": "https://gitlab.com/pixielity/laravel/framework/response/-/issues",
+    "source": "https://gitlab.com/pixielity/laravel/framework/response"
+  },
+  "require": {
+    "php": "^8.5",
+    "illuminate/contracts": "^12.0|^13.0",
+    "illuminate/http": "^12.0|^13.0",
+    "illuminate/pipeline": "^12.0|^13.0",
+    "illuminate/support": "^12.0|^13.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^11.0",
+    "orchestra/testbench": "^10.0",
+    "mockery/mockery": "^1.6",
+    "phpstan/phpstan": "^2.0",
+    "laravel/pint": "^1.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Pixielity\\Response\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Pixielity\\Response\\Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Pixielity\\Response\\Providers\\ResponseServiceProvider"
+      ]
+    },
+    "branch-alias": {
+      "dev-main": "1.x-dev"
+    }
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit",
+    "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
+    "format": "vendor/bin/pint",
+    "analyse": "vendor/bin/phpstan analyse src --memory-limit=1G"
+  },
+  "config": {
+    "sort-packages": true,
+    "preferred-install": "dist",
+    "optimize-autoloader": true
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true
+}

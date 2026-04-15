@@ -1,0 +1,62 @@
+{
+  "name": "pixielity/laravel-crud",
+  "description": "CRUD operations, repository pattern, and service layer for Laravel — zero external dependencies, attribute-driven configuration.",
+  "type": "library",
+  "license": "MIT",
+  "keywords": [
+    "crud",
+    "repository",
+    "service",
+    "pattern",
+    "laravel",
+    "eloquent",
+    "pixielity"
+  ],
+  "authors": [
+    {
+      "name": "Pixielity Team",
+      "email": "dev@pixielity.com"
+    }
+  ],
+  "require": {
+    "php": "^8.5",
+    "illuminate/cache": "^13.0",
+    "illuminate/container": "^13.0",
+    "illuminate/contracts": "^13.0",
+    "illuminate/database": "^13.0",
+    "illuminate/http": "^13.0",
+    "illuminate/pagination": "^13.0",
+    "illuminate/support": "^13.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Pixielity\\Crud\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Pixielity\\Crud\\Providers\\CrudServiceProvider"
+      ]
+    }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^12.0",
+    "mockery/mockery": "^1.6",
+    "orchestra/testbench": "^10.0|^11.0",
+    "laravel/pint": "^1.0",
+    "phpstan/phpstan": "^2.0"
+  },
+  "homepage": "https://gitlab.com/pixielity/laravel/framework/crud",
+  "support": {
+    "issues": "https://gitlab.com/pixielity/laravel/framework/crud/-/issues",
+    "source": "https://gitlab.com/pixielity/laravel/framework/crud"
+  },
+  "config": {
+    "sort-packages": true,
+    "optimize-autoloader": true,
+    "preferred-install": "dist"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}

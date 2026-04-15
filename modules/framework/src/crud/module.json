@@ -1,0 +1,8 @@
+{
+  "name": "Crud",
+  "alias": "crud",
+  "description": "CRUD module — Base Repository, Base Service, Criteria, Scopes, Registries",
+  "version": "2.0.0",
+  "active": true,
+  "order": 3
+}

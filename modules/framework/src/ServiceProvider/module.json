@@ -1,0 +1,9 @@
+{
+  "name": "ServiceProvider",
+  "alias": "service-provider",
+  "description": "Attribute-based modular service provider for Laravel 13",
+  "version": "1.0.0",
+  "keywords": ["service-provider", "module", "attributes", "discovery"],
+  "active": true,
+  "order": 1
+}

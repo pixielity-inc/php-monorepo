@@ -1,0 +1,65 @@
+{
+  "name": "pixielity/laravel-aop",
+  "description": "Attribute-driven AOP (Aspect-Oriented Programming) engine for Laravel 13 — method interception via #[Cache], #[Transaction], #[Log], #[Authorize], #[Before], #[After], #[Around] attributes with build-time proxy generation.",
+  "type": "library",
+  "license": "MIT",
+  "keywords": [
+    "aop",
+    "aspect",
+    "interceptor",
+    "proxy",
+    "cache",
+    "transaction",
+    "attributes",
+    "laravel",
+    "pixielity"
+  ],
+  "authors": [
+    {
+      "name": "Pixielity Team",
+      "email": "dev@pixielity.com"
+    }
+  ],
+  "require": {
+    "php": "^8.5",
+    "illuminate/container": "^13.0",
+    "illuminate/contracts": "^13.0",
+    "illuminate/filesystem": "^13.0",
+    "illuminate/pipeline": "^13.0",
+    "illuminate/support": "^13.0",
+    "olvlvl/composer-attribute-collector": "^2.0",
+    "pixielity/laravel-discovery": "^1.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Pixielity\\Aop\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Pixielity\\Aop\\Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Pixielity\\Aop\\Providers\\AopServiceProvider"
+      ]
+    }
+  },
+  "suggest": {
+    "illuminate/cache": "Required for the #[Cache] interceptor (^13.0)",
+    "illuminate/database": "Required for the #[Transaction] interceptor (^13.0)",
+    "illuminate/log": "Required for the #[Log] interceptor (^13.0)"
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "preferred-install": "dist",
+    "sort-packages": true,
+    "allow-plugins": {
+      "olvlvl/composer-attribute-collector": true
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}

@@ -1,0 +1,67 @@
+{
+  "name": "pixielity/laravel-service-provider",
+  "description": "Attribute-based modular service provider for Laravel 13 — zero runtime reflection, Octane-safe, with automatic resource loading, discovery, and lifecycle management.",
+  "type": "library",
+  "license": "MIT",
+  "keywords": [
+    "laravel",
+    "service-provider",
+    "module",
+    "attributes",
+    "discovery",
+    "octane",
+    "pixielity"
+  ],
+  "authors": [
+    {
+      "name": "Pixielity Team",
+      "email": "dev@pixielity.com",
+      "homepage": "https://pixielity.com",
+      "role": "Developer"
+    }
+  ],
+  "homepage": "https://github.com/pixielity-inc/php-monorepo/tree/main/packages/framework/src/ServiceProvider",
+  "support": {
+    "issues": "https://github.com/pixielity-inc/php-monorepo/issues",
+    "source": "https://github.com/pixielity-inc/php-monorepo/tree/main/packages/framework/src/ServiceProvider"
+  },
+  "require": {
+    "php": "^8.5",
+    "illuminate/console": "^13.0",
+    "illuminate/contracts": "^13.0",
+    "illuminate/routing": "^13.0",
+    "illuminate/support": "^13.0",
+    "olvlvl/composer-attribute-collector": "^2.0",
+    "pixielity/laravel-discovery": "^1.0",
+    "pixielity/laravel-enum": "^1.0"
+  },
+  "suggest": {
+    "spatie/laravel-health": "Required for health check registration via HasHealthChecks interface (^2.0)",
+    "pixielity/laravel-routing": "Required for controller/middleware auto-discovery via #[AsController]/#[AsMiddleware] attributes (^1.0)"
+  },
+  "autoload": {
+    "psr-4": {
+      "Pixielity\\ServiceProvider\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Pixielity\\ServiceProvider\\Tests\\": "tests/"
+    }
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "preferred-install": "dist",
+    "sort-packages": true,
+    "allow-plugins": {
+      "olvlvl/composer-attribute-collector": true
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-main": "1.x-dev"
+    }
+  }
+}

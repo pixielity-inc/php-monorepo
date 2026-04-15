@@ -1,0 +1,9 @@
+{
+  "name": "Aop",
+  "alias": "aop",
+  "description": "Attribute-driven AOP engine — method interception via PHP attributes with build-time proxy generation",
+  "version": "1.0.0",
+  "keywords": ["aop", "aspect", "interceptor", "proxy", "cache", "transaction"],
+  "active": true,
+  "order": 1
+}

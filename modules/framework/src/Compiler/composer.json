@@ -1,0 +1,57 @@
+{
+  "name": "pixielity/laravel-compiler",
+  "description": "Unified compilation system for Pixielity packages — discovers and executes compiler passes in priority order via php artisan app:compile.",
+  "type": "library",
+  "license": "MIT",
+  "keywords": [
+    "compiler",
+    "compile",
+    "di",
+    "discovery",
+    "cache",
+    "proxy",
+    "laravel",
+    "pixielity"
+  ],
+  "authors": [
+    {
+      "name": "Pixielity Team",
+      "email": "dev@pixielity.com"
+    }
+  ],
+  "require": {
+    "php": "^8.5",
+    "illuminate/console": "^13.0",
+    "illuminate/contracts": "^13.0",
+    "illuminate/support": "^13.0",
+    "olvlvl/composer-attribute-collector": "^2.0",
+    "pixielity/laravel-discovery": "^1.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Pixielity\\Compiler\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Pixielity\\Compiler\\Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Pixielity\\Compiler\\Providers\\CompilerServiceProvider"
+      ]
+    }
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "preferred-install": "dist",
+    "sort-packages": true,
+    "allow-plugins": {
+      "olvlvl/composer-attribute-collector": true
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
