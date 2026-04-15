@@ -1,0 +1,9 @@
+{
+  "name": "ImportExport",
+  "alias": "import-export",
+  "description": "Unified, attribute-driven import/export engine with Laravel Excel, sample data generation, async jobs with broadcasting, and multi-tenant awareness",
+  "keywords": ["import", "export", "excel", "csv", "sample-data"],
+  "priority": 60,
+  "providers": ["Pixielity\\ImportExport\\Providers\\ImportExportServiceProvider"],
+  "files": []
+}

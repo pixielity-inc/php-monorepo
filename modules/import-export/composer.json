@@ -1,0 +1,127 @@
+{
+  "name": "pixielity/laravel-import-export",
+  "description": "Pixielity Import/Export module — unified, attribute-driven import/export engine with Laravel Excel, CSV/XLSX/JSON/PDF support, sample data generation, async jobs with broadcasting, and multi-tenant awareness.",
+  "type": "library",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Pixielity\\ImportExport\\": "src/"
+    }
+  },
+  "repositories": [
+    {
+      "type": "path",
+      "url": "../crud",
+      "options": {
+        "symlink": true
+      }
+    },
+    {
+      "type": "path",
+      "url": "../database",
+      "options": {
+        "symlink": true
+      }
+    },
+    {
+      "type": "path",
+      "url": "../framework",
+      "options": {
+        "symlink": true
+      }
+    },
+    {
+      "type": "path",
+      "url": "../tenancy",
+      "options": {
+        "symlink": true
+      }
+    }
+  ],
+  "require": {
+    "php": "^8.5",
+    "illuminate/broadcasting": "^13.0",
+    "illuminate/bus": "^13.0",
+    "illuminate/database": "^13.0",
+    "illuminate/http": "^13.0",
+    "illuminate/queue": "^13.0",
+    "illuminate/routing": "^13.0",
+    "illuminate/support": "^13.0",
+    "maatwebsite/excel": "^3.1",
+    "pixielity/laravel-crud": "@dev",
+    "pixielity/laravel-database": "@dev",
+    "pixielity/laravel-discovery": "*",
+    "pixielity/laravel-framework": "@dev",
+    "spatie/laravel-data": "^4.0"
+  },
+  "suggest": {
+    "pixielity/laravel-tenancy": "Required for multi-tenant scoping of import/export operations (@dev).",
+    "barryvdh/laravel-dompdf": "Required for PDF export format support (^3.0).",
+    "mpdf/mpdf": "Alternative PDF export driver (^8.0)."
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "keywords": [
+    "laravel",
+    "import",
+    "export",
+    "excel",
+    "csv",
+    "xlsx",
+    "json",
+    "pdf",
+    "sample-data",
+    "multi-tenant",
+    "pixielity"
+  ],
+  "homepage": "https://github.com/pixielity-inc/php-monorepo/tree/main/packages/import-export",
+  "authors": [
+    {
+      "name": "Pixielity Team",
+      "email": "dev@pixielity.com",
+      "homepage": "https://pixielity.com",
+      "role": "Developer"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/pixielity-inc/php-monorepo/issues",
+    "source": "https://github.com/pixielity-inc/php-monorepo/tree/main/packages/import-export",
+    "docs": "https://github.com/pixielity-inc/php-monorepo/blob/main/packages/import-export/README.md"
+  },
+  "require-dev": {
+    "laravel/pint": "^1.0",
+    "phpstan/phpstan": "^2.0",
+    "phpunit/phpunit": "^12.0",
+    "rector/rector": "^2.0",
+    "orchestra/testbench": "^10.0|^11.0"
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit --testdox",
+    "lint": "vendor/bin/pint --test",
+    "lint:fix": "vendor/bin/pint",
+    "analyse": "vendor/bin/phpstan analyse --no-progress --memory-limit=512M",
+    "check": [
+      "@lint",
+      "@analyse",
+      "@test"
+    ]
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "preferred-install": "dist",
+    "sort-packages": true,
+    "allow-plugins": {
+      "olvlvl/composer-attribute-collector": true
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-main": "1.x-dev"
+    },
+    "laravel": {
+      "providers": [
+        "Pixielity\\ImportExport\\Providers\\ImportExportServiceProvider"
+      ]
+    }
+  }
+}
