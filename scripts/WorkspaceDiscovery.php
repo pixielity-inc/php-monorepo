@@ -67,7 +67,7 @@ class WorkspaceDiscovery
             $io->write("<comment>→ {$rel}</comment>");
 
             $bin     = self::findComposerBin();
-            $cmd     = escapeshellcmd($bin) . " install {$flags} --working-dir=" . escapeshellarg($workspace);
+            $cmd     = $bin . " install {$flags} --working-dir=" . escapeshellarg($workspace);
             $exitCode = 0;
 
             passthru($cmd, $exitCode);
@@ -116,7 +116,7 @@ class WorkspaceDiscovery
             $io->write("<comment>→ {$rel}</comment>");
 
             $bin     = self::findComposerBin();
-            $cmd     = escapeshellcmd($bin) . ' repos:sync --working-dir=' . escapeshellarg($workspace);
+            $cmd     = $bin . ' repos:sync --working-dir=' . escapeshellarg($workspace);
             $exitCode = 0;
 
             passthru($cmd, $exitCode);
@@ -164,7 +164,7 @@ class WorkspaceDiscovery
             $io->write("<comment>→ {$relative}</comment>");
 
             $composerBin = self::findComposerBin();
-            $command     = escapeshellcmd($composerBin)
+            $command     = $composerBin
                 . ' ' . escapeshellarg($script)
                 . ' --working-dir=' . escapeshellarg($workspace)
                 . ' 2>&1';
@@ -250,14 +250,22 @@ class WorkspaceDiscovery
     /**
      * Find the Composer binary path.
      *
-     * @return string Path to the composer executable.
+     * When running inside a Composer script, `$_SERVER['SCRIPT_FILENAME']`
+     * points to the composer phar/binary. We use `escapeshellarg()` on each
+     * path segment to handle spaces (e.g., macOS Herd installs composer at
+     * `/Users/.../Application Support/Herd/bin/composer`).
+     *
+     * The returned string is already shell-safe — callers must NOT wrap it
+     * in `escapeshellcmd()` again.
+     *
+     * @return string Shell-safe command string to invoke Composer.
      */
     private static function findComposerBin(): string
     {
         // When running inside a Composer script, $_SERVER['SCRIPT_FILENAME']
         // points to the composer phar/binary.
         if (!empty($_SERVER['SCRIPT_FILENAME'])) {
-            return PHP_BINARY . ' ' . escapeshellarg($_SERVER['SCRIPT_FILENAME']);
+            return escapeshellarg(PHP_BINARY) . ' ' . escapeshellarg($_SERVER['SCRIPT_FILENAME']);
         }
 
         return 'composer';
