@@ -43,8 +43,8 @@
     "repos:sync": "composer repos:sync:all"
   },
   "devDependencies": {
-    "prettier": "^3.7.4",
-    "turbo": "^2.9.3",
+    "prettier": "^3.8.3",
+    "turbo": "^2.9.6",
     "typescript": "5.9.2"
   },
   "engines": {
